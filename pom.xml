@@ -78,6 +78,5 @@
 		<module>../free-framework</module>
 		<module>../free-blog</module>
 		<module>../free-ssoclient</module>
-		<module>../free-ssoserver</module>
 	</modules>
 </project>
