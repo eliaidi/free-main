@@ -62,9 +62,22 @@
 		<outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>
 		<finalName>${project.artifactId}.${package.environment}.${project.version}</finalName>
 	</build>
+	<repositories>
+		<repository>
+			<id>springsource-repo</id>
+			<name>SpringSource Repository</name>
+			<url>http://repo.springsource.org/release</url>
+		</repository>
+		<repository>
+			<id>maven-cloudhopper</id>
+			<name>maven cloudhopper</name>
+			<url>http://maven.cloudhopper.com/repos/third-party/</url>
+		</repository>
+	</repositories>
 	<modules>
-		<module>../free-blog</module>
 		<module>../free-framework</module>
-		<module>../free-sso</module>
+		<module>../free-blog</module>
+		<module>../free-ssoclient</module>
+		<module>../free-ssoserver</module>
 	</modules>
 </project>
