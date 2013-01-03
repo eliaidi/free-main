@@ -20,6 +20,7 @@
 		<junitVersion>4.10</junitVersion>
 		<logbackVersion>1.0.7</logbackVersion>
 		<frameworkVersion>${project.version}</frameworkVersion>
+		<redisVersion>1.0.2.RELEASE</redisVersion>
 	</properties>
 	<profiles>
 		<profile>
