@@ -21,7 +21,7 @@
 		<logbackVersion>1.0.7</logbackVersion>
 		<frameworkVersion>${project.version}</frameworkVersion>
 		<redisVersion>1.0.2.RELEASE</redisVersion>
-		<mongodbVersion>1.0.3.RELEASE</mongodbVersion>
+		<mongodbVersion>1.1.1.RELEASE</mongodbVersion>
 	</properties>
 	<profiles>
 		<profile>
