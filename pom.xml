@@ -22,6 +22,7 @@
 		<frameworkVersion>${project.version}</frameworkVersion>
 		<redisVersion>1.0.2.RELEASE</redisVersion>
 		<mongodbVersion>1.1.1.RELEASE</mongodbVersion>
+		<jacksonVersion>1.9.11</jacksonVersion>
 	</properties>
 	<profiles>
 		<profile>
