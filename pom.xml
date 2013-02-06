@@ -23,6 +23,8 @@
 		<redisVersion>1.0.2.RELEASE</redisVersion>
 		<mongodbVersion>1.1.1.RELEASE</mongodbVersion>
 		<jacksonVersion>1.9.11</jacksonVersion>
+		<commons-ioVersion>2.4</commons-ioVersion>
+		<commons-fileuploadVersion>1.2.2</commons-fileuploadVersion>
 	</properties>
 	<profiles>
 		<profile>
