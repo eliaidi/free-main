@@ -20,11 +20,13 @@
 		<junitVersion>4.10</junitVersion>
 		<logbackVersion>1.0.7</logbackVersion>
 		<frameworkVersion>${project.version}</frameworkVersion>
+		<apithriftVersion>${project.version}</apithriftVersion>
 		<redisVersion>1.0.2.RELEASE</redisVersion>
 		<mongodbVersion>1.1.1.RELEASE</mongodbVersion>
 		<jacksonVersion>1.9.11</jacksonVersion>
 		<commons-ioVersion>2.4</commons-ioVersion>
 		<commons-fileuploadVersion>1.2.2</commons-fileuploadVersion>
+		<thriftVersion>0.9.0</thriftVersion>
 	</properties>
 	<profiles>
 		<profile>
@@ -94,5 +96,7 @@
 		<module>../free-blog</module>
 		<module>../free-ssoclient</module>
 		<!-- <module>../free-soso</module> -->
+		<module>../free-apiclient</module>
+		<module>../free-apiservice</module>
 	</modules>
 </project>
