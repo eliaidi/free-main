@@ -95,8 +95,8 @@
 		<module>../free-framework</module>
 		<module>../free-blog</module>
 		<module>../free-ssoclient</module>
-		<!-- <module>../free-soso</module> -->
 		<module>../free-apiclient</module>
 		<module>../free-apiservice</module>
+		<module>../free-apithrift</module>
 	</modules>
 </project>
