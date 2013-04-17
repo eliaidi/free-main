@@ -93,9 +93,9 @@
 	</repositories>
 	<modules>
 	 	<module>free-framework</module>
-		<!--<module>../free-apithrift</module>
-		<module>../free-apiclient</module>
-		<module>../free-apiservice</module>
-		<module>../free-blog</module> -->
+		<module>free-apithrift</module>
+		<module>free-apiclient</module>
+		<module>free-apiservice</module>
+		<module>free-blog</module>
 	</modules>
 </project>
