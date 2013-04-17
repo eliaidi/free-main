@@ -1,0 +1,15 @@
+<div class="row">
+	<div class="pagination">
+	  <ul>
+	    <li><a href="${pages.pageUrl}/${pages.upPage}${pages.params}">前一页</a></li>
+	  	<#list 1..pages.totalPage as item>
+	  	<#if pages.pageNo == item>
+	    <li class="active"> <a href="${pages.pageUrl}/${item}${pages.params}">${item}</a></li>
+	    <#else>
+	    <li > <a href="${pages.pageUrl}/${item}${pages.params}">${item}</a></li>
+	    </#if>
+	    </#list>
+	    <li><a href="${pages.pageUrl}/${pages.nextPage}${pages.params}">后一页</a></li>
+	  </ul>
+	</div>
+</div>

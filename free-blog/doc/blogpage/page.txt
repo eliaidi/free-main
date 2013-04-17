@@ -1,0 +1,14 @@
+index.html 首页
+posts_list.html 博客列表页
+posts_content.html 博客内容页
+posts_publish.html　博客发表页
+posts_update.html 博客更新页
+
+my_space.html 我的博客首页
+my_space_content.html 我的博客内容页
+					发表博客页
+					修改博客页
+					分类管理页
+					文章管理页
+					博客设置页
+					评论管理页

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>${posts.title}-${posts.blogNick}(mkfree_休闲网站-博客)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="<@settingUrl>${mkfree_blog_url}</@settingUrl> (oyhk)">
+
+<!-- Le styles -->
+<link href="${mkfree_static_url}common/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="${mkfree_static_url}common/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+<link href="${mkfree_static_url}common/prettify/prettify.min.css" type="text/css" rel="stylesheet" />
+
+<style type="text/css">
+body {
+	padding-top: 60px;
+	padding-bottom: 40px;
+}
+
+.sidebar-nav {
+	padding: 9px 0;
+}
+</style>
+
+<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+
+<body onload="prettyPrint();">
+	<#include "../include/navigation.html"/>
+	<div class="container">
+		<div class="row">
+			<div class="span">
+				<ul class="breadcrumb">
+					<li><a href="http://www.mkfree.com">首页</a> <span class="divider">/</span></li>
+					<li><a href="http://blog.mkfree.com">博客</a> <span class="divider">/</span></li>
+					<li><a href="http://blog.mkfree.com/list/1">博客列表</a> <span class="divider">/</span></li>
+					<li class="active">${posts.title}</li>
+				</ul>
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span9">
+				<div class="hero-unit">
+					<h1 style="font-size: 30px;">${posts.title}</h1>
+					<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare span9">
+						<a class="bds_qzone"></a> <a class="bds_tsina"></a> <a class="bds_tqq"></a> <a class="bds_renren"></a> <a class="bds_t163"></a> <span
+							class="bds_more"></span> <a class="shareCount"></a>
+					</div>
+					<br>
+					<div class="span15" style="color: #A12A2A; font-size: 14px;">${posts.blogNick}&nbsp;&nbsp;发表于:${posts.createTime?string('yyyy-MM-dd
+						HH:mm:ss')}&nbsp;&nbsp;评论数：0&nbsp;&nbsp;有${posts.views}浏览</div>
+					<p>${posts.content}</p>
+					<div class="span">
+						<div class="pull-left">
+							<@upNextPosts type=1 postsid=posts.id length=20> <i class="icon-backward"></i><a href="${mkfree_blog_url}posts/${upNextPosts.id}"
+								title="${upNextPosts.summary}">${upNextPosts.title}</a> </@upNextPosts>
+						</div>
+						<div class="pull-right">
+							<@upNextPosts type=0 postsid=posts.id length=20> <#if upNextPosts.id?? > <a href="${mkfree_blog_url}posts/${upNextPosts.id}"
+								title="${upNextPosts.summary}">${upNextPosts.title}</a><i class="icon-forward"></i> <#else> 没有了下一篇... </#if> </@upNextPosts>
+						</div>
+					</div>
+				</div>
+				<div class="hero-unit">
+					<p style="font-weight: bold;">相关博客文章</p>
+					<ul class="unstyled">
+						<@relatedPosts q=posts.title> <#list relatedPosts as posts>
+						<li><a href="${mkfree_blog_url}posts/${posts.id}">${posts.title}</a></li> </#list> </@relatedPosts>
+					</ul>
+				</div>
+				<div class="hero-unit">
+					<div class="row">
+						<#assign commentIndex = 1 />
+						<div class="span" id="comments">
+							<h4>评论:</h4>
+							<hr>
+							<#list blogComments as blogComment>
+							<div>
+								<p style="background-color: #F2F8EF">
+									${commentIndex}楼:&nbsp;<a href="#" id="ref_${commentIndex}">${blogComment.nick}</a> <span style="font-size: 11px; margin-left: 15px;">${blogComment.createTime?string('yyyy-MM-dd
+										HH:mm:ss')}</span> <a href="javascript:voie(0)" class="pull-right" onclick="commentsRef('ref_${commentIndex}')">@Ta</a>
+								</p>
+								<p>${blogComment.content}</p>
+							</div>
+							<#assign commentIndex = commentIndex+1 /> </#list>
+						</div>
+						<div class="span">
+							<div class="alert alert-success " id="comments_success" style="text-align: center; display: none;">
+								<button type="button" class="close" data-dismiss="alert">×</button>
+								<strong>发表评论成功!</strong>
+							</div>
+							<div class="alert fade in" id="comments_warn" style="text-align: center; display: none;">
+								<a class="close" data-dismiss="alert" href="#">×</a> <strong>发表评论有误,请检查...</strong>
+							</div>
+							<b>发表评论:</b> <#if sso_user??> <span class="pull-right" style="font-size: 12px;"><input id="anonymityUserId" type="checkbox" value="0">&nbsp;&nbsp;匿名用户</span>
+							<#else> <span style="margin-left: 20px;"><input id="inputVistorName" value="" type="text" class="span3" placeholder="留下你的网名..." /></span>
+							</#if>
+							<textarea id="comment_content"></textarea>
+							<br>
+							<button class="btn btn-primary pull-right"
+								onclick="saveBlogComment('${posts.id}','${commentIndex}'<#if sso_user??>,'${sso_user.id}','${sso_user.nick}'</#if>);">提 交</button>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<!--/span-->
+			<div class="span3">
+				<div class="well sidebar-nav">
+					<ul class="nav nav-list">
+						<li>
+							<div style="height: 100px; width: 235px;">
+								<div style="height: 100px; width: 130px; float: left;">
+									<img alt="博主头像" src="http://upload.mkfree.com/blog/user/000/000/001/icon/user_1.jpg">
+								</div>
+								<div style="width: 95px; float: right;">
+									<h4>oyhk</h4>
+									<p>关注此人</p>
+								</div>
+							</div>
+						</li>
+						<li>喜欢一个人，是看到了他的优点；爱一个人，是包容他的缺点…喜欢是一种心情，爱是一种感情</li>
+						<li class="nav-header">博客分类</li>
+						<li><a href="#">java(10)</a></li>
+						<li><a href="#">nodejs(5)</a></li>
+						<li class="nav-header">阅读排行</li>
+						<li><a href="#">ubuntu nginx 安装配置...</a></li>
+						<li><a href="#">ubuntu mysql 安装配置...</a></li>
+						<li><a href="#">ubuntu nodejs 源代码分析...</a></li>
+						<li><a href="#"></a></li>
+						<li class="nav-header">最新评论</li>
+						<li><a href="#">哇,什么博客啊?</a></li>
+						<li><a href="#">博客代码能分享吗?</a></li>
+						<li><a href="#"></a></li>
+						<li class="nav-header">访问统计</li>
+						<li><a href="#">今日访问:133</a></li>
+						<li><a href="#">昨日访问:15</a></li>
+						<li><a href="#">本周访问:235</a></li>
+						<li><a href="#">本月访问:1000</a></li>
+						<li><a href="#">所有访问:2330</a></li>
+					</ul>
+				</div>
+				<!--/.well -->
+			</div>
+			<!--/span-->
+		</div>
+		<!--/row-->
+
+		<hr>
+		<#include "../include/footer.html"/>
+	</div>
+	<!--/.fluid-container-->
+
+	<!-- Le javascript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="${mkfree_static_url}common/script/jquery/jquery.min.js"></script>
+	<script src="${mkfree_static_url}common/bootstrap/script/bootstrap.min.js"></script>
+	<script src="${mkfree_static_url}common/prettify/prettify.min.js"></script>
+	<script src="${mkfree_static_url}/common/kindeditor-4.1.4/kindeditor-min.js"></script>
+	<script src="${mkfree_static_url}/common/kindeditor-4.1.4/lang/zh_CN.js"></script>
+	<script type="text/javascript">
+		//博客回复(引用,相当于@xxx)
+		var ref = '';
+		//回复博客一共有多少条记录
+		var commentCount;
+		/**
+		 * 异步提交对博客的评论
+		 *
+		 * param postsId 回复的博客文章ID
+		 * param commentIndex 回复博客一共有多少条记录
+		 * param replyUserId 回复人的用户ID
+		 * param replyUserNick 回复人昵称,用来做页面显示,加数据沉余
+		 */
+		function saveBlogComment(postsId,commentIndex,replyUserId,replyUserNick) {
+			if(commentCount == undefined){
+				commentCount = commentIndex; //这篇博客的回复总数--例如:1楼,2楼.....
+			}
+			if($("#anonymityUserId").attr("checked") == "checked"){ //是否匿名用户
+				replyUserId = $("#anonymityUserId").val(); //那么replyuserId就是为0了
+			}
+			if($.trim($("#inputVistorName").val()).length > 0){
+				replyUserNick = $.trim($("#inputVistorName").val());
+			}
+			$.ajax({
+				type : "POST",
+				url : '/comment/save',
+				data : {
+					postsId : postsId,
+					userId : replyUserId,
+					nick : replyUserNick,
+					content :kedit.html()
+				},
+				success : function(data, textStatus, jqXHR) {
+					if(data.success){ //成功.
+						var obj = data.obj;
+						var replyTime = new Date(obj.createTime);
+						var formatReplyTime = (replyTime.getYear()+1900)+"-"+(replyTime.getMonth()+1)+"-"+replyTime.getDate()+" "+ (replyTime.getHours()-4)+":"+replyTime.getMinutes()+":"+replyTime.getSeconds();
+						// 组装评论内容,异步显示..
+						var content = '<div><p style="background-color: #F2F8EF">'+commentCount+'楼:&nbsp;<a href="#" id="ref_'+commentCount+'">'+ obj.nick
+							+'</a><span style="font-size: 11px;margin-left: 15px;">'+formatReplyTime
+							+'</span><a href="javascript:voie(0)" class="pull-right" onclick="commentsRef(\'ref_'+commentCount+'\')">@Ta</a> </p><p>'+obj.content+ref+'</p></div>';
+						$("#comments").append(content);
+						$("#comments_success").show("slow");
+						kedit.html("");
+						setTimeout(function(){$("#comments_success").hide("slow");},4000);
+						commentCount ++; //回复完后,总数加加
+					}else{
+						$("#comments_warn").show("slow");
+						setTimeout(function(){$("#comments_warn").hide("slow");},4000);
+					}
+				},
+				dataType : "json"
+			});
+		}
+		/**
+		 * 引用博客回复   @xxx...
+		 */
+		function commentsRef(refId){
+			var refValue = $("#"+refId).html();
+			ref  = '&nbsp;&nbsp;<a href="#">@'+refValue+'</a>';
+			kedit.focus();
+		}
+	</script>
+	<script type="text/javascript">
+		var kedit;
+		KindEditor.ready(function(K) {
+			kedit = K.create('#comment_content', {
+				width : '770px',
+				height : '300px',
+				items : [ 'source', '|', 'undo', 'redo', 'cut', 'copy', 'paste', '|', 'code', 'justifyleft', 'justifycenter', 'justifyright',
+				          'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', '|', 'formatblock', 'fontname', 'fontsize', '|', 
+				          'forecolor', 'hilitecolor', 'bold', 'removeformat', 'hr', 'emoticons', 'link', 'unlink' , 'preview', 'fullscreen'
+				        ]
+			});
+		});
+	</script>
+	<!-- Baidu Button BEGIN -->
+	<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=669698"></script>
+	<script type="text/javascript" id="bdshell_js"></script>
+	<script type="text/javascript">
+		document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion="
+				+ Math.ceil(new Date() / 3600000)
+	</script>
+	<!-- Baidu Button END -->
+</body>
+</html>

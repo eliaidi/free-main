@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>mkfree 休闲网站--博客</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="Keywords" content="休闲网站,休闲博客,java编程 ,java设计模式,java基础,编程技术,java" />
+<meta name="description" content="mkfree 休闲网站--自由-博客,发表心情,分享技术,分享图片,分享视频">
+<meta name="author" content="<@settingUrl>${mkfree_blog_url}</@settingUrl> (oyhk)">
+<link href="${mkfree_static_url}/common/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="${mkfree_static_url}/common/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+<style type="text/css">
+body {
+	padding-top: 60px;
+	padding-bottom: 40px;
+}
+</style>
+</head>
+<body>
+	<#include "../include/navigation.html"/>
+	<div class="container">
+		<div class="row">
+			<div class="span8">
+				<div class="hero-unit">
+					<@postsDisplay type=4 count=1> <#list blogPosts as posts>
+					<h3><a href="${mkfree_blog_url}posts/${posts.id}">${posts.title}</a></h3>
+					<p>${posts.summary}</p>
+					</#list> </@postsDisplay>
+					<p> <a class="btn btn-primary btn-large" href="${mkfree_blog_url}list/1">更 多 &raquo;</a> </p>
+				</div>
+			</div>
+			<div class="span4">
+				<ul class="nav nav-tabs">
+					<li class="active"><a href="#1" data-toggle="tab">最新博客</a></li>
+					<li><a href="#2" data-toggle="tab">最新推荐</a></li>
+					<li><a href="#3" data-toggle="tab">本周热点</a></li>
+					<li><a style="float:right;margin-left: 35px;" href="${mkfree_blog_url}list/1" >更 多...</a></li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active" id="1">
+						<ul class="unstyled">
+							<@postsDisplay type=5 count=10 length=40> <#list blogPosts as posts>
+							<li style="line-height: 30px;"><a href="${mkfree_blog_url}posts/${posts.id}">${posts.title}</a></li>
+							</#list> </@postsDisplay>
+						</ul>
+					</div>
+					<div class="tab-pane" id="2">
+						<ul class="unstyled">
+							<@postsDisplay type=3 count=10 length=40> <#list blogPosts as posts>
+							<li style="line-height: 30px;"><a href="${mkfree_blog_url}posts/${posts.id}">${posts.title}</a></li>
+							</#list> </@postsDisplay>
+						</ul>
+					</div>
+					<div class="tab-pane" id="3">
+						<ul>
+							<li><a href="${mkfree_blog_url}posts/3">休闲(mkfree)博客开发文档---介绍-作者(oyhk)---第三章</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Example row of columns -->
+		<@postsDisplay type=5 count=3>
+		<div class="row">
+			<#list blogPosts as posts>
+			<div class="span4">
+				<h3>
+					<a href="${mkfree_blog_url}posts/${posts.id}">${posts.title}</a>
+				</h3>
+				<p>${posts.summary}</p>
+				<p>
+					<a class="btn" href="${mkfree_blog_url}posts/${posts.id}">View details &raquo;</a>
+				</p>
+			</div>
+			</#list>
+		</div>
+		</@postsDisplay>
+		<@postsDisplay type=5 count=3 startIndex=3>
+		<div class="row">
+			<#list blogPosts as posts>
+			<div class="span4">
+				<h3>
+					<a href="${mkfree_blog_url}posts/${posts.id}">${posts.title}</a>
+				</h3>
+				<p>${posts.summary}</p>
+				<p>
+					<a class="btn" href="${mkfree_blog_url}posts/${posts.id}">View details &raquo;</a>
+				</p>
+			</div>
+			</#list>
+		</div>
+		</@postsDisplay>
+		<@postsDisplay type=5 count=3 startIndex=6>
+		<div class="row">
+			<#list blogPosts as posts>
+			<div class="span4">
+				<h3>
+					<a href="${mkfree_blog_url}posts/${posts.id}">${posts.title}</a>
+				</h3>
+				<p>${posts.summary}</p>
+				<p>
+					<a class="btn" href="${mkfree_blog_url}posts/${posts.id}">View details &raquo;</a>
+				</p>
+			</div>
+			</#list>
+		</div>
+		</@postsDisplay>
+		<@postsDisplay type=5 count=2 startIndex=9>
+		<div class="row">
+			<#list blogPosts as posts>
+			<div class="span4">
+				<h3>
+					<a href="${mkfree_blog_url}posts/${posts.id}">${posts.title}</a>
+				</h3>
+				<p>${posts.summary}</p>
+				<p>
+					<a class="btn" href="${mkfree_blog_url}posts/${posts.id}">View details &raquo;</a>
+				</p>
+			</div>
+			</#list>
+			<div class="span3">
+				<h3>文章分类</h3>
+				<p>spring</p>
+				<p>java</p>
+				<p>nginx</p>
+				<p>thrift</p>
+			</div>
+		</div>
+		</@postsDisplay>
+		<hr>
+		<#include "../include/footer.html" />
+	</div>
+	<!-- /container -->
+
+	<!-- Le javascript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="${mkfree_static_url}/common/script/jquery/jquery.min.js"></script>
+	<script src="${mkfree_static_url}/common/bootstrap/script/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="navbar-inner">
+		<div class="container">
+			<a class="btn btn-navbar" data-toggle="collapse"
+				data-target=".nav-collapse"> <span class="icon-bar"></span> <span
+				class="icon-bar"></span> <span class="icon-bar"></span>
+			</a> 
+			<a class="brand" href="#">free-blog</a>
+			<div class="nav-collapse collapse">
+				<ul class="nav">
+					<li><a href="${mkfree_url}">首 页</a></li>
+					<li class="active"><a href="${mkfree_blog_url}">博客</a></li>
+					<li class="dropdown">
+		              	<a href="#" class="dropdown-toggle" data-toggle="dropdown">java core 教程 <b class="caret"></b></a>
+		              	<ul class="dropdown-menu">
+		                	<li><a href="${mkfree_blog_url}posts/5112a1d7975a15ea1757d846">java i/o 教程</a></li>
+		              	</ul>
+		            </li>
+		            <li class="dropdown">
+		              	<a href="#" class="dropdown-toggle" data-toggle="dropdown">order 教程 <b class="caret"></b></a>
+		              	<ul class="dropdown-menu">
+		                	<li><a href="${mkfree_blog_url}posts/51278bba975a07b8f133bbb8">thrift 资料</a></li>
+		                	<li><a href="${mkfree_blog_url}posts/51679f71975a2683ccfee2cc">elasticsearch java api 教程</a></li>
+		              	</ul>
+		            </li>
+					<li><a href="#">RSS</a></li>
+				</ul>
+				<form class="navbar-search pull-left" action="http://localhost:8802/so/blog">
+		            <input name="q" type="text" class="search-query span2" placeholder="搜索">
+		            <button type="submit" class="btn">搜索</button>
+		         </form>
+				<#if sso_user?? >
+				<ul class="nav pull-right">
+					<li><a href="#">${sso_user.nick}</a></li>
+					<li><a href="${mkfree_blog_url}${sso_user.account}_space">我的博客</a></li>
+					<li><a href="http://sso.mkfree.com/logout">退出</a></li>
+				</ul>
+				<#else>
+				<form action="${mkfree_blog_url}sso/login" class="navbar-form pull-right" method="post">
+					<input name="account" class="span1" type="text" placeholder="帐号"> 
+					<input name="password" class="span1" type="password" placeholder="密码">
+					<button type="submit" class="btn">登 录</button>
+					<a type="button" class="btn" href="http://sso.mkfree.com/register" target="_blank">注 册</a>
+				</form>
+				</#if>
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+	</div>
+</div>
