@@ -59,7 +59,7 @@ service ApiService extends base.BaseService{
   /**
    * 搜索博客
    */
-  base.SearchResultVO search(1:string q);
+  base.SearchResultVO search(1:string q,2:i32 startIndex);
   /**
    * 创建博客索引
    */

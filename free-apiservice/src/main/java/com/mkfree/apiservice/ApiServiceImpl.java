@@ -48,8 +48,8 @@ public class ApiServiceImpl implements Iface {
 
 	// so
 	@Override
-	public SearchResultVO search(String q) throws TException {
-		return soService.search(q);
+	public SearchResultVO search(String q, int startIndex) throws TException {
+		return soService.search(q, startIndex);
 	}
 
 	@Override

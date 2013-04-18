@@ -37,7 +37,7 @@ public class RelatedPostDirective implements TemplateDirectiveModel {
 		List<BlogPostVO> posts = null;
 		Map<String, TemplateModel> paramWrap = new HashMap<String, TemplateModel>(params);
 		String q = DirectiveUtils.getStringByparams("q", params);// 获取查询的标题
-		SearchResultVO result = SOClient.search(q);
+		SearchResultVO result = SOClient.search(q, 0);// 从0开始
 		posts = BlogClient.findByIds(result.getIds());
 		paramWrap.put(RELATED_BLOG_POSTS, DEFAULT_WRAPPER.wrap(posts));
 

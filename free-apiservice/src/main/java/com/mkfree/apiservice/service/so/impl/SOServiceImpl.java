@@ -38,11 +38,11 @@ public class SOServiceImpl implements SOService {
 	}
 
 	@Override
-	public SearchResultVO search(String q) {
+	public SearchResultVO search(String q, int startIndex) {
 		SearchResultVO searchResultVO = new SearchResultVO();
 		searchResultVO.setIds(new ArrayList<String>());
 		SearchResponse response = client.prepareSearch(blogIndexName).setTypes(blogIndexType).setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
-				.setQuery(QueryBuilders.fieldQuery(blogIndexFieldTitle, q)).setFrom(0).setSize(15).setExplain(true).execute().actionGet();
+				.setQuery(QueryBuilders.fieldQuery(blogIndexFieldTitle, q)).setFrom(startIndex).setSize(15).setExplain(true).execute().actionGet();
 		SearchHits searchHits = response.getHits();
 		SearchHit[] hits = searchHits.getHits();
 		for (int i = 0; i < hits.length; i++) {

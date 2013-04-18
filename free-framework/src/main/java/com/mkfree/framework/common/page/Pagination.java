@@ -75,8 +75,7 @@ public class Pagination<T> {
 	 * 计算一共多少页
 	 */
 	public void setTotalPage() {
-		this.totalPage = (int) ((this.totalCount % this.pageSize > 0) ? (this.totalCount / this.pageSize + 1)
-				: this.totalCount / this.pageSize);
+		this.totalPage = (int) ((this.totalCount % this.pageSize > 0) ? (this.totalCount / this.pageSize + 1) : this.totalCount / this.pageSize);
 	}
 
 	/**
@@ -127,6 +126,7 @@ public class Pagination<T> {
 
 	public void setTotalCount(long totalCount) {
 		this.totalCount = totalCount;
+		this.init();
 	}
 
 	public List<T> getDatas() {
@@ -149,7 +149,11 @@ public class Pagination<T> {
 		this.setPageNo(pageNo);
 		this.setPageSize(pageSize);
 		this.setTotalCount(totalCount);
-		this.init();
+	}
+
+	public Pagination(int pageNo, int pageSize) {
+		this.setPageNo(pageNo);
+		this.setPageSize(pageSize);
 	}
 
 	/**

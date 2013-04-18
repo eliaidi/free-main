@@ -83,7 +83,7 @@ public class TNonblockingClient {
 			TProtocol protocol = new TCompactProtocol(transport);// 使用高密度二进制协议
 			ApiService.Client client = new ApiService.Client(protocol);// 创建Client
 			long start = System.currentTimeMillis();
-			SearchResultVO results = client.search("java");
+			SearchResultVO results = client.search("java", 0);
 			System.out.println(results);
 			System.out.println("耗时：" + (System.currentTimeMillis() - start));
 			transport.close();// 关闭资源

@@ -1,5 +1,7 @@
 package com.mkfree.so.action;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,9 +37,11 @@ public class SOController {
 	 */
 	@RequestMapping(value = "/so/blog/{pageNo}", method = RequestMethod.GET)
 	public String blogSearch(String q, @PathVariable int pageNo, Model model) {
-		SearchResultVO result = SOClient.search(q);
-		Pagination<BlogPostVO> pagination = new Pagination<BlogPostVO>(pageNo, 15, result.getTotal());
-		pagination.setDatas(BlogClient.findByIds(result.getIds()));
+		Pagination<BlogPostVO> pagination = new Pagination<BlogPostVO>(pageNo, 15);
+		SearchResultVO result = SOClient.search(q, pagination.getFirstResult());
+		pagination.setTotalCount(result.getTotal());
+		List<BlogPostVO> datas = BlogClient.findByIds(result.getIds());
+		pagination.setDatas(datas);
 		pagination.setPageUrl(BlogConstants.MKFREE_BLOG_URL + "so/blog");
 		pagination.setParams("?q=" + q);
 		model.addAttribute("pages", pagination);

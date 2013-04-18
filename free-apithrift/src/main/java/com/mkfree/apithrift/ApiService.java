@@ -59,8 +59,9 @@ public class ApiService {
      * 搜索博客
      * 
      * @param q
+     * @param startIndex
      */
-    public com.mkfree.apithrift.SearchResultVO search(String q) throws org.apache.thrift.TException;
+    public com.mkfree.apithrift.SearchResultVO search(String q, int startIndex) throws org.apache.thrift.TException;
 
     /**
      * 创建博客索引
@@ -92,7 +93,7 @@ public class ApiService {
 
     public void findByIds(List<String> ids, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.findByIds_call> resultHandler) throws org.apache.thrift.TException;
 
-    public void search(String q, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.search_call> resultHandler) throws org.apache.thrift.TException;
+    public void search(String q, int startIndex, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.search_call> resultHandler) throws org.apache.thrift.TException;
 
     public void createIndex(org.apache.thrift.async.AsyncMethodCallback<AsyncClient.createIndex_call> resultHandler) throws org.apache.thrift.TException;
 
@@ -188,16 +189,17 @@ public class ApiService {
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "findByIds failed: unknown result");
     }
 
-    public com.mkfree.apithrift.SearchResultVO search(String q) throws org.apache.thrift.TException
+    public com.mkfree.apithrift.SearchResultVO search(String q, int startIndex) throws org.apache.thrift.TException
     {
-      send_search(q);
+      send_search(q, startIndex);
       return recv_search();
     }
 
-    public void send_search(String q) throws org.apache.thrift.TException
+    public void send_search(String q, int startIndex) throws org.apache.thrift.TException
     {
       search_args args = new search_args();
       args.setQ(q);
+      args.setStartIndex(startIndex);
       sendBase("search", args);
     }
 
@@ -391,24 +393,27 @@ public class ApiService {
       }
     }
 
-    public void search(String q, org.apache.thrift.async.AsyncMethodCallback<search_call> resultHandler) throws org.apache.thrift.TException {
+    public void search(String q, int startIndex, org.apache.thrift.async.AsyncMethodCallback<search_call> resultHandler) throws org.apache.thrift.TException {
       checkReady();
-      search_call method_call = new search_call(q, resultHandler, this, ___protocolFactory, ___transport);
+      search_call method_call = new search_call(q, startIndex, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
       ___manager.call(method_call);
     }
 
     public static class search_call extends org.apache.thrift.async.TAsyncMethodCall {
       private String q;
-      public search_call(String q, org.apache.thrift.async.AsyncMethodCallback<search_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      private int startIndex;
+      public search_call(String q, int startIndex, org.apache.thrift.async.AsyncMethodCallback<search_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.q = q;
+        this.startIndex = startIndex;
       }
 
       public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
         prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("search", org.apache.thrift.protocol.TMessageType.CALL, 0));
         search_args args = new search_args();
         args.setQ(q);
+        args.setStartIndex(startIndex);
         args.write(prot);
         prot.writeMessageEnd();
       }
@@ -617,7 +622,7 @@ public class ApiService {
 
       public search_result getResult(I iface, search_args args) throws org.apache.thrift.TException {
         search_result result = new search_result();
-        result.success = iface.search(args.q);
+        result.success = iface.search(args.q, args.startIndex);
         return result;
       }
     }
@@ -2820,6 +2825,7 @@ public class ApiService {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("search_args");
 
     private static final org.apache.thrift.protocol.TField Q_FIELD_DESC = new org.apache.thrift.protocol.TField("q", org.apache.thrift.protocol.TType.STRING, (short)1);
+    private static final org.apache.thrift.protocol.TField START_INDEX_FIELD_DESC = new org.apache.thrift.protocol.TField("startIndex", org.apache.thrift.protocol.TType.I32, (short)2);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
@@ -2828,10 +2834,12 @@ public class ApiService {
     }
 
     public String q; // required
+    public int startIndex; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-      Q((short)1, "q");
+      Q((short)1, "q"),
+      START_INDEX((short)2, "startIndex");
 
       private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -2848,6 +2856,8 @@ public class ApiService {
         switch(fieldId) {
           case 1: // Q
             return Q;
+          case 2: // START_INDEX
+            return START_INDEX;
           default:
             return null;
         }
@@ -2888,11 +2898,15 @@ public class ApiService {
     }
 
     // isset id assignments
+    private static final int __STARTINDEX_ISSET_ID = 0;
+    private byte __isset_bitfield = 0;
     public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.Q, new org.apache.thrift.meta_data.FieldMetaData("q", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.START_INDEX, new org.apache.thrift.meta_data.FieldMetaData("startIndex", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(search_args.class, metaDataMap);
     }
@@ -2901,19 +2915,24 @@ public class ApiService {
     }
 
     public search_args(
-      String q)
+      String q,
+      int startIndex)
     {
       this();
       this.q = q;
+      this.startIndex = startIndex;
+      setStartIndexIsSet(true);
     }
 
     /**
      * Performs a deep copy on <i>other</i>.
      */
     public search_args(search_args other) {
+      __isset_bitfield = other.__isset_bitfield;
       if (other.isSetQ()) {
         this.q = other.q;
       }
+      this.startIndex = other.startIndex;
     }
 
     public search_args deepCopy() {
@@ -2923,6 +2942,8 @@ public class ApiService {
     @Override
     public void clear() {
       this.q = null;
+      setStartIndexIsSet(false);
+      this.startIndex = 0;
     }
 
     public String getQ() {
@@ -2949,6 +2970,29 @@ public class ApiService {
       }
     }
 
+    public int getStartIndex() {
+      return this.startIndex;
+    }
+
+    public search_args setStartIndex(int startIndex) {
+      this.startIndex = startIndex;
+      setStartIndexIsSet(true);
+      return this;
+    }
+
+    public void unsetStartIndex() {
+      __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __STARTINDEX_ISSET_ID);
+    }
+
+    /** Returns true if field startIndex is set (has been assigned a value) and false otherwise */
+    public boolean isSetStartIndex() {
+      return EncodingUtils.testBit(__isset_bitfield, __STARTINDEX_ISSET_ID);
+    }
+
+    public void setStartIndexIsSet(boolean value) {
+      __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __STARTINDEX_ISSET_ID, value);
+    }
+
     public void setFieldValue(_Fields field, Object value) {
       switch (field) {
       case Q:
@@ -2959,6 +3003,14 @@ public class ApiService {
         }
         break;
 
+      case START_INDEX:
+        if (value == null) {
+          unsetStartIndex();
+        } else {
+          setStartIndex((Integer)value);
+        }
+        break;
+
       }
     }
 
@@ -2966,6 +3018,9 @@ public class ApiService {
       switch (field) {
       case Q:
         return getQ();
+
+      case START_INDEX:
+        return Integer.valueOf(getStartIndex());
 
       }
       throw new IllegalStateException();
@@ -2980,6 +3035,8 @@ public class ApiService {
       switch (field) {
       case Q:
         return isSetQ();
+      case START_INDEX:
+        return isSetStartIndex();
       }
       throw new IllegalStateException();
     }
@@ -3006,6 +3063,15 @@ public class ApiService {
           return false;
       }
 
+      boolean this_present_startIndex = true;
+      boolean that_present_startIndex = true;
+      if (this_present_startIndex || that_present_startIndex) {
+        if (!(this_present_startIndex && that_present_startIndex))
+          return false;
+        if (this.startIndex != that.startIndex)
+          return false;
+      }
+
       return true;
     }
 
@@ -3028,6 +3094,16 @@ public class ApiService {
       }
       if (isSetQ()) {
         lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.q, typedOther.q);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetStartIndex()).compareTo(typedOther.isSetStartIndex());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetStartIndex()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.startIndex, typedOther.startIndex);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -3059,6 +3135,10 @@ public class ApiService {
         sb.append(this.q);
       }
       first = false;
+      if (!first) sb.append(", ");
+      sb.append("startIndex:");
+      sb.append(this.startIndex);
+      first = false;
       sb.append(")");
       return sb.toString();
     }
@@ -3078,6 +3158,8 @@ public class ApiService {
 
     private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
       try {
+        // it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
+        __isset_bitfield = 0;
         read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
       } catch (org.apache.thrift.TException te) {
         throw new java.io.IOException(te);
@@ -3110,6 +3192,14 @@ public class ApiService {
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
+            case 2: // START_INDEX
+              if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
+                struct.startIndex = iprot.readI32();
+                struct.setStartIndexIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
             default:
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
           }
@@ -3130,6 +3220,9 @@ public class ApiService {
           oprot.writeString(struct.q);
           oprot.writeFieldEnd();
         }
+        oprot.writeFieldBegin(START_INDEX_FIELD_DESC);
+        oprot.writeI32(struct.startIndex);
+        oprot.writeFieldEnd();
         oprot.writeFieldStop();
         oprot.writeStructEnd();
       }
@@ -3151,19 +3244,29 @@ public class ApiService {
         if (struct.isSetQ()) {
           optionals.set(0);
         }
-        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetStartIndex()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
         if (struct.isSetQ()) {
           oprot.writeString(struct.q);
+        }
+        if (struct.isSetStartIndex()) {
+          oprot.writeI32(struct.startIndex);
         }
       }
 
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, search_args struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
-        BitSet incoming = iprot.readBitSet(1);
+        BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           struct.q = iprot.readString();
           struct.setQIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.startIndex = iprot.readI32();
+          struct.setStartIndexIsSet(true);
         }
       }
     }

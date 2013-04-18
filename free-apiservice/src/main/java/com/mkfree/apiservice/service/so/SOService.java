@@ -17,5 +17,5 @@ public interface SOService {
 	 * @param q
 	 * @return
 	 */
-	public SearchResultVO search(String q);
+	public SearchResultVO search(String q, int startIndex);
 }
