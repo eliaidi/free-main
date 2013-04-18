@@ -7,8 +7,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.mkfree.apiclient.blog.BlogClient;
 import com.mkfree.apiclient.so.SOClient;
 import com.mkfree.apithrift.BlogPostVO;
+import com.mkfree.apithrift.SearchResultVO;
 import com.mkfree.framework.common.web.freemaker.DirectiveUtils;
 
 import freemarker.core.Environment;
@@ -20,7 +22,7 @@ import freemarker.template.TemplateModel;
 /**
  * 相关博客的标签
  * 
- * @author hk
+ * @author hkd
  * 
  *         2012-11-24 上午9:37:42
  */
@@ -30,14 +32,13 @@ public class RelatedPostDirective implements TemplateDirectiveModel {
 	public final static String RELATED_BLOG_POSTS = "relatedPosts";// 相关博客文章
 
 	@Override
-	public void execute(Environment env, Map params, TemplateModel[] loopVars, TemplateDirectiveBody body)
-			throws TemplateException, IOException {
+	public void execute(Environment env, Map params, TemplateModel[] loopVars, TemplateDirectiveBody body) throws TemplateException, IOException {
 
 		List<BlogPostVO> posts = null;
 		Map<String, TemplateModel> paramWrap = new HashMap<String, TemplateModel>(params);
 		String q = DirectiveUtils.getStringByparams("q", params);// 获取查询的标题
-
-		posts = SOClient.search(q);
+		SearchResultVO result = SOClient.search(q);
+		posts = BlogClient.findByIds(result.getIds());
 		paramWrap.put(RELATED_BLOG_POSTS, DEFAULT_WRAPPER.wrap(posts));
 
 		Map<String, TemplateModel> origMap = DirectiveUtils.addParamsToVariable(env, paramWrap);
