@@ -1,8 +1,6 @@
 package com.mkfree.apiservice.service.so;
 
-import java.util.List;
-
-import com.mkfree.apithrift.BlogPostVO;
+import com.mkfree.apithrift.SearchResultVO;
 
 public interface SOService {
 
@@ -13,5 +11,11 @@ public interface SOService {
 	 */
 	public String createIndex();
 
-	public List<BlogPostVO> search(String q);
+	/**
+	 * 搜索
+	 * 
+	 * @param q
+	 * @return
+	 */
+	public SearchResultVO search(String q);
 }

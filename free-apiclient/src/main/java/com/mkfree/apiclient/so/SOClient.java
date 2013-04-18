@@ -1,8 +1,5 @@
 package com.mkfree.apiclient.so;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.thrift.TException;
 import org.apache.thrift.protocol.TCompactProtocol;
 import org.apache.thrift.protocol.TProtocol;
@@ -11,7 +8,7 @@ import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
 
 import com.mkfree.apithrift.ApiService;
-import com.mkfree.apithrift.BlogPostVO;
+import com.mkfree.apithrift.SearchResultVO;
 
 public class SOClient {
 
@@ -31,8 +28,8 @@ public class SOClient {
 		}
 	}
 
-	public static List<BlogPostVO> search(String q) {
-		List<BlogPostVO> results = new ArrayList<BlogPostVO>();
+	public static SearchResultVO search(String q) {
+		SearchResultVO results = null;
 		try {
 			// 设置传输通道，对于非阻塞服务，需要使用TFramedTransport，它将数据分块发送
 			TTransport transport = new TFramedTransport(new TSocket("localhost", 9901));

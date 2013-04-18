@@ -21,6 +21,11 @@ public class BlogPostServiceImpl implements BlogPostService {
 	}
 
 	@Override
+	public List<BlogPost> findByIds(List<String> ids) {
+		return blogPostsDao.findByIds(ids);
+	}
+
+	@Override
 	public List<BlogPost> findAll() {
 		return blogPostsDao.findAll();
 	}

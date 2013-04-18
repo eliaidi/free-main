@@ -24,6 +24,14 @@ public interface BlogPostsDao {
 	public BlogPost findById(String id);
 
 	/**
+	 * 通过多个ID查找多条记录
+	 * 
+	 * @param ids
+	 * @return
+	 */
+	public List<BlogPost> findByIds(List<String> ids);
+
+	/**
 	 * 获取全部博客文章
 	 * 
 	 * @return
@@ -45,8 +53,7 @@ public interface BlogPostsDao {
 	 * 通过类型去查找博客文章
 	 * 
 	 * @param type
-	 *            类型 1.hot(热门) 2.top(置顶) 3.views(浏览次数高) 4.head(头) 5.lists(列表)
-	 *            6.new(最新博客)
+	 *            类型 1.hot(热门) 2.top(置顶) 3.views(浏览次数高) 4.head(头) 5.lists(列表) 6.new(最新博客)
 	 * @param number
 	 *            查多少条(数量)
 	 * @return

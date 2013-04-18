@@ -62,6 +62,14 @@ public interface BlogPostService {
 	public BlogPost findById(String id);
 
 	/**
+	 * 通过多个ID查找多条记录
+	 * 
+	 * @param ids
+	 * @return
+	 */
+	public List<BlogPost> findByIds(List<String> ids);
+
+	/**
 	 * 获取全部博客
 	 * 
 	 * @return

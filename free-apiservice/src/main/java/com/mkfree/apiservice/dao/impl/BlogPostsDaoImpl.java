@@ -68,6 +68,13 @@ public class BlogPostsDaoImpl extends MongodbDao<BlogPost> implements BlogPostsD
 	}
 
 	@Override
+	public List<BlogPost> findByIds(List<String> ids) {
+		Query query = new Query();
+		query.addCriteria(new Criteria().and("id").in(ids));
+		return mongoTemplate.find(query, this.getEntityClass());
+	}
+
+	@Override
 	public BlogPost getUpNextPosts(int type, String postsid) {
 		BlogPost blogPost = null;
 		Query query = new Query();

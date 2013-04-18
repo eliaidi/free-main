@@ -1,5 +1,6 @@
 package com.mkfree.apiservice;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.thrift.TException;
@@ -13,6 +14,7 @@ import com.mkfree.apiservice.service.sso.SSOService;
 import com.mkfree.apithrift.ApiService.Iface;
 import com.mkfree.apithrift.BlogPostVO;
 import com.mkfree.apithrift.SSOUserVO;
+import com.mkfree.apithrift.SearchResultVO;
 import com.mkfree.framework.common.spring.KBeanUtils;
 
 @Service(value = "apiService")
@@ -32,9 +34,21 @@ public class ApiServiceImpl implements Iface {
 		return blogPostVO;
 	}
 
+	@Override
+	public List<BlogPostVO> findByIds(List<String> ids) throws TException {
+		List<BlogPostVO> results = new ArrayList<BlogPostVO>();
+		List<BlogPost> datas = blogPostService.findByIds(ids);
+		for (int i = 0; i < datas.size(); i++) {
+			BlogPostVO blogPostVO = new BlogPostVO();
+			KBeanUtils.copyProperties(datas.get(i), blogPostVO);
+			results.add(blogPostVO);
+		}
+		return results;
+	}
+
 	// so
 	@Override
-	public List<BlogPostVO> search(String q) throws TException {
+	public SearchResultVO search(String q) throws TException {
 		return soService.search(q);
 	}
 

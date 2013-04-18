@@ -40,7 +40,7 @@ struct SSOUserVO{
 	14: i32 success;//是否成功 1:成功 0:失败
 }
 
-service ApiService extends CommonService{
+service ApiService extends base.BaseService{
   //blog--------------------------------------------------------------------------------------------------------
   /**
    * 保存一篇博客
@@ -50,12 +50,16 @@ service ApiService extends CommonService{
    * 通过ID获取博客文章
    */
   BlogPostVO findById(1: string id);
+  /**
+   * 通过多个ID获取多篇文章
+   */
+  list<BlogPostVO> findByIds(1:list<string> ids);
   
   //so--------------------------------------------------------------------------------------------------------
   /**
    * 搜索博客
    */
-  list<BlogPostVO> search(1:string q);
+  base.SearchResultVO search(1:string q);
   /**
    * 创建博客索引
    */
