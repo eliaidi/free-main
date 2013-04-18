@@ -25,7 +25,7 @@
 		            </li>
 					<li><a href="#">RSS</a></li>
 				</ul>
-				<form class="navbar-search pull-left" action="http://localhost:8802/so/blog">
+				<form class="navbar-search pull-left" action="${mkfree_blog_url}so/blog">
 		            <input name="q" type="text" class="search-query span2" placeholder="搜索">
 		            <button type="submit" class="btn">搜索</button>
 		         </form>
@@ -33,7 +33,7 @@
 				<ul class="nav pull-right">
 					<li><a href="#">${sso_user.nick}</a></li>
 					<li><a href="${mkfree_blog_url}${sso_user.account}_space">我的博客</a></li>
-					<li><a href="http://sso.mkfree.com/logout">退出</a></li>
+					<li><a href="h${mkfree_blog_url}logout">退出</a></li>
 				</ul>
 				<#else>
 				<form action="${mkfree_blog_url}sso/login" class="navbar-form pull-right" method="post">

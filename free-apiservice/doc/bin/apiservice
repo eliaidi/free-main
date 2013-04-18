@@ -24,7 +24,7 @@ RUNNING_USER=root
 APP_HOME="/opt/mkfree/free-apiservice"
 
 #需要启动的Java主程序jar包（main方法一定要在这jar里面,并且指定好main方法的类）
-APP_MAIN_JAR=free-apiservice.test.0.0.1-SNAPSHOT.jar
+APP_MAIN_JAR=free-apiservice-0.0.1-SNAPSHOT.jar
 
 #拼凑完整的classpath参数，包括指定lib目录下所有的jar
 CLASSPATH=$APP_HOME

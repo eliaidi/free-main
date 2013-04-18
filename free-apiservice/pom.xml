@@ -20,7 +20,7 @@
 						<manifest>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
-							<mainClass>com.mkfree.apiservice.server.ApiServiceServer</mainClass>
+							<mainClass>com.mkfree.apiservice.ApiServiceServer</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
