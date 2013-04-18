@@ -67,7 +67,7 @@
 			</plugin>
 		</plugins>
 		<outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>
-		<finalName>${project.artifactId}.${project.version}</finalName>
+		<finalName>${project.artifactId}-${project.version}</finalName>
 	</build>
 	<repositories>
 		<repository>
