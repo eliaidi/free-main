@@ -5,7 +5,7 @@
 		<groupId>com.mkfree</groupId>
 		<artifactId>free-main</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../free-main/pom.xml</relativePath>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>free-apiservice</artifactId>
 	<packaging>jar</packaging>

@@ -5,7 +5,7 @@
 		<groupId>com.mkfree</groupId>
 		<version>0.0.1-SNAPSHOT</version>
 		<artifactId>free-main</artifactId>
-		<relativePath>../free-main/pom.xml</relativePath>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>free-apithrift</artifactId>
 	<build>
