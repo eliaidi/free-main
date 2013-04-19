@@ -24,8 +24,8 @@ free-main是个人用于学习开发的应用网站,暂时功能只有blog
 - 通用服务
 	- elasticsearch 0.20.2
 
-缓存:
+- 缓存:
 	- redis 2.6.12
 
-数据库:
+- 数据库:
 	- mongodb 2.4
