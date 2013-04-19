@@ -4,7 +4,11 @@ free-main是个人用于学习开发的应用网站,暂时功能只有blog
 基于thrift协议服务形式开发...
 
 - 前端框架:
+<<<<<<< HEAD
 	- spring 3.1.2
+=======
+  - spring 3.1.2
+>>>>>>> dev
 	- springmvc 3.1.2
 	- freemarker 2.3.19
 	- logback 1.0.7
@@ -24,8 +28,15 @@ free-main是个人用于学习开发的应用网站,暂时功能只有blog
 - 通用服务
 	- elasticsearch 0.20.2
 
+<<<<<<< HEAD
 缓存:
 	- redis 2.6.12
 
 数据库:
+=======
+- 缓存:
+	- redis 2.6.12
+
+- 数据库:
+>>>>>>> dev
 	- mongodb 2.4
