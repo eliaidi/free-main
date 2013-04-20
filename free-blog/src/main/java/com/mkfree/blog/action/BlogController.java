@@ -32,7 +32,6 @@ import com.mkfree.framework.common.web.request.RequestUtils;
  *         2012-11-3 上午11:33:41 www.mkfree.com 首页处理类,首页是生成静态页面
  */
 @Controller
-@RequestMapping(value = "/")
 public class BlogController {
 
 	/**

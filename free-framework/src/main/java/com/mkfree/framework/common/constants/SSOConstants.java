@@ -1,6 +1,5 @@
 package com.mkfree.framework.common.constants;
 
-import com.mkfree.framework.common.spring.KPropertyPlaceholderConfigurer;
 
 /**
  * sso Server Constants
@@ -21,10 +20,6 @@ public class SSOConstants {
 	public final static String PASSWORD = "password";
 	// 是否验证成功
 	public final static String ISSUCCESS = "isSuccess";
-	// sso 服务器 ip
-	public final static String SSO_IP = KPropertyPlaceholderConfigurer.getStringValue("sso.ip");
-	// sso 服务器 prot
-	public final static int SSO_PORT = KPropertyPlaceholderConfigurer.getIntValue("sso.port");
 	// 用户ticket(票据)
 	public final static String SSO_TICKET = "sso_ticket";
 	// 用户

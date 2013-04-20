@@ -2,6 +2,7 @@ package com.mkfree.framework.common.web.cookie;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Cookie 工具类
@@ -19,12 +20,49 @@ public class CookieUtils {
 	 * @param name
 	 * @return
 	 */
-	public static boolean checkCookieIsExist(HttpServletRequest req, String name) {
-		String value = CookieUtils.getCookieValue(req, name);
+	public static boolean checkCookieIsExist(HttpServletRequest req, String cookieName) {
+		String value = CookieUtils.getCookieValue(req, cookieName);
 		if (value != null && value != "") {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * 通过cookieName清空cookie
+	 * 
+	 * @param req
+	 * @param res
+	 * @param cookieName
+	 */
+	public static void flushCookie(HttpServletRequest req, HttpServletResponse res, String cookieName, String domain) {
+		flushCookie(req, res, cookieName, domain, null);
+	}
+
+	/**
+	 * 通过cookieName清空cookie
+	 * 
+	 * @param req
+	 * @param res
+	 * @param cookieName
+	 *            cookie名
+	 * @param domain
+	 *            域名
+	 * @param path
+	 *            cookie 路径
+	 */
+	public static void flushCookie(HttpServletRequest req, HttpServletResponse res, String cookieName, String domain, String path) {
+		if (checkCookieValueIsNull(req, cookieName))
+			return;
+		Cookie cookie = getCookie(req, cookieName);
+		cookie.setValue(null);
+		cookie.setDomain(domain);
+		cookie.setMaxAge(-1);// 清空cookie生命
+		if (path != null) {
+			cookie.setPath(path);
+		}
+		res.addCookie(cookie);
+
 	}
 
 	/**
