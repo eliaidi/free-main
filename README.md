@@ -16,11 +16,7 @@ free-main是个人用于学习开发的应用网站,暂时功能只有blog
   
 
 - 前端框架:
-<<<<<<< HEAD
     - spring 3.1.2
-=======
-	- spring 3.1.2
->>>>>>> 378ce4c634cbdffcd150e5531d73977d0f8a60e3
 	- springmvc 3.1.2
 	- freemarker 2.3.19
 	- logback 1.0.7
