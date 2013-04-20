@@ -55,7 +55,7 @@ public class SSOController {
 					cookie.setDomain(SSOConstants.MKFREECOM);
 					cookie.setPath("/");
 					res.addCookie(cookie);
-					Cookie cookieSessionId = new Cookie(SSOConstants.SESSIONID, sessionid);
+					Cookie cookieSessionId = new Cookie(SSOConstants.SSO_SESSIONID, sessionid);
 					cookieSessionId.setDomain(SSOConstants.MKFREECOM);
 					cookieSessionId.setPath("/");
 					res.addCookie(cookieSessionId);
@@ -78,7 +78,7 @@ public class SSOController {
 	@RequestMapping(value = "/sso/logout", method = RequestMethod.GET)
 	public String logout(HttpServletRequest req, HttpServletResponse res) {
 		req.getSession().invalidate();// 清空Session
-		CookieUtils.flushCookie(req, res, SSOConstants.SESSIONID, SSOConstants.MKFREECOM, "/");
+		CookieUtils.flushCookie(req, res, SSOConstants.SSO_SESSIONID, SSOConstants.MKFREECOM, "/");
 		CookieUtils.flushCookie(req, res, SSOConstants.SSO_TICKET, SSOConstants.MKFREECOM, "/");
 		return "redirect:" + BlogConstants.MKFREE_BLOG_URL;
 	}

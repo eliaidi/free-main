@@ -28,8 +28,7 @@ import com.mkfree.framework.common.web.session.SessionUtils;
  */
 public class SSOFilter implements Filter {
 
-	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException,
-			ServletException {
+	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) resp;
 
@@ -62,7 +61,7 @@ public class SSOFilter implements Filter {
 	 * @param request
 	 */
 	private void userSessionidExist(HttpServletRequest request) {
-		String sessionId = CookieUtils.getCookieValue(request, SSOConstants.SESSIONID);
+		String sessionId = CookieUtils.getCookieValue(request, SSOConstants.SSO_SESSIONID);
 		byte[] objectBytes = redisService.get(sessionId.getBytes());
 		SSOUserVO user = (SSOUserVO) SerializeUtil.unserialize(objectBytes);
 		if (user == null) {// redis user session 已经失效
@@ -84,7 +83,7 @@ public class SSOFilter implements Filter {
 	 */
 	private boolean checkCookieSessionIdisExist(HttpServletRequest request) {
 		// cookie sessionid null
-		if (CookieUtils.checkCookieValueIsNull(request, SSOConstants.SESSIONID)) {
+		if (CookieUtils.checkCookieValueIsNull(request, SSOConstants.SSO_SESSIONID)) {
 			return true;
 		}
 		return false;
@@ -127,8 +126,7 @@ public class SSOFilter implements Filter {
 	 * @return 为空返回true
 	 */
 	private boolean checkTicketAndSessionIdisExist(HttpServletRequest request) {
-		if (CookieUtils.checkCookieValueIsNull(request, SSOConstants.SSO_TICKET)
-				&& CookieUtils.checkCookieValueIsNull(request, SSOConstants.SESSIONID)) {
+		if (CookieUtils.checkCookieValueIsNull(request, SSOConstants.SSO_TICKET) && CookieUtils.checkCookieValueIsNull(request, SSOConstants.SSO_SESSIONID)) {
 			request.getSession().removeAttribute(SSOConstants.SSO_USER);
 			return true;
 		}

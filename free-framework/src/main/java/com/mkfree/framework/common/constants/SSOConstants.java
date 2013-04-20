@@ -1,6 +1,5 @@
 package com.mkfree.framework.common.constants;
 
-
 /**
  * sso Server Constants
  * 
@@ -25,6 +24,6 @@ public class SSOConstants {
 	// 用户
 	public final static String SSO_USER = "sso_user";
 	// session id
-	public final static String SESSIONID = "sessionid";
+	public final static String SSO_SESSIONID = "sso_sessionid";
 
 }
