@@ -3,7 +3,7 @@ package com.mkfree.apiservice.common.utils.date;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class TimeFormat {
+public class TimeUtils {
 
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
