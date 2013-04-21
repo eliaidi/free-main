@@ -8,7 +8,7 @@ import org.apache.thrift.transport.TTransport;
 import org.apache.thrift.transport.TTransportException;
 
 import com.mkfree.apithrift.ApiService;
-import com.mkfree.apithrift.BlogPostVO;
+import com.mkfree.apithrift.vo.BlogPostVO;
 
 public class SimpleClient {
 

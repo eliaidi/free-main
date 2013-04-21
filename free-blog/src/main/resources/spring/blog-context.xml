@@ -14,9 +14,4 @@
 	<bean id="upNextPosts" class="com.mkfree.blog.action.directive.UpNextPostsDirective" />
 	<bean id="relatedPosts" class="com.mkfree.blog.action.directive.RelatedPostDirective" />
 
-	<!-- json转换器 -->
-	<bean id="mappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />  
-	<!-- 支持上传文件 -->
-    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
-    
 </beans>

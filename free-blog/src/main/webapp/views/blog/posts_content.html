@@ -31,7 +31,7 @@ body {
 
 <body onload="prettyPrint();">
 	<#include "../include/navigation.html"/>
-	<div class="container">
+	<div class="container-fluid">
 		<div class="row">
 			<div class="span">
 				<ul class="breadcrumb">
@@ -51,8 +51,7 @@ body {
 							class="bds_more"></span> <a class="shareCount"></a>
 					</div>
 					<br>
-					<div class="span15" style="color: #A12A2A; font-size: 14px;">${posts.blogNick}&nbsp;&nbsp;发表于:${posts.createTime?string('yyyy-MM-dd
-						HH:mm:ss')}&nbsp;&nbsp;评论数：0&nbsp;&nbsp;有${posts.views}浏览</div>
+					<div class="span15" style="color: #A12A2A; font-size: 14px;">${posts.blogNick}&nbsp;&nbsp;发表于:${posts.createTime?string('yyyy-MM-dd HH:mm:ss')}&nbsp;&nbsp;评论数：0&nbsp;&nbsp;有${posts.views}浏览</div>
 					<p>${posts.content}</p>
 					<div class="span">
 						<div class="pull-left">
@@ -81,8 +80,7 @@ body {
 							<#list blogComments as blogComment>
 							<div>
 								<p style="background-color: #F2F8EF">
-									${commentIndex}楼:&nbsp;<a href="#" id="ref_${commentIndex}">${blogComment.nick}</a> <span style="font-size: 11px; margin-left: 15px;">${blogComment.createTime?string('yyyy-MM-dd
-										HH:mm:ss')}</span> <a href="javascript:voie(0)" class="pull-right" onclick="commentsRef('ref_${commentIndex}')">@Ta</a>
+									${commentIndex}楼:&nbsp;<a href="#" id="ref_${commentIndex}">${blogComment.nick}</a> <span style="font-size: 11px; margin-left: 15px;">${blogComment.createTime}</span> <a href="javascript:voie(0)" class="pull-right" onclick="commentsRef('ref_${commentIndex}')">@Ta</a>
 								</p>
 								<p>${blogComment.content}</p>
 							</div>
@@ -198,11 +196,9 @@ body {
 				success : function(data, textStatus, jqXHR) {
 					if(data.success){ //成功.
 						var obj = data.obj;
-						var replyTime = new Date(obj.createTime);
-						var formatReplyTime = (replyTime.getYear()+1900)+"-"+(replyTime.getMonth()+1)+"-"+replyTime.getDate()+" "+ (replyTime.getHours()-4)+":"+replyTime.getMinutes()+":"+replyTime.getSeconds();
 						// 组装评论内容,异步显示..
 						var content = '<div><p style="background-color: #F2F8EF">'+commentCount+'楼:&nbsp;<a href="#" id="ref_'+commentCount+'">'+ obj.nick
-							+'</a><span style="font-size: 11px;margin-left: 15px;">'+formatReplyTime
+							+'</a><span style="font-size: 11px;margin-left: 15px;">'+obj.createTime
 							+'</span><a href="javascript:voie(0)" class="pull-right" onclick="commentsRef(\'ref_'+commentCount+'\')">@Ta</a> </p><p>'+obj.content+ref+'</p></div>';
 						$("#comments").append(content);
 						$("#comments_success").show("slow");

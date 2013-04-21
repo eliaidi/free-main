@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mkfree.apiclient.sso.SSOClient;
-import com.mkfree.apithrift.SSOUserVO;
+import com.mkfree.apithrift.vo.SSOUserVO;
 import com.mkfree.framework.common.constants.BlogConstants;
 import com.mkfree.framework.common.constants.SSOConstants;
 import com.mkfree.framework.common.redis.RedisService;

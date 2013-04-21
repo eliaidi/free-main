@@ -1,6 +1,6 @@
 package com.mkfree.apiservice.service.sso;
 
-import com.mkfree.apithrift.SSOUserVO;
+import com.mkfree.apithrift.vo.SSOUserVO;
 
 public interface SSOService {
 

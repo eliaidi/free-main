@@ -12,8 +12,7 @@ import com.mkfree.framework.common.spring.KPropertyPlaceholderConfigurer;
 public class BlogConstants {
 
 	// 静态域名url
-	public final static String MKFREE_STATIC_URL = KPropertyPlaceholderConfigurer
-			.getStringValue("mkfree_static_url");
+	public final static String MKFREE_STATIC_URL = KPropertyPlaceholderConfigurer.getStringValue("mkfree_static_url");
 	// 博客域名url
 	public final static String MKFREE_BLOG_URL = KPropertyPlaceholderConfigurer.getStringValue("mkfree_blog_url");
 	// 错误页面url

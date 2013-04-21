@@ -12,7 +12,6 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			classpath:spring/spring-context.xml
-			classpath:spring/blog-context.xml
 		</param-value>
 	</context-param>
 	<servlet>

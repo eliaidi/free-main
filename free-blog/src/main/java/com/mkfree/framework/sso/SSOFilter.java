@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.mkfree.apiclient.sso.SSOClient;
-import com.mkfree.apithrift.SSOUserVO;
+import com.mkfree.apithrift.vo.SSOUserVO;
 import com.mkfree.framework.common.constants.SSOConstants;
 import com.mkfree.framework.common.redis.RedisService;
 import com.mkfree.framework.common.spring.util.SpringUtil;

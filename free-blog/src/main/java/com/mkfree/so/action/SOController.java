@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mkfree.apiclient.blog.BlogClient;
 import com.mkfree.apiclient.so.SOClient;
-import com.mkfree.apithrift.BlogPostVO;
-import com.mkfree.apithrift.SearchResultVO;
+import com.mkfree.apithrift.vo.BlogPostVO;
+import com.mkfree.apithrift.vo.SearchResultVO;
 import com.mkfree.framework.common.constants.BlogConstants;
 import com.mkfree.framework.common.page.Pagination;
 

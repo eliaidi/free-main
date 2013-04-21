@@ -9,8 +9,8 @@ import java.util.Map;
 
 import com.mkfree.apiclient.blog.BlogClient;
 import com.mkfree.apiclient.so.SOClient;
-import com.mkfree.apithrift.BlogPostVO;
-import com.mkfree.apithrift.SearchResultVO;
+import com.mkfree.apithrift.vo.BlogPostVO;
+import com.mkfree.apithrift.vo.SearchResultVO;
 import com.mkfree.framework.common.web.freemaker.DirectiveUtils;
 
 import freemarker.core.Environment;

@@ -24,6 +24,7 @@
 	<!-- 初始化上传应用的配置信息 -->
 	<bean class="com.mkfree.framework.common.constants.AppUploadConstants" />
 	
+	<import resource="blog-context.xml" />
 	<import resource="spring-mongodb.xml" />
 	<import resource="spring-redis.xml" />
 </beans>

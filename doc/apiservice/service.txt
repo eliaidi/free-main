@@ -1,0 +1,4 @@
+service说明文档
+
+1.upadate,save 参数传输使用VO对象
+2.find,delete 参数传输不使用VO对象,使用thrift类型

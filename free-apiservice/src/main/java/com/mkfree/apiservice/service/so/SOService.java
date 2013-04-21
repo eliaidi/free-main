@@ -1,6 +1,6 @@
 package com.mkfree.apiservice.service.so;
 
-import com.mkfree.apithrift.SearchResultVO;
+import com.mkfree.apithrift.vo.SearchResultVO;
 
 public interface SOService {
 

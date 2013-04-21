@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import com.mkfree.apiservice.dao.BlogPostsDao;
 import com.mkfree.apiservice.domain.BlogPost;
 import com.mkfree.apiservice.service.so.SOService;
-import com.mkfree.apithrift.SearchResultVO;
+import com.mkfree.apithrift.vo.SearchResultVO;
 import com.mkfree.framework.common.spring.KPropertyPlaceholderConfigurer;
 
 @Service(value = "SOService")

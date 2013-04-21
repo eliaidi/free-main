@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.mkfree.blog.domain.BlogComment;
+import com.mkfree.apiclient.blog.BlogCommentClient;
+import com.mkfree.apithrift.vo.BlogCommentVO;
 import com.mkfree.blog.domain.BlogPost;
-import com.mkfree.blog.service.BlogCommentService;
 import com.mkfree.blog.service.BlogPostsService;
 import com.mkfree.blog.service.BlogUserService;
 import com.mkfree.framework.common.constants.BlogConstants;
@@ -58,9 +58,8 @@ public class BlogController {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("views", (bp.getViews() + 1) + "");
 		blogPostsService.update(bp.getId(), params);
-
 		model.addAttribute("posts", bp);
-		List<BlogComment> blogComments = blogCommentService.findByPostsId(id);
+		List<BlogCommentVO> blogComments = BlogCommentClient.findByPostsId(bp.getId());
 		model.addAttribute("blogComments", blogComments);
 		return "blog/posts_content";
 	}
@@ -201,6 +200,4 @@ public class BlogController {
 	private BlogUserService blogUserService;
 	@Autowired
 	private BlogPostsService blogPostsService;
-	@Autowired
-	private BlogCommentService blogCommentService;
 }

@@ -14,7 +14,7 @@ import com.mkfree.apiservice.dao.SysUserDao;
 import com.mkfree.apiservice.domain.SysTicket;
 import com.mkfree.apiservice.domain.SysUser;
 import com.mkfree.apiservice.service.sso.SSOService;
-import com.mkfree.apithrift.SSOUserVO;
+import com.mkfree.apithrift.vo.SSOUserVO;
 import com.mkfree.framework.common.spring.KBeanUtils;
 
 @Service(value = "ssoService")

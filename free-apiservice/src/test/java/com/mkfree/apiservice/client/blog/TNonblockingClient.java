@@ -12,9 +12,9 @@ import org.apache.thrift.transport.TTransport;
 import org.junit.Test;
 
 import com.mkfree.apithrift.ApiService;
-import com.mkfree.apithrift.BlogPostVO;
-import com.mkfree.apithrift.SSOUserVO;
-import com.mkfree.apithrift.SearchResultVO;
+import com.mkfree.apithrift.vo.BlogPostVO;
+import com.mkfree.apithrift.vo.SSOUserVO;
+import com.mkfree.apithrift.vo.SearchResultVO;
 
 public class TNonblockingClient {
 

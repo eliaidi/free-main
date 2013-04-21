@@ -8,13 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mkfree.apiservice.domain.BlogPost;
+import com.mkfree.apiservice.service.blog.BlogCommentService;
 import com.mkfree.apiservice.service.blog.BlogPostService;
 import com.mkfree.apiservice.service.so.SOService;
 import com.mkfree.apiservice.service.sso.SSOService;
 import com.mkfree.apithrift.ApiService.Iface;
-import com.mkfree.apithrift.BlogPostVO;
-import com.mkfree.apithrift.SSOUserVO;
-import com.mkfree.apithrift.SearchResultVO;
+import com.mkfree.apithrift.vo.BlogCommentVO;
+import com.mkfree.apithrift.vo.BlogPostVO;
+import com.mkfree.apithrift.vo.SSOUserVO;
+import com.mkfree.apithrift.vo.SearchResultVO;
 import com.mkfree.framework.common.spring.KBeanUtils;
 
 @Service(value = "apiService")
@@ -22,7 +24,7 @@ public class ApiServiceImpl implements Iface {
 
 	// blog
 	@Override
-	public void save(BlogPostVO blogPostVO) throws TException {
+	public void saveBlogPost(BlogPostVO blogPostVO) throws TException {
 
 	}
 
@@ -44,6 +46,16 @@ public class ApiServiceImpl implements Iface {
 			results.add(blogPostVO);
 		}
 		return results;
+	}
+
+	@Override
+	public List<BlogCommentVO> findBlogCommentByPostsId(String postId) throws TException {
+		return blogCommentService.findByPostsId(postId);
+	}
+
+	@Override
+	public BlogCommentVO saveBlogComment(BlogCommentVO blogCommentVO) throws TException {
+		return blogCommentService.save(blogCommentVO);
 	}
 
 	// so
@@ -70,6 +82,8 @@ public class ApiServiceImpl implements Iface {
 
 	@Autowired
 	private BlogPostService blogPostService;
+	@Autowired
+	private BlogCommentService blogCommentService;
 	@Autowired
 	private SOService soService;
 	@Autowired

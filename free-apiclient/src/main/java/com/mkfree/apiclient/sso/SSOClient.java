@@ -8,7 +8,7 @@ import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
 
 import com.mkfree.apithrift.ApiService;
-import com.mkfree.apithrift.SSOUserVO;
+import com.mkfree.apithrift.vo.SSOUserVO;
 
 /**
  * sso 中心客户端类

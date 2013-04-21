@@ -10,7 +10,7 @@ import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
 
 import com.mkfree.apithrift.ApiService;
-import com.mkfree.apithrift.BlogPostVO;
+import com.mkfree.apithrift.vo.BlogPostVO;
 
 public class BlogClient {
 
