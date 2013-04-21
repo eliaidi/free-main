@@ -1,82 +1,111 @@
 package com.mkfree.apiservice.service.blog.impl;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mkfree.apiservice.dao.BlogPostsDao;
 import com.mkfree.apiservice.domain.BlogPost;
 import com.mkfree.apiservice.service.blog.BlogPostService;
+import com.mkfree.apithrift.vo.BlogPostVO;
+import com.mkfree.apithrift.vo.PaginationVO;
 import com.mkfree.framework.common.page.Pagination;
+import com.mkfree.framework.common.spring.KBeanUtils;
+import com.mkfree.framework.common.utils.VpsTimeUtil;
 import com.mkfree.framework.common.web.html.HtmlUtils;
 
-@Service("blogPostService")
+@Service("blogPostsService")
 public class BlogPostServiceImpl implements BlogPostService {
 
 	@Override
-	public BlogPost findById(String id) {
-		return blogPostsDao.findById(id);
+	public BlogPostVO findById(String id) {
+		BlogPost blogPost = blogPostsDao.findById(id);
+		BlogPostVO blogPostVO = new BlogPostVO();
+		KBeanUtils.copyProperties(blogPost, blogPostVO);
+		return blogPostVO;
 	}
 
 	@Override
-	public List<BlogPost> findByIds(List<String> ids) {
-		return blogPostsDao.findByIds(ids);
-	}
-
-	@Override
-	public List<BlogPost> findAll() {
-		return blogPostsDao.findAll();
-	}
-
-	@Override
-	public List<BlogPost> findPostsBytype(int type, int startIndex, int number, int length) {
-		List<BlogPost> lists = null;
-		lists = blogPostsDao.findPostsBytype(type, startIndex, number);
-		if (length > 0) {
-			for (int i = 0; i < lists.size(); i++) {
-				String title = lists.get(i).getTitle();
-				lists.get(i).setTitle((title.length() > length) ? title.substring(0, length) + "..." : title);
+	public List<BlogPostVO> findBytype(int type, int startIndex, int number, int length) {
+		List<BlogPostVO> results = new ArrayList<BlogPostVO>();
+		List<BlogPost> blogPosts = blogPostsDao.findPostsBytype(type, startIndex, number);
+		for (int i = 0; i < blogPosts.size(); i++) {
+			BlogPost blogPost = blogPosts.get(i);
+			String title = blogPost.getTitle();
+			if (length > 0) {
+				blogPost.setTitle((title.length() > length) ? title.substring(0, length) + "..." : title);
 			}
+			BlogPostVO blogPostVO = new BlogPostVO();
+			KBeanUtils.copyProperties(blogPost, blogPostVO);
+			results.add(blogPostVO);
 		}
-		return lists;
+		return results;
 	}
 
 	@Override
-	public Pagination<BlogPost> getPage(int pageNo, int pageSize) {
+	public List<BlogPostVO> findByIds(List<String> ids) {
+		List<BlogPost> blogPosts = blogPostsDao.findByIds(ids);
+		List<BlogPostVO> blogPostVOs = new ArrayList<BlogPostVO>();
+		for (int i = 0; i < blogPosts.size(); i++) {
+			BlogPostVO blogPostVO = new BlogPostVO();
+			KBeanUtils.copyProperties(blogPosts.get(i), blogPostVO);
+			blogPostVOs.add(blogPostVO);
+		}
+		return blogPostVOs;
+	}
+
+	@Override
+	public PaginationVO getPage(int pageNo, int pageSize) {
+		PaginationVO results = new PaginationVO();
+		results.setDatas(new ArrayList<BlogPostVO>());
 		Pagination<BlogPost> pages = this.blogPostsDao.getPage(pageNo, pageSize);
 		for (int i = 0; i < pages.getDatas().size(); i++) {
-			String title = pages.getDatas().get(i).getTitle();
-			pages.getDatas().get(i).setTitle(title.length() > 50 ? title.substring(0, 50) + "..." : title);
+			BlogPost blogPost = pages.getDatas().get(i);
+			String title = blogPost.getTitle();
+			blogPost.setTitle(title.length() > 50 ? title.substring(0, 50) + "..." : title);
+			BlogPostVO blogPostVO = new BlogPostVO();
+			KBeanUtils.copyProperties(blogPost, blogPostVO);
+			results.getDatas().add(blogPostVO);
 		}
-		return pages;
+		KBeanUtils.copyProperties(pages, results, new String[] { "datas" });
+		return results;
 	}
 
 	@Override
-	public BlogPost getUpNextPosts(int type, String postsid) {
-		return blogPostsDao.getUpNextPosts(type, postsid);
+	public BlogPostVO findUpNextPost(int type, String postsid) {
+		return this.findUpNextPost(type, postsid, null);
 	}
 
 	@Override
-	public BlogPost getUpNextPosts(int type, String postsid, String userid) {
-		return null;
+	public BlogPostVO findUpNextPost(int type, String postsid, String userid) {
+		BlogPost blogPost = blogPostsDao.getUpNextPosts(type, postsid, userid);
+		BlogPostVO blogPostVO = new BlogPostVO();
+		KBeanUtils.copyProperties(blogPost, blogPostVO);
+		return blogPostVO;
 	}
 
 	@Override
-	public BlogPost save(BlogPost entity) {
-		return blogPostsDao.save(entity);
+	public String save(BlogPostVO blogPostVO) {
+		BlogPost blogPost = new BlogPost();
+		KBeanUtils.copyProperties(blogPostVO, blogPost);// vo copy 到 domain
+		blogPost.setCreateTime(VpsTimeUtil.getVPSTime());
+		blogPost.setUpdateTime(VpsTimeUtil.getVPSTime());
+		blogPost = blogPostsDao.save(blogPost);
+		return blogPost.getId();
 	}
 
 	@Override
 	public void update(String id, Map<String, Object> params) {
 		BlogPost bp = blogPostsDao.findById(id);
-		if (bp.getSummary() == null && bp.getSummary().trim().length() == 0) {
-			String content = (String) params.get("content");
-			if (content != null && content.trim().length() > 0) {
-				params.put("sumary", HtmlUtils.filterHtmlCode(content, 240));
-			}
+		if (StringUtils.isBlank(bp.getSummary())) {
+			params.put("sumary", HtmlUtils.filterHtmlCode(bp.getContent(), 240));
 		}
+		bp.setUpdateTime(new Date());
 		blogPostsDao.update(id, params);
 	}
 

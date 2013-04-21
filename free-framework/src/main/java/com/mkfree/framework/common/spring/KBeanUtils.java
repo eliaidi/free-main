@@ -31,29 +31,46 @@ public class KBeanUtils extends BeanUtils {
 		}
 	}
 
+	/**
+	 * 对象copy
+	 * 
+	 * @param orig
+	 * @param dest
+	 */
 	public static void copyProperties(Object orig, Object dest) {
+		copyProperties(orig, dest, new String[] {});
+	}
+
+	/**
+	 * 对象copy ,可以过滤字段
+	 * 
+	 * @param orig
+	 * @param dest
+	 * @param ignoreFiled
+	 *            不复制的字段
+	 */
+	public static void copyProperties(Object orig, Object dest, String[] ignoreFiled) {
 		try {
 			Field[] origFiles = orig.getClass().getDeclaredFields();
 			List<String> ignoreFields = new ArrayList<String>();
+			for (int i = 0; i < ignoreFiled.length; i++) {
+				ignoreFields.add(ignoreFiled[i]);
+			}
 			for (int i = 0; i < origFiles.length; i++) {
 				Field origField = origFiles[i];
 				if (origField.getType().isInstance(new Date())) {
 					ignoreFields.add(origField.getName());
-					Method origMethod = orig.getClass().getDeclaredMethod(
-							GET + origField.getName().substring(0, 1).toUpperCase() + origField.getName().substring(1));
+					Method origMethod = orig.getClass().getDeclaredMethod(GET + origField.getName().substring(0, 1).toUpperCase() + origField.getName().substring(1));
 					Object origresult = origMethod.invoke(orig);
 					if (origresult == null) {
 						continue;
 					}
-					Method destMethod = dest.getClass().getDeclaredMethod(
-							SET + origField.getName().substring(0, 1).toUpperCase() + origField.getName().substring(1),
-							String.class);
+					Method destMethod = dest.getClass().getDeclaredMethod(SET + origField.getName().substring(0, 1).toUpperCase() + origField.getName().substring(1), String.class);
 					destMethod.invoke(dest, new Object[] { dateFormat.format(origresult) });
 				}
 			}
 			BeanUtils.copyProperties(orig, dest, ignoreFields.toArray(new String[ignoreFields.size()]));
-		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
-				| InvocationTargetException e) {
+		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
 		}
 	}

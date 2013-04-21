@@ -50,6 +50,19 @@ public interface BlogPostsDao {
 	public BlogPost getUpNextPosts(int type, String postsid);
 
 	/**
+	 * 通过博客文章ID获取上一篇,下一篇文章,并且获取指定用户
+	 * 
+	 * @param type
+	 *            类型..1:上一篇,0:下一篇
+	 * @param postsid
+	 *            博客ID
+	 * @param userId
+	 *            用户ID
+	 * @return
+	 */
+	public BlogPost getUpNextPosts(int type, String postsid, String userId);
+
+	/**
 	 * 通过类型去查找博客文章
 	 * 
 	 * @param type

@@ -72,12 +72,21 @@ public class BlogPostsDaoImpl extends MongodbDao<BlogPost> implements BlogPostsD
 		Query query = new Query();
 		query.addCriteria(new Criteria().and("id").in(ids));
 		return mongoTemplate.find(query, this.getEntityClass());
+
 	}
 
 	@Override
 	public BlogPost getUpNextPosts(int type, String postsid) {
+		return this.getUpNextPosts(type, postsid, null);
+	}
+
+	@Override
+	public BlogPost getUpNextPosts(int type, String postsid, String userId) {
 		BlogPost blogPost = null;
 		Query query = new Query();
+		if (userId != null) {
+			query.addCriteria(new Criteria().and("blogUser").is(userId));
+		}
 		if (type == 1) {// 上一篇
 			BlogPost current = super.findById(postsid);
 			query.addCriteria(new Criteria().and("createTime").lt(current.getCreateTime()));

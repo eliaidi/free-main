@@ -24,7 +24,7 @@ public class SimpleClient {
 			ApiService.Client client = new ApiService.Client(protocol);
 
 			long start = System.currentTimeMillis();
-			BlogPostVO blogPost = client.findById("514916ce975a24f6a830e53e");
+			BlogPostVO blogPost = client.findBlogPostById("514916ce975a24f6a830e53e");
 			System.out.println(blogPost.getId());
 			System.out.println(blogPost.getTitle());
 			System.out.println("耗时：" + (System.currentTimeMillis() - start));

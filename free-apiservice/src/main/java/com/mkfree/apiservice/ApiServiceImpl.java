@@ -1,13 +1,12 @@
 package com.mkfree.apiservice;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.thrift.TException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mkfree.apiservice.domain.BlogPost;
 import com.mkfree.apiservice.service.blog.BlogCommentService;
 import com.mkfree.apiservice.service.blog.BlogPostService;
 import com.mkfree.apiservice.service.so.SOService;
@@ -15,37 +14,48 @@ import com.mkfree.apiservice.service.sso.SSOService;
 import com.mkfree.apithrift.ApiService.Iface;
 import com.mkfree.apithrift.vo.BlogCommentVO;
 import com.mkfree.apithrift.vo.BlogPostVO;
+import com.mkfree.apithrift.vo.PaginationVO;
 import com.mkfree.apithrift.vo.SSOUserVO;
 import com.mkfree.apithrift.vo.SearchResultVO;
-import com.mkfree.framework.common.spring.KBeanUtils;
 
+@SuppressWarnings({ "unchecked", "rawtypes" })
 @Service(value = "apiService")
 public class ApiServiceImpl implements Iface {
 
-	// blog
+	// blogPost---------------------------------------------------------------------------------------
 	@Override
-	public void saveBlogPost(BlogPostVO blogPostVO) throws TException {
-
+	public String saveBlogPost(BlogPostVO blogPostVO) throws TException {
+		return blogPostService.save(blogPostVO);
 	}
 
 	@Override
-	public BlogPostVO findById(String id) throws TException {
-		BlogPost post = blogPostService.findById(id);
-		BlogPostVO blogPostVO = new BlogPostVO();
-		KBeanUtils.copyProperties(post, blogPostVO);
-		return blogPostVO;
+	public void updateBlogPost(String id, Map<String, String> params) throws TException {
+		blogPostService.update(id, (Map) params);
 	}
 
 	@Override
-	public List<BlogPostVO> findByIds(List<String> ids) throws TException {
-		List<BlogPostVO> results = new ArrayList<BlogPostVO>();
-		List<BlogPost> datas = blogPostService.findByIds(ids);
-		for (int i = 0; i < datas.size(); i++) {
-			BlogPostVO blogPostVO = new BlogPostVO();
-			KBeanUtils.copyProperties(datas.get(i), blogPostVO);
-			results.add(blogPostVO);
-		}
-		return results;
+	public BlogPostVO findBlogPostById(String id) throws TException {
+		return blogPostService.findById(id);
+	}
+
+	@Override
+	public List<BlogPostVO> findBlogPostByType(int type, int startIndex, int number, int length) throws TException {
+		return blogPostService.findBytype(type, startIndex, number, length);
+	}
+
+	@Override
+	public BlogPostVO findUpNextPost(int type, String postsid, String userid) throws TException {
+		return blogPostService.findUpNextPost(type, postsid, userid);
+	}
+
+	@Override
+	public List<BlogPostVO> findBlogPostByIds(List<String> ids) throws TException {
+		return blogPostService.findByIds(ids);
+	}
+
+	@Override
+	public PaginationVO getBlogPostPage(int pageNo, int pageSize) throws TException {
+		return blogPostService.getPage(pageNo, pageSize);
 	}
 
 	@Override
@@ -58,7 +68,7 @@ public class ApiServiceImpl implements Iface {
 		return blogCommentService.save(blogCommentVO);
 	}
 
-	// so
+	// so---------------------------------------------------------------------------------------
 	@Override
 	public SearchResultVO search(String q, int startIndex) throws TException {
 		return soService.search(q, startIndex);
@@ -69,7 +79,7 @@ public class ApiServiceImpl implements Iface {
 		soService.createIndex();
 	}
 
-	// sso
+	// sso---------------------------------------------------------------------------------------
 	@Override
 	public SSOUserVO loginByAccountAndPassword(String account, String password) throws TException {
 		return ssoService.login(account, password);

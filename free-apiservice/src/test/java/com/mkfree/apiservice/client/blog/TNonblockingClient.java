@@ -26,7 +26,7 @@ public class TNonblockingClient {
 			TProtocol protocol = new TCompactProtocol(transport);// 使用高密度二进制协议
 			ApiService.Client client = new ApiService.Client(protocol);// 创建Client
 			long start = System.currentTimeMillis();
-			BlogPostVO blogPost = client.findById("514916ce975a24f6a830e53e");
+			BlogPostVO blogPost = client.findBlogPostById("514916ce975a24f6a830e53e");
 			System.out.println("耗时：" + (System.currentTimeMillis() - start));
 			transport.close();// 关闭资源
 		} catch (TException x) {
@@ -64,7 +64,7 @@ public class TNonblockingClient {
 			List<String> ids = new ArrayList<String>();
 			ids.add(1 + "");
 			ids.add(2 + "");
-			List<BlogPostVO> results = client.findByIds(ids);
+			List<BlogPostVO> results = client.findBlogPostByIds(ids);
 			System.out.println(results);
 			System.out.println("耗时：" + (System.currentTimeMillis() - start));
 			transport.close();// 关闭资源

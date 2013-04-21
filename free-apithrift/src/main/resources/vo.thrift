@@ -59,7 +59,17 @@ struct SSOUserVO{
 	13: i32 ticketVaild;//ticket是否有效
 	14: i32 success;//是否成功 1:成功 0:失败
 }
-
-service BaseService{
-
+/**
+ * 用于分页传输对象
+ */
+struct PaginationVO{
+	1:i32 pageSize = 20;//一页数据默认20条
+	2:i32 pageNo;//当前页码
+	3:i32 upPage;//上一页
+	4:i32 nextPage//下一页
+	5:i64 totalCount;//一共有多少条数据
+	6:i64 totalPage;//一共有多少页
+	7:string pageUrl;//分页的url
+	8:string params = "";//url后面所带的参数,默认是""==空字符串
+	9:list<BlogPostVO> datas;//数据集合
 }

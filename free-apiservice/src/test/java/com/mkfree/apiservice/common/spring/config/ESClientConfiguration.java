@@ -20,8 +20,8 @@ import org.elasticsearch.search.SearchHits;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.mkfree.apiservice.dao.BlogPostsDao;
 import com.mkfree.apiservice.domain.BlogPost;
-import com.mkfree.apiservice.service.blog.BlogPostService;
 import com.mkfree.framework.common.spring.KPropertyPlaceholderConfigurer;
 
 public class ESClientConfiguration {
@@ -37,8 +37,7 @@ public class ESClientConfiguration {
 	}
 
 	public void search(String q) {
-		SearchResponse response = client.prepareSearch(blogIndexName).setTypes(blogIndexType)
-				.setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+		SearchResponse response = client.prepareSearch(blogIndexName).setTypes(blogIndexType).setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
 				.setQuery(QueryBuilders.fieldQuery(blogIndexFieldTitle, q)) // Query
 				// .setFilter(FilterBuilders.rangeFilter("age").from(12).to(18))
 				// Filter
@@ -57,11 +56,10 @@ public class ESClientConfiguration {
 	 * 创建索引
 	 */
 	public void createIndex() {
-		BlogPostService blogPostService = (BlogPostService) app.getBean("blogPostService");
-		List<BlogPost> blogPosts = blogPostService.findAll();
+		BlogPostsDao BlogPostsDao = (BlogPostsDao) app.getBean("blogPostService");
+		List<BlogPost> blogPosts = BlogPostsDao.findAll();
 		for (int i = 0; i < blogPosts.size(); i++) {
-			IndexResponse indexResponse = client.prepareIndex(blogIndexName, blogIndexType)
-					.setSource(getBuilderJson(blogPosts.get(i))).execute().actionGet();
+			IndexResponse indexResponse = client.prepareIndex(blogIndexName, blogIndexType).setSource(getBuilderJson(blogPosts.get(i))).execute().actionGet();
 			System.out.println(indexResponse);
 		}
 	}

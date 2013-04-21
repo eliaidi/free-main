@@ -3,8 +3,8 @@ package com.mkfree.apiservice.service.blog;
 import java.util.List;
 import java.util.Map;
 
-import com.mkfree.apiservice.domain.BlogPost;
-import com.mkfree.framework.common.page.Pagination;
+import com.mkfree.apithrift.vo.BlogPostVO;
+import com.mkfree.apithrift.vo.PaginationVO;
 
 /**
  * 博客博文服务接口
@@ -19,11 +19,12 @@ public interface BlogPostService {
 	 * 通过博文的类型去查找博文,用于前端页面显示
 	 * 
 	 * @param type
+	 *            1:热门 2:置顶 3:浏览次数高 4:头条 5:列表
 	 * @param number
 	 *            条数
 	 * @return
 	 */
-	public List<BlogPost> findPostsBytype(int type, int startIndex, int number, int length);
+	public List<BlogPostVO> findBytype(int type, int startIndex, int number, int length);
 
 	/**
 	 * 获取分页记录
@@ -32,7 +33,7 @@ public interface BlogPostService {
 	 * @param pageSize
 	 * @return
 	 */
-	public Pagination<BlogPost> getPage(int pageNo, int pageSize);
+	public PaginationVO getPage(int pageNo, int pageSize);
 
 	/**
 	 * 通过博客ＩＤ去获取上一篇下一篇文章
@@ -41,7 +42,7 @@ public interface BlogPostService {
 	 * @param postsid
 	 * @return
 	 */
-	public BlogPost getUpNextPosts(int type, String postsid);
+	public BlogPostVO findUpNextPost(int type, String postsid);
 
 	/**
 	 * 通过用户id跟博客ＩＤ去获取当前文章的上一篇下一篇
@@ -51,7 +52,7 @@ public interface BlogPostService {
 	 * @param userid
 	 * @return
 	 */
-	public BlogPost getUpNextPosts(int type, String postsid, String userid);
+	public BlogPostVO findUpNextPost(int type, String postsid, String userid);
 
 	/**
 	 * 通过ID去查找实体
@@ -59,7 +60,7 @@ public interface BlogPostService {
 	 * @param id
 	 * @return
 	 */
-	public BlogPost findById(String id);
+	public BlogPostVO findById(String id);
 
 	/**
 	 * 通过多个ID查找多条记录
@@ -67,14 +68,7 @@ public interface BlogPostService {
 	 * @param ids
 	 * @return
 	 */
-	public List<BlogPost> findByIds(List<String> ids);
-
-	/**
-	 * 获取全部博客
-	 * 
-	 * @return
-	 */
-	public List<BlogPost> findAll();
+	public List<BlogPostVO> findByIds(List<String> ids);
 
 	/**
 	 * 保存一个实体
@@ -82,7 +76,7 @@ public interface BlogPostService {
 	 * @param entity
 	 * @return
 	 */
-	public BlogPost save(BlogPost entity);
+	public String save(BlogPostVO blogPostVO);
 
 	/**
 	 * 更新一个实体

@@ -7,11 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-
-import com.mkfree.blog.domain.BlogPost;
-import com.mkfree.blog.service.BlogPostsService;
+import com.mkfree.apiclient.blog.BlogClient;
+import com.mkfree.apithrift.vo.BlogPostVO;
 import com.mkfree.framework.common.web.freemaker.DirectiveUtils;
 
 import freemarker.core.Environment;
@@ -33,10 +30,9 @@ public class PostsDisplayDirective implements TemplateDirectiveModel {
 	public final static String BLOG_POSTS = "blogPosts";// 博客文章
 
 	@Override
-	public void execute(Environment env, Map params, TemplateModel[] loopVars, TemplateDirectiveBody body)
-			throws TemplateException, IOException {
+	public void execute(Environment env, Map params, TemplateModel[] loopVars, TemplateDirectiveBody body) throws TemplateException, IOException {
 
-		List<BlogPost> posts = null;
+		List<BlogPostVO> posts = null;
 		Map<String, TemplateModel> paramWrap = new HashMap<String, TemplateModel>(params);
 		int type = DirectiveUtils.getIntByparams("type", params);// 类型
 		int number = DirectiveUtils.getIntByparams("count", params);// 取多少条数据
@@ -47,14 +43,13 @@ public class PostsDisplayDirective implements TemplateDirectiveModel {
 		} else if (type == 2) {
 
 		} else if (type == 3) {
-			posts = blogPostsService.findPostsBytype(type, startIndex, number, length);
+			posts = BlogClient.findByType(type, startIndex, number, length);
 			paramWrap.put(BLOG_POSTS, DEFAULT_WRAPPER.wrap(posts));
 		} else if (type == 4) {// 头条
-			posts = blogPostsService.findPostsBytype(type, startIndex, number, length);
-
+			posts = BlogClient.findByType(type, startIndex, number, length);
 			paramWrap.put(BLOG_POSTS, DEFAULT_WRAPPER.wrap(posts));
 		} else if (type == 5) {// 列表数据
-			posts = blogPostsService.findPostsBytype(type, startIndex, number, length);
+			posts = BlogClient.findByType(type, startIndex, number, length);
 			paramWrap.put(BLOG_POSTS, DEFAULT_WRAPPER.wrap(posts));
 		} else if (type == 6) {// 最新博客
 
@@ -64,8 +59,4 @@ public class PostsDisplayDirective implements TemplateDirectiveModel {
 		body.render(env.getOut());
 		DirectiveUtils.removeParamsFromVariable(env, paramWrap, origMap);
 	}
-
-	@Autowired
-	@Qualifier("blogPostsService")
-	private BlogPostsService blogPostsService;
 }
