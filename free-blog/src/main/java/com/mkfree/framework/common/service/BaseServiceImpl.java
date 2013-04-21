@@ -53,7 +53,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 	 * @return
 	 */
 	@Override
-	public void updateFirst(String id, Map<String, String> params) {
+	public void updateFirst(String id, Map<String, Object> params) {
 		mongodbDao.updateFirst(id, params);
 	}
 }

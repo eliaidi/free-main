@@ -65,7 +65,7 @@ public class ApiServiceImpl implements Iface {
 
 	@Override
 	public SSOUserVO loginByTicket(String ticket) throws TException {
-		return null;
+		return ssoService.login(ticket);
 	}
 
 	@Autowired

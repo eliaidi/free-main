@@ -11,5 +11,13 @@ public interface SysUserDao {
 	 * @param password
 	 * @return
 	 */
-	public SysUser getUserByAccountAndPassword(String account, String password);
+	public SysUser findByAccountAndPassword(String account, String password);
+
+	/**
+	 * 通过id查找用户
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public SysUser findById(String id);
 }

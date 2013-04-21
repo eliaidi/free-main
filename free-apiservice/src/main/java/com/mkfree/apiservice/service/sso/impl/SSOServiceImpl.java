@@ -1,18 +1,18 @@
 package com.mkfree.apiservice.service.sso.impl;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.mkfree.apiservice.dao.SysTicketDao;
+import com.mkfree.apiservice.dao.SysUserDao;
 import com.mkfree.apiservice.domain.SysTicket;
 import com.mkfree.apiservice.domain.SysUser;
-import com.mkfree.apiservice.service.permission.SysTicketService;
-import com.mkfree.apiservice.service.permission.SysUserService;
 import com.mkfree.apiservice.service.sso.SSOService;
 import com.mkfree.apithrift.SSOUserVO;
 import com.mkfree.framework.common.spring.KBeanUtils;
@@ -27,20 +27,25 @@ public class SSOServiceImpl implements SSOService {
 		int isSuccess = this.checkAccountAndPasswordIsVaild(account, password, user);// 验证用户密码
 		if (isSuccess == 1) {
 			SysTicket ticket = this.getTicketByUserid(user.getId());
+			Calendar c = Calendar.getInstance();
+			c.setTime(new Date());
+			c.add(Calendar.DATE, 7);// 暂时默认登录成功后,ticket有效时间为7天
 			if (ticket != null) {
 				ticket.setValue(user.getAccount() + new Random().nextLong());
 				ticket.setVaild(1);
 				Map<String, Object> params = new HashMap<String, Object>();
 				params.put("value", ticket.getValue());
 				params.put("vaild", ticket.getVaild());
-				sysTicketService.update(params);
+				params.put("vaildTime", c.getTime());
+				sysTicketDao.update(ticket.getId(), params);
 			} else {
 				ticket = new SysTicket();
 				ticket.setUserid(user.getId());
 				ticket.setVaild(1);
 				ticket.setValue(user.getAccount() + new Random().nextLong());
 				ticket.setCreateTime(new Date());
-				sysTicketService.save(ticket);
+				ticket.setVaildTime(c.getTime());
+				sysTicketDao.save(ticket);
 			}
 			KBeanUtils.copyProperties(user, ssoUserVO);
 			ssoUserVO.setTicketVaild(ticket.getVaild());
@@ -52,8 +57,19 @@ public class SSOServiceImpl implements SSOService {
 
 	@Override
 	public SSOUserVO login(String ticketValue) {
-		int isSuccess = checkTicketIsVaild(ticketValue);
-		return null;
+		SSOUserVO ssoUserVO = new SSOUserVO();
+		SysTicket ticket = sysTicketDao.getTicketByValue(ticketValue);
+		if (ticket == null)
+			return ssoUserVO;
+		int isSuccess = checkTicketIsVaild(ticket);
+		if (isSuccess == 1) {// 验证成功,再次登录
+			SysUser sysUser = sysUserDao.findById(ticket.getUserid());
+			KBeanUtils.copyProperties(sysUser, ssoUserVO);
+		}
+		ssoUserVO.setTicketVaild(ticket.getVaild());
+		ssoUserVO.setTicketValue(ticket.getValue());
+		ssoUserVO.setSuccess(isSuccess);
+		return ssoUserVO;
 	}
 
 	/**
@@ -64,7 +80,7 @@ public class SSOServiceImpl implements SSOService {
 	 * @return
 	 */
 	public SysUser getUserByAccountAndPassword(String account, String password) {
-		SysUser user = sysUserService.getUserByAccountAndPassword(account, password);
+		SysUser user = sysUserDao.findByAccountAndPassword(account, password);
 		return user;
 	}
 
@@ -91,7 +107,7 @@ public class SSOServiceImpl implements SSOService {
 	 * @return
 	 */
 	public SysTicket getTicketByUserid(String userid) {
-		SysTicket ticket = sysTicketService.getTicketByUserid(userid);
+		SysTicket ticket = sysTicketDao.getTicketByUserid(userid);
 		return ticket;
 	}
 
@@ -99,21 +115,18 @@ public class SSOServiceImpl implements SSOService {
 	 * 验证ticket是否有效
 	 * 
 	 * @param ticket
-	 * @return
+	 * @return 1:成功 0:失败
 	 */
-	public int checkTicketIsVaild(String ticket) {
-		String databaseTicket = "sso_ticket";// 模拟ticket
-		if (ticket.equals(databaseTicket)) {
+	private int checkTicketIsVaild(SysTicket ticket) {
+		if (ticket.getVaildTime().after(new Date())) { // 有效时间大于当前时间,证明有效
 			return 1;
 		}
 		return 0;
 	}
 
 	@Autowired
-	@Qualifier("sysUserService")
-	private SysUserService sysUserService;
+	private SysUserDao sysUserDao;
 	@Autowired
-	@Qualifier("sysTicketService")
-	private SysTicketService sysTicketService;
+	private SysTicketDao sysTicketDao;
 
 }

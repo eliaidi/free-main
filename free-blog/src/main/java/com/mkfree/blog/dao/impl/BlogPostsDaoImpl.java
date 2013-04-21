@@ -92,7 +92,7 @@ public class BlogPostsDaoImpl extends MongodbDao<BlogPost> implements BlogPostsD
 	}
 
 	@Override
-	public void update(String id, Map<String, String> params) {
+	public void update(String id, Map<String, Object> params) {
 		Query query = new Query();
 		query.addCriteria(new Criteria().and("id").is(id));
 		super.updateFirst(query, params);

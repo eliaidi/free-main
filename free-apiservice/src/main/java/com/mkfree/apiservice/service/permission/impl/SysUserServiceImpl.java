@@ -14,7 +14,7 @@ public class SysUserServiceImpl implements SysUserService {
 	private SysUserDao sysUserDao;
 
 	public SysUser getUserByAccountAndPassword(String account, String password) {
-		return sysUserDao.getUserByAccountAndPassword(account, password);
+		return sysUserDao.findByAccountAndPassword(account, password);
 	}
 
 }

@@ -128,7 +128,7 @@ public abstract class MongodbDao<T> {
 	 *            需要更新的字段
 	 * @return
 	 */
-	public WriteResult updateFirst(String id, Map<String, String> params) {
+	public WriteResult updateFirst(String id, Map<String, Object> params) {
 		Query query = new Query();
 		return this.updateFirst(query.addCriteria(new Criteria().and("id").is(id)), params);
 	}
@@ -141,7 +141,7 @@ public abstract class MongodbDao<T> {
 	 *            准备更新的参数
 	 * @return
 	 */
-	public WriteResult updateFirst(Query query, Map<String, String> params) {
+	public WriteResult updateFirst(Query query, Map<String, Object> params) {
 		WriteResult writeResult = mongoTemplate.updateFirst(query, this.getUpdate(params), this.getEntityClass());
 		return writeResult;
 	}
@@ -153,7 +153,7 @@ public abstract class MongodbDao<T> {
 	 * @param params
 	 *            准备更新的参数
 	 */
-	public WriteResult updateMulti(Query query, Map<String, String> params) {
+	public WriteResult updateMulti(Query query, Map<String, Object> params) {
 		WriteResult writeResult = this.mongoTemplate.updateMulti(query, this.getUpdate(params), this.getEntityClass());
 		return writeResult;
 	}
@@ -165,7 +165,7 @@ public abstract class MongodbDao<T> {
 	 * @param params
 	 *            准备更新的参数
 	 */
-	public WriteResult upsert(Query query, Map<String, String> params) {
+	public WriteResult upsert(Query query, Map<String, Object> params) {
 		WriteResult writeResult = this.mongoTemplate.upsert(query, this.getUpdate(params), this.getEntityClass());
 		return writeResult;
 	}
@@ -228,7 +228,7 @@ public abstract class MongodbDao<T> {
 	 *            ex: title 这个是标题.. params.put("title","要修改的标题");
 	 * @return
 	 */
-	protected Update getUpdate(Map<String, String> params) {
+	protected Update getUpdate(Map<String, Object> params) {
 		Update update = new Update();
 		Set<String> keys = params.keySet();
 		Iterator<String> iterator = keys.iterator();

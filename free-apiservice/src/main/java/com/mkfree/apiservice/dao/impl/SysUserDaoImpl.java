@@ -13,7 +13,7 @@ import com.mkfree.framework.common.mongodb.MongodbDao;
 @Repository("sysUserDao")
 public class SysUserDaoImpl extends MongodbDao<SysUser> implements SysUserDao {
 
-	public SysUser getUserByAccountAndPassword(String account, String password) {
+	public SysUser findByAccountAndPassword(String account, String password) {
 		Query query = new Query();
 		Criteria c = new Criteria();
 		c.and("account").is(account);
@@ -32,4 +32,5 @@ public class SysUserDaoImpl extends MongodbDao<SysUser> implements SysUserDao {
 	protected void setMongoTemplate(MongoTemplate mongoTemplate) {
 		this.mongoTemplate = mongoTemplate;
 	}
+
 }

@@ -3,17 +3,20 @@ package com.mkfree.apiservice.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import com.mkfree.framework.common.utils.IDEntity;
 
+@Document(collection = "sysTickets")
 public class SysTicket extends IDEntity implements Serializable {
 
 	private static final long serialVersionUID = 8581670214707405089L;
 
 	private String userid;// 用户id
-	private String value;
-	private int vaild;
-	private Date vaildTime;
-	private Date createTime;
+	private String value; // 用户ticket值
+	private int vaild;// 是否有效
+	private Date vaildTime;// 有效时间
+	private Date createTime;// 创建时间
 
 	public String getUserid() {
 		return userid;

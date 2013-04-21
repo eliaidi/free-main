@@ -21,7 +21,16 @@ public interface SysTicketDao {
 	 */
 	public SysTicket getTicketByUserid(String userid);
 
+	/**
+	 * 通过唯一的ticket 值获取 ticket
+	 * 
+	 * @param value
+	 * @return
+	 */
+	public SysTicket getTicketByValue(String value);
+
 	public SysTicket save(SysTicket entity);
 
-	public SysTicket update(Map<String, Object> params);
+	public void update(String id, Map<String, Object> params);
+
 }

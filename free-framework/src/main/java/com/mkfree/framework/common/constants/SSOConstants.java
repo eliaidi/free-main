@@ -26,4 +26,7 @@ public class SSOConstants {
 	// session id
 	public final static String SSO_SESSIONID = "sso_sessionid";
 
+	// 登录用户cookie存活时间默认为7天
+	public final static int COOKIE_LIVE_TIME = 7 * 24 * 60 * 60;
+
 }

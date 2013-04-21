@@ -43,7 +43,7 @@ public class SSOController {
 	@RequestMapping(value = "/sso/login", method = RequestMethod.POST)
 	public String login(@RequestParam("account") String account, @RequestParam("password") String password, HttpServletRequest req, HttpServletResponse res) {
 		try {
-			SSOUserVO ssoUserVO = SSOClient.login(account, password);
+			SSOUserVO ssoUserVO = SSOClient.loginByAccountAndPassword(account, password);
 			if (ssoUserVO != null) {
 				if (ssoUserVO.getSuccess() == 1) {
 					// sessionid用于做session共享
@@ -51,13 +51,15 @@ public class SSOController {
 					byte[] sso_user_key = sessionid.getBytes("utf-8");
 					byte[] sso_user_value = SerializeUtil.serialize(ssoUserVO);
 					redisService.set(sso_user_key, sso_user_value, 1800);
-					Cookie cookie = new Cookie(SSOConstants.SSO_TICKET, ssoUserVO.getTicketValue());
-					cookie.setDomain(SSOConstants.MKFREECOM);
-					cookie.setPath("/");
-					res.addCookie(cookie);
+					Cookie cookieTicket = new Cookie(SSOConstants.SSO_TICKET, ssoUserVO.getTicketValue());
+					cookieTicket.setDomain(SSOConstants.MKFREECOM);
+					cookieTicket.setPath("/");
+					cookieTicket.setMaxAge(SSOConstants.COOKIE_LIVE_TIME);// 暂时设置存活7天
+					res.addCookie(cookieTicket);
 					Cookie cookieSessionId = new Cookie(SSOConstants.SSO_SESSIONID, sessionid);
 					cookieSessionId.setDomain(SSOConstants.MKFREECOM);
 					cookieSessionId.setPath("/");
+					cookieSessionId.setMaxAge(SSOConstants.COOKIE_LIVE_TIME);
 					res.addCookie(cookieSessionId);
 				}
 			}

@@ -38,8 +38,7 @@ public interface BlogPostsDao {
 	 * 通过类型去查找博客文章
 	 * 
 	 * @param type
-	 *            类型 1.hot(热门) 2.top(置顶) 3.views(浏览次数高) 4.head(头) 5.lists(列表)
-	 *            6.new(最新博客)
+	 *            类型 1.hot(热门) 2.top(置顶) 3.views(浏览次数高) 4.head(头) 5.lists(列表) 6.new(最新博客)
 	 * @param number
 	 *            查多少条(数量)
 	 * @return
@@ -69,5 +68,5 @@ public interface BlogPostsDao {
 	 * @param id
 	 * @param params
 	 */
-	public void update(String id, Map<String, String> params);
+	public void update(String id, Map<String, Object> params);
 }

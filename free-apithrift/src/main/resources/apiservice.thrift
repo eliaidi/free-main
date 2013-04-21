@@ -73,5 +73,5 @@ service ApiService extends base.BaseService{
   /**
    * 通过ticket登录
    */
-  SSOUserVO loginByTicket(1:string ticket);
+  SSOUserVO loginByTicket(1:string ticketValue);
 }

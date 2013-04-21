@@ -40,6 +40,6 @@ public interface BaseService<T> {
 	 * @param params
 	 *            这个是更新条件
 	 */
-	public void updateFirst(String id, Map<String, String> params);
+	public void updateFirst(String id, Map<String, Object> params);
 
 }

@@ -55,7 +55,7 @@ public class BlogController {
 	@RequestMapping(value = "/posts/{id}", method = RequestMethod.GET)
 	public String blogPostsContent(Model model, @PathVariable String id) {
 		BlogPost bp = blogPostsService.findById(id);
-		Map<String, String> params = new HashMap<String, String>();
+		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("views", (bp.getViews() + 1) + "");
 		blogPostsService.update(bp.getId(), params);
 
@@ -188,11 +188,9 @@ public class BlogController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{account}_space/posts/update/{id}", method = RequestMethod.POST)
-	public String updateBlogPosts(HttpServletRequest req, Model model, @PathVariable String account, @PathVariable String id) {
-		String title = RequestUtils.getParamValue(req, "title");
-		String content = RequestUtils.getParamValue(req, "content");
+	public String updateBlogPosts(Model model, @PathVariable String account, @PathVariable String id, String title, String content) {
 		Assert.notEmpty(new Object[] { title, content }, "title or content null...");
-		Map<String, String> params = new HashMap<String, String>();
+		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("title", title);
 		params.put("content", content);
 		this.blogPostsService.update(id, params);

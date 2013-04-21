@@ -62,10 +62,10 @@ public class BlogPostsServiceImpl implements BlogPostsService {
 	}
 
 	@Override
-	public void update(String id, Map<String, String> params) {
+	public void update(String id, Map<String, Object> params) {
 		BlogPost bp = blogPostsDao.findById(id);
 		if (bp.getSummary() == null && bp.getSummary().trim().length() == 0) {
-			String content = params.get("content");
+			String content = (String) params.get("content");
 			if (content != null && content.trim().length() > 0) {
 				params.put("sumary", HtmlUtils.filterHtmlCode(content, 240));
 			}

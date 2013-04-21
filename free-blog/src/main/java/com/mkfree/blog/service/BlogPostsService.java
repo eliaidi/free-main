@@ -76,6 +76,6 @@ public interface BlogPostsService {
 	 *            唯一标识
 	 * @param params
 	 */
-	public void update(String id, Map<String, String> params);
+	public void update(String id, Map<String, Object> params);
 
 }

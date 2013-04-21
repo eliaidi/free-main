@@ -83,5 +83,5 @@ public interface BlogPostsDao {
 	 * @param id
 	 * @param params
 	 */
-	public void update(String id, Map<String, String> params);
+	public void update(String id, Map<String, Object> params);
 }
