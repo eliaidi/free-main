@@ -50,7 +50,7 @@ public class SSOController {
 					String sessionid = ssoUserVO.getAccount() + new Random().nextLong();
 					byte[] sso_user_key = sessionid.getBytes("utf-8");
 					byte[] sso_user_value = SerializeUtil.serialize(ssoUserVO);
-					redisService.set(sso_user_key, sso_user_value, 1800);
+					redisService.set(sso_user_key, sso_user_value, SSOConstants.SSO_USER_KEY_TIME);
 					Cookie cookieTicket = new Cookie(SSOConstants.SSO_TICKET, ssoUserVO.getTicketValue());
 					cookieTicket.setDomain(SSOConstants.MKFREECOM);
 					cookieTicket.setPath("/");

@@ -1,7 +1,6 @@
 package com.mkfree.framework.sso;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.Random;
 
 import javax.servlet.Filter;
@@ -37,7 +36,7 @@ public class SSOFilter implements Filter {
 		HttpServletResponse response = (HttpServletResponse) resp;
 
 		this.ssoFilterService(request, response);
-
+		System.out.println(123);
 		chain.doFilter(request, response);
 	}
 
@@ -65,40 +64,55 @@ public class SSOFilter implements Filter {
 	 * @param request
 	 */
 	private void userSessionidExist(HttpServletRequest request, HttpServletResponse response) {
-		try {
-			String sessionId = CookieUtils.getCookieValue(request, SSOConstants.SSO_SESSIONID);
-			byte[] objectBytes = redisService.get(sessionId.getBytes());
-			SSOUserVO user = (SSOUserVO) SerializeUtil.unserialize(objectBytes);
-			if (user == null) {// redis user session 已经失效
-				if (!CookieUtils.checkCookieValueIsNull(request, SSOConstants.SSO_TICKET)) {
-					String ticketValue = CookieUtils.getCookieValue(request, SSOConstants.SSO_TICKET);
-					SSOUserVO ssoUserVO = SSOClient.loginByTicket(ticketValue);
-					if (ssoUserVO != null) {
-						if (ssoUserVO.getSuccess() == 1) {
-							// sessionid用于做session共享
-							String sessionid = ssoUserVO.getAccount() + new Random().nextLong();
-							byte[] sso_user_key = sessionid.getBytes("utf-8");
-							byte[] sso_user_value = SerializeUtil.serialize(ssoUserVO);
-							redisService.set(sso_user_key, sso_user_value, 1800);
-							Cookie cookieTicket = new Cookie(SSOConstants.SSO_TICKET, ssoUserVO.getTicketValue());
-							cookieTicket.setDomain(SSOConstants.MKFREECOM);
-							cookieTicket.setPath("/");
-							cookieTicket.setMaxAge(SSOConstants.COOKIE_LIVE_TIME);// 存活时间默认7天
-							response.addCookie(cookieTicket);
-							Cookie cookieSessionId = new Cookie(SSOConstants.SSO_SESSIONID, sessionid);
-							cookieSessionId.setDomain(SSOConstants.MKFREECOM);
-							cookieSessionId.setPath("/");
-							cookieSessionId.setMaxAge(SSOConstants.COOKIE_LIVE_TIME);
-							response.addCookie(cookieSessionId);
-						}
-					}
-				}
-			} else {
-				request.getSession().setAttribute(SSOConstants.SSO_USER, user);
+
+		String sessionId = CookieUtils.getCookieValue(request, SSOConstants.SSO_SESSIONID);
+		byte[] objectBytes = redisService.get(sessionId.getBytes());
+		SSOUserVO user = (SSOUserVO) SerializeUtil.unserialize(objectBytes);
+		if (user == null) {// redis user session 已经失效
+			if (!CookieUtils.checkCookieValueIsNull(request, SSOConstants.SSO_TICKET)) {
+				String ticketValue = CookieUtils.getCookieValue(request, SSOConstants.SSO_TICKET);
+				this.loginByTicketValue(ticketValue, request, response);
 			}
-		} catch (UnsupportedEncodingException e) {
+		} else {
+			request.getSession().setAttribute(SSOConstants.SSO_USER, user);
+		}
+
+	}
+
+	/**
+	 * 如果用户的ticket存在,那么我获取ticket自动帮他登录,至于成功于否,看服务器检查ticket是否可以有效
+	 * 
+	 * @param ticketValue
+	 * @param request
+	 * @param response
+	 */
+	private void loginByTicketValue(String ticketValue, HttpServletRequest request, HttpServletResponse response) {
+		try {
+			// 通过ticket向服务器,请求登录
+			SSOUserVO ssoUserVO = SSOClient.loginByTicket(ticketValue);
+			if (ssoUserVO != null) {
+				if (ssoUserVO.getSuccess() == 1) {// 登录成功
+					// sessionid用于做session共享
+					String sessionid = ssoUserVO.getAccount() + new Random().nextLong();
+					byte[] sso_user_key = sessionid.getBytes("utf-8");
+					byte[] sso_user_value = SerializeUtil.serialize(ssoUserVO);
+					redisService.set(sso_user_key, sso_user_value, SSOConstants.SSO_USER_KEY_TIME);
+					Cookie cookieTicket = new Cookie(SSOConstants.SSO_TICKET, ssoUserVO.getTicketValue());
+					cookieTicket.setDomain(SSOConstants.MKFREECOM);
+					cookieTicket.setPath("/");
+					cookieTicket.setMaxAge(SSOConstants.COOKIE_LIVE_TIME);// 存活时间默认7天
+					response.addCookie(cookieTicket);
+					Cookie cookieSessionId = new Cookie(SSOConstants.SSO_SESSIONID, sessionid);
+					cookieSessionId.setDomain(SSOConstants.MKFREECOM);
+					cookieSessionId.setPath("/");
+					cookieSessionId.setMaxAge(SSOConstants.COOKIE_LIVE_TIME);
+					response.addCookie(cookieSessionId);
+				}
+			}
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
 	}
 
 	/**
