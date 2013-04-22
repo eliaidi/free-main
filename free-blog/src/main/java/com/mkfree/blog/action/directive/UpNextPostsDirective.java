@@ -8,7 +8,6 @@ import java.util.Map;
 
 import com.mkfree.apiclient.blog.BlogClient;
 import com.mkfree.apithrift.vo.BlogPostVO;
-import com.mkfree.blog.domain.BlogPost;
 import com.mkfree.framework.common.web.freemaker.DirectiveUtils;
 
 import freemarker.core.Environment;
@@ -43,7 +42,7 @@ public class UpNextPostsDirective implements TemplateDirectiveModel {
 			}
 			paramWrap.put(UP_NEXT_POSTS, DEFAULT_WRAPPER.wrap(posts));
 		} else {
-			paramWrap.put(UP_NEXT_POSTS, DEFAULT_WRAPPER.wrap(new BlogPost()));
+			paramWrap.put(UP_NEXT_POSTS, DEFAULT_WRAPPER.wrap(new BlogPostVO()));
 		}
 
 		Map<String, TemplateModel> origMap = DirectiveUtils.addParamsToVariable(env, paramWrap);
