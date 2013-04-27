@@ -18,4 +18,12 @@ public interface SOService {
 	 * @return
 	 */
 	public SearchResultVO search(String q, int startIndex);
+
+	/**
+	 * 通过索引类型删除,这类型下的所有索引
+	 * 
+	 * @param type
+	 * @return
+	 */
+	public int deleteIndexByType(String indexName, String type);
 }

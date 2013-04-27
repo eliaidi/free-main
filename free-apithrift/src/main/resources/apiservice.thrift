@@ -52,6 +52,10 @@ service ApiService extends base.BaseService{
 	 * 创建博客索引
 	 */
 	void createIndex();
+	/**
+	 * 通过索引类型删除,这类型下的所有索引
+	 */ 
+	i32 deleteIndexByType(1:string indexName,2:string type);
 	  
 	//sso--------------------------------------------------------------------------------------------------------
 	/**

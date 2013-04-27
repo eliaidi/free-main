@@ -9,6 +9,7 @@ import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
+import org.elasticsearch.index.query.MatchAllQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
@@ -27,7 +28,6 @@ public class SOServiceImpl implements SOService {
 	public String createIndex() {
 		String result = "ERROR";
 		long start = System.currentTimeMillis();
-		client.prepareDeleteByQuery(new String[] { "blog" });
 		List<BlogPost> blogPosts = blogPostsDao.findAll();
 		for (int i = 0; i < blogPosts.size(); i++) {
 			client.prepareIndex(blogIndexName, blogIndexType).setSource(getBuilderJson(blogPosts.get(i))).execute().actionGet();
@@ -38,11 +38,19 @@ public class SOServiceImpl implements SOService {
 	}
 
 	@Override
+	public int deleteIndexByType(String indexName, String type) {
+		MatchAllQueryBuilder allQueryBuilder = QueryBuilders.matchAllQuery();// 查询所有的documents
+		// 现在把blog索引post类型的索引全部删除,由于用了QueryBuilders.matchAllQuery(),匹配所有blog post下的索引
+		client.prepareDeleteByQuery(indexName).setQuery(allQueryBuilder).setTypes(type).execute().actionGet();
+		return 1;
+	}
+
+	@Override
 	public SearchResultVO search(String q, int startIndex) {
 		SearchResultVO searchResultVO = new SearchResultVO();
 		searchResultVO.setIds(new ArrayList<String>());
-		SearchResponse response = client.prepareSearch(blogIndexName).setTypes(blogIndexType).setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
-				.setQuery(QueryBuilders.fieldQuery(blogIndexFieldTitle, q)).setFrom(startIndex).setSize(15).setExplain(true).execute().actionGet();
+		SearchResponse response = client.prepareSearch(blogIndexName).setTypes(blogIndexType).setSearchType(SearchType.DFS_QUERY_THEN_FETCH).setQuery(QueryBuilders.fieldQuery(blogIndexFieldTitle, q))
+				.setFrom(startIndex).setSize(15).setExplain(true).execute().actionGet();
 		SearchHits searchHits = response.getHits();
 		SearchHit[] hits = searchHits.getHits();
 		for (int i = 0; i < hits.length; i++) {
@@ -58,8 +66,7 @@ public class SOServiceImpl implements SOService {
 	/**
 	 * 创建索引 通常是json格式
 	 * 
-	 * @param obj
-	 *            创建索引的实体
+	 * @param obj 创建索引的实体
 	 * 
 	 * @return
 	 */
@@ -78,11 +85,11 @@ public class SOServiceImpl implements SOService {
 		return json;
 	}
 
-	private String blogIndexName = KPropertyPlaceholderConfigurer.getStringValue("blog.index.name");
-	private String blogIndexType = KPropertyPlaceholderConfigurer.getStringValue("blog.index.type.post");
-	private String[] blogIndexFields = KPropertyPlaceholderConfigurer.getStringValue("blog.index.fields").split(",");
-	private String blogIndexFieldId = blogIndexFields[0];
-	private String blogIndexFieldTitle = blogIndexFields[1];
+	private final String blogIndexName = KPropertyPlaceholderConfigurer.getStringValue("blog.index.name");
+	private final String blogIndexType = KPropertyPlaceholderConfigurer.getStringValue("blog.index.type.post");
+	private final String[] blogIndexFields = KPropertyPlaceholderConfigurer.getStringValue("blog.index.fields").split(",");
+	private final String blogIndexFieldId = blogIndexFields[0];
+	private final String blogIndexFieldTitle = blogIndexFields[1];
 	@Autowired
 	private BlogPostsDao blogPostsDao;
 	@Autowired

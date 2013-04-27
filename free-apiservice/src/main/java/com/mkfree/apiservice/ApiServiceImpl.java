@@ -79,6 +79,11 @@ public class ApiServiceImpl implements Iface {
 		soService.createIndex();
 	}
 
+	@Override
+	public int deleteIndexByType(String indexName, String type) throws TException {
+		return soService.deleteIndexByType(indexName, type);
+	}
+
 	// sso---------------------------------------------------------------------------------------
 	@Override
 	public SSOUserVO loginByAccountAndPassword(String account, String password) throws TException {

@@ -30,6 +30,12 @@ public class SOController {
 		return blogSearch(q, 1, model);
 	}
 
+	@RequestMapping(value = "/so/delete/{indexName}/{type}", method = RequestMethod.GET)
+	public String deleteIndexByType(@PathVariable String indexName, @PathVariable String type) {
+		SOClient.deleteIndexByType(indexName, type);
+		return "blog/index";
+	}
+
 	/**
 	 * 搜索博客
 	 * 
