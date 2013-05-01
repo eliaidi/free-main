@@ -1,4 +1,4 @@
-package com.mkfree.framework.common.utils;
+package com.mkfree.framework.common.utils.date;
 
 import java.util.Calendar;
 import java.util.Date;

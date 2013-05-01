@@ -3,16 +3,16 @@ package com.mkfree.framework.common.spring;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 
+import com.mkfree.framework.common.utils.date.TimeUtils;
+
 public class KBeanUtils extends BeanUtils {
 
-	static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss");
 	static String SET = "set";
 	static String GET = "get";
 
@@ -46,8 +46,7 @@ public class KBeanUtils extends BeanUtils {
 	 * 
 	 * @param orig
 	 * @param dest
-	 * @param ignoreFiled
-	 *            不复制的字段
+	 * @param ignoreFiled 不复制的字段
 	 */
 	public static void copyProperties(Object orig, Object dest, String[] ignoreFiled) {
 		try {
@@ -66,7 +65,7 @@ public class KBeanUtils extends BeanUtils {
 						continue;
 					}
 					Method destMethod = dest.getClass().getDeclaredMethod(SET + origField.getName().substring(0, 1).toUpperCase() + origField.getName().substring(1), String.class);
-					destMethod.invoke(dest, new Object[] { dateFormat.format(origresult) });
+					destMethod.invoke(dest, new Object[] { TimeUtils.tiemDateFormatToString((Date) origresult) });
 				}
 			}
 			BeanUtils.copyProperties(orig, dest, ignoreFields.toArray(new String[ignoreFields.size()]));

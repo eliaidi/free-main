@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Sort;
@@ -84,7 +85,7 @@ public class BlogPostsDaoImpl extends MongodbDao<BlogPost> implements BlogPostsD
 	public BlogPost getUpNextPosts(int type, String postsid, String userId) {
 		BlogPost blogPost = null;
 		Query query = new Query();
-		if (userId != null) {
+		if (!StringUtils.isBlank(userId)) {
 			query.addCriteria(new Criteria().and("blogUser").is(userId));
 		}
 		if (type == 1) {// 上一篇

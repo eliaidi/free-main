@@ -16,7 +16,7 @@ import com.mkfree.apithrift.vo.BlogPostVO;
 import com.mkfree.apithrift.vo.PaginationVO;
 import com.mkfree.framework.common.page.Pagination;
 import com.mkfree.framework.common.spring.KBeanUtils;
-import com.mkfree.framework.common.utils.VpsTimeUtil;
+import com.mkfree.framework.common.utils.date.VpsTimeUtil;
 import com.mkfree.framework.common.web.html.HtmlUtils;
 
 @Service("blogPostsService")
@@ -85,7 +85,9 @@ public class BlogPostServiceImpl implements BlogPostService {
 	public BlogPostVO findUpNextPost(int type, String postsid, String userid) {
 		BlogPost blogPost = blogPostsDao.getUpNextPosts(type, postsid, userid);
 		BlogPostVO blogPostVO = new BlogPostVO();
-		KBeanUtils.copyProperties(blogPost, blogPostVO);
+		if (blogPost != null) {
+			KBeanUtils.copyProperties(blogPost, blogPostVO);
+		}
 		return blogPostVO;
 	}
 

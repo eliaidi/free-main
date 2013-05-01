@@ -1,4 +1,4 @@
-package com.mkfree.apiservice.common.utils.date;
+package com.mkfree.framework.common.utils.date;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

@@ -15,7 +15,7 @@ import com.mkfree.apiservice.service.blog.BlogCommentService;
 import com.mkfree.apithrift.vo.BlogCommentVO;
 import com.mkfree.framework.common.constants.BlogConstants;
 import com.mkfree.framework.common.spring.KBeanUtils;
-import com.mkfree.framework.common.utils.VpsTimeUtil;
+import com.mkfree.framework.common.utils.date.VpsTimeUtil;
 import com.mkfree.framework.common.web.html.HtmlUtils;
 
 @Service("blogCommentService")
