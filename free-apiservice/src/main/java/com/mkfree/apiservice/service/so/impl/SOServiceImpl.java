@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.lucene.queryParser.QueryParser;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Client;
@@ -49,6 +50,7 @@ public class SOServiceImpl implements SOService {
 	public SearchResultVO search(String q, int startIndex) {
 		SearchResultVO searchResultVO = new SearchResultVO();
 		searchResultVO.setIds(new ArrayList<String>());
+		q = QueryParser.escape(q);// 过滤特殊字符 (+ - && || ! ( ) { } [ ] ^ " ~ * ? : )
 		SearchResponse response = client.prepareSearch(blogIndexName).setTypes(blogIndexType).setSearchType(SearchType.DFS_QUERY_THEN_FETCH).setQuery(QueryBuilders.fieldQuery(blogIndexFieldTitle, q))
 				.setFrom(startIndex).setSize(15).setExplain(true).execute().actionGet();
 		SearchHits searchHits = response.getHits();

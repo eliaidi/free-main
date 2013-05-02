@@ -31,8 +31,13 @@ public class SOServiceTest extends BaseTest {
 		}
 	}
 
+	@Test
 	public void search() {
-
+		try {
+			apiService.search("休闲(mkfree)博客开发文档---介绍-作者(oyhk)---第一章", 0);
+		} catch (TException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Autowired

@@ -38,14 +38,12 @@ public class UpNextPostsDirective implements TemplateDirectiveModel {
 		int length = DirectiveUtils.getIntByparams("length", params);// 获取标题的长度
 		String userid = DirectiveUtils.getStringByparams("userid", params);
 		BlogPostVO posts = BlogClient.findUpNextPost(type, postsid, userid);
-		if (posts != null && !StringUtils.isBlank(posts.getId())) {
+		if (!StringUtils.isBlank(posts.getId())) {
 			if (length > 0) {
 				posts.setTitle(posts.getTitle().length() > length ? posts.getTitle().substring(0, length) + "..." : posts.getTitle());
 			}
-			paramWrap.put(UP_NEXT_POSTS, DEFAULT_WRAPPER.wrap(posts));
-		} else {
-			paramWrap.put(UP_NEXT_POSTS, DEFAULT_WRAPPER.wrap(new BlogPostVO()));
 		}
+		paramWrap.put(UP_NEXT_POSTS, DEFAULT_WRAPPER.wrap(posts));
 
 		Map<String, TemplateModel> origMap = DirectiveUtils.addParamsToVariable(env, paramWrap);
 		body.render(env.getOut());

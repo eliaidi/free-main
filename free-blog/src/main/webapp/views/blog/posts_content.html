@@ -5,17 +5,12 @@
 <title>${posts.title}-${posts.blogNick}(mkfree_休闲网站-博客)</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
-<meta name="author"
-	content="<@settingUrl>${mkfree_blog_url}</@settingUrl> (oyhk)">
+<meta name="author" content="<@settingUrl>${mkfree_blog_url}</@settingUrl> (oyhk)">
 
 <!-- Le styles -->
-<link href="${mkfree_static_url}common/bootstrap/css/bootstrap.min.css"
-	rel="stylesheet">
-<link
-	href="${mkfree_static_url}common/bootstrap/css/bootstrap-responsive.min.css"
-	rel="stylesheet">
-<link href="${mkfree_static_url}common/prettify/prettify.min.css"
-	type="text/css" rel="stylesheet" />
+<link href="${mkfree_static_url}common/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="${mkfree_static_url}common/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+<link href="${mkfree_static_url}common/prettify/prettify.min.css" type="text/css" rel="stylesheet" />
 
 <style type="text/css">
 body {
@@ -40,12 +35,9 @@ body {
 		<div class="row">
 			<div class="span">
 				<ul class="breadcrumb">
-					<li><a href="http://www.mkfree.com">首页</a> <span
-						class="divider">/</span></li>
-					<li><a href="http://blog.mkfree.com">博客</a> <span
-						class="divider">/</span></li>
-					<li><a href="http://blog.mkfree.com/list/1">博客列表</a> <span
-						class="divider">/</span></li>
+					<li><a href="http://www.mkfree.com">首页</a> <span class="divider">/</span></li>
+					<li><a href="http://blog.mkfree.com">博客</a> <span class="divider">/</span></li>
+					<li><a href="http://blog.mkfree.com/list/1">博客列表</a> <span class="divider">/</span></li>
 					<li class="active">${posts.title}</li>
 				</ul>
 			</div>
@@ -54,20 +46,17 @@ body {
 			<div class="span9">
 				<div class="hero-unit">
 					<h1 style="font-size: 30px;">${posts.title}</h1>
-					<div id="bdshare"
-						class="bdshare_t bds_tools_32 get-codes-bdshare span9">
-						<a class="bds_qzone"></a> <a class="bds_tsina"></a> <a
-							class="bds_tqq"></a> <a class="bds_renren"></a> <a
-							class="bds_t163"></a> <span class="bds_more"></span> <a
-							class="shareCount"></a>
+					<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare span9">
+						<a class="bds_qzone"></a> <a class="bds_tsina"></a> <a class="bds_tqq"></a> <a class="bds_renren"></a> <a class="bds_t163"></a> <span class="bds_more"></span> <a class="shareCount"></a>
 					</div>
 					<br>
 					<div class="span15" style="color: #A12A2A; font-size: 14px;">${posts.blogNick}&nbsp;&nbsp;发表于:${posts.createTime}&nbsp;&nbsp;评论数：0&nbsp;&nbsp;有${posts.views}浏览</div>
 					<p>${posts.content}</p>
 					<div class="span">
 						<div class="pull-left">
-							上一篇:<@upNextPosts type=1 postsid=posts.id length=60> <a href="${mkfree_blog_url}posts/${upNextPosts.id}" title="${upNextPosts.summary}">${upNextPosts.title}</a></@upNextPosts><br> 
-							下一篇:<@upNextPosts type=0 postsid=posts.id length=60> <#if upNextPosts.id?? > <a href="${mkfree_blog_url}posts/${upNextPosts.id}" title="${upNextPosts.summary}">${upNextPosts.title}</a><#else> 没有了下一篇... </#if></@upNextPosts>
+							上一篇:<@upNextPosts type=1 postsid=posts.id length=60> <#if upNextPosts.id?? ><a href="${mkfree_blog_url}posts/${upNextPosts.id}" title="${upNextPosts.summary}">${upNextPosts.title}</a><#else>没有了上一篇... </#if></@upNextPosts><br>
+							下一篇:<@upNextPosts type=0 postsid=posts.id length=60> <#if upNextPosts.id?? > <a href="${mkfree_blog_url}posts/${upNextPosts.id}" title="${upNextPosts.summary}">${upNextPosts.title}</a> <#else>
+							没有了下一篇... </#if></@upNextPosts>
 						</div>
 					</div>
 				</div>
@@ -75,8 +64,7 @@ body {
 					<p style="font-weight: bold;">相关博客文章</p>
 					<ul class="unstyled">
 						<@relatedPosts q=posts.title> <#list relatedPosts as posts>
-						<li><a href="${mkfree_blog_url}posts/${posts.id}">${posts.title}</a></li>
-						</#list> </@relatedPosts>
+						<li><a href="${mkfree_blog_url}posts/${posts.id}">${posts.title}</a></li> </#list> </@relatedPosts>
 					</ul>
 				</div>
 				<div class="hero-unit">
@@ -88,36 +76,26 @@ body {
 							<#list blogComments as blogComment>
 							<div>
 								<p style="background-color: #F2F8EF">
-									${commentIndex}楼:&nbsp;<a href="#" id="ref_${commentIndex}">${blogComment.nick}</a>
-									<span style="font-size: 11px; margin-left: 15px;">${blogComment.createTime}</span>
-									<a href="javascript:voie(0)" class="pull-right"
-										onclick="commentsRef('ref_${commentIndex}')">@Ta</a>
+									${commentIndex}楼:&nbsp;<a href="#" id="ref_${commentIndex}">${blogComment.nick}</a> <span style="font-size: 11px; margin-left: 15px;">${blogComment.createTime}</span> <a
+										href="javascript:voie(0)" class="pull-right" onclick="commentsRef('ref_${commentIndex}')">@Ta</a>
 								</p>
 								<p>${blogComment.content}</p>
 							</div>
 							<#assign commentIndex = commentIndex+1 /> </#list>
 						</div>
 						<div class="span">
-							<div class="alert alert-success " id="comments_success"
-								style="text-align: center; display: none;">
+							<div class="alert alert-success " id="comments_success" style="text-align: center; display: none;">
 								<button type="button" class="close" data-dismiss="alert">×</button>
 								<strong>发表评论成功!</strong>
 							</div>
-							<div class="alert fade in" id="comments_warn"
-								style="text-align: center; display: none;">
+							<div class="alert fade in" id="comments_warn" style="text-align: center; display: none;">
 								<a class="close" data-dismiss="alert" href="#">×</a> <strong>发表评论有误,请检查...</strong>
 							</div>
-							<b>发表评论:</b> <#if sso_user??> <span class="pull-right"
-								style="font-size: 12px;"><input id="anonymityUserId"
-								type="checkbox" value="0">&nbsp;&nbsp;匿名用户</span> <#else> <span
-								style="margin-left: 20px;"><input id="inputVistorName"
-								value="" type="text" class="span3" placeholder="留下你的网名..." /></span>
-							</#if>
+							<b>发表评论:</b> <#if sso_user??> <span class="pull-right" style="font-size: 12px;"><input id="anonymityUserId" type="checkbox" value="0">&nbsp;&nbsp;匿名用户</span> <#else> <span
+								style="margin-left: 20px;"><input id="inputVistorName" value="" type="text" class="span3" placeholder="留下你的网名..." /></span> </#if>
 							<textarea id="comment_content"></textarea>
 							<br>
-							<button class="btn btn-primary pull-right"
-								onclick="saveBlogComment('${posts.id}','${commentIndex}'<#if sso_user??>,'${sso_user.id}','${sso_user.nick}'</#if>);">提
-								交</button>
+							<button class="btn btn-primary pull-right" onclick="saveBlogComment('${posts.id}','${commentIndex}'<#if sso_user??>,'${sso_user.id}','${sso_user.nick}'</#if>);">提 交</button>
 						</div>
 					</div>
 				</div>
@@ -130,8 +108,7 @@ body {
 						<li>
 							<div style="height: 100px; width: 235px;">
 								<div style="height: 100px; width: 130px; float: left;">
-									<img alt="博主头像"
-										src="http://upload.mkfree.com/blog/user/000/000/001/icon/user_1.jpg">
+									<img alt="博主头像" src="http://upload.mkfree.com/blog/user/000/000/001/icon/user_1.jpg">
 								</div>
 								<div style="width: 95px; float: right;">
 									<h4>oyhk</h4>
@@ -175,13 +152,10 @@ body {
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script src="${mkfree_static_url}common/script/jquery/jquery.min.js"></script>
-	<script
-		src="${mkfree_static_url}common/bootstrap/script/bootstrap.min.js"></script>
+	<script src="${mkfree_static_url}common/bootstrap/script/bootstrap.min.js"></script>
 	<script src="${mkfree_static_url}common/prettify/prettify.min.js"></script>
-	<script
-		src="${mkfree_static_url}/common/kindeditor-4.1.4/kindeditor-min.js"></script>
-	<script
-		src="${mkfree_static_url}/common/kindeditor-4.1.4/lang/zh_CN.js"></script>
+	<script src="${mkfree_static_url}/common/kindeditor-4.1.4/kindeditor-min.js"></script>
+	<script src="${mkfree_static_url}/common/kindeditor-4.1.4/lang/zh_CN.js"></script>
 	<script type="text/javascript">
 		//博客回复(引用,相当于@xxx)
 		var ref = '';
@@ -257,8 +231,7 @@ body {
 		});
 	</script>
 	<!-- Baidu Button BEGIN -->
-	<script type="text/javascript" id="bdshare_js"
-		data="type=tools&amp;uid=669698"></script>
+	<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=669698"></script>
 	<script type="text/javascript" id="bdshell_js"></script>
 	<script type="text/javascript">
 		document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion="
