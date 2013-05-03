@@ -27,15 +27,8 @@ public class BlogCommentServiceImpl implements BlogCommentService {
 
 	@Override
 	public List<BlogCommentVO> findByPostsId(String postId) {
-		List<BlogCommentVO> results = new ArrayList<BlogCommentVO>();
 		List<BlogComment> blogComments = blogCommentDao.findByPostsId(postId);
-		for (int i = 0; i < blogComments.size(); i++) {
-			BlogCommentVO blogCommentVO = new BlogCommentVO();
-			BlogComment blogComment = blogComments.get(i);
-			KBeanUtils.copyProperties(blogComment, blogCommentVO);
-			results.add(blogCommentVO);
-		}
-		return results;
+		return copyList(blogComments);
 	}
 
 	@Override
@@ -69,6 +62,29 @@ public class BlogCommentServiceImpl implements BlogCommentService {
 		}
 		KBeanUtils.copyProperties(blogComment, commentVO);
 		return commentVO;
+	}
+
+	@Override
+	public List<BlogCommentVO> findOrderByCreateTime(int num) {
+		List<BlogComment> blogComments = blogCommentDao.findOrderByCreateTime(num);
+		return copyList(blogComments);
+	}
+
+	/**
+	 * 复制对象
+	 * 
+	 * @param blogComments
+	 * @return
+	 */
+	private List<BlogCommentVO> copyList(List<BlogComment> blogComments) {
+		List<BlogCommentVO> results = new ArrayList<BlogCommentVO>();
+		for (int i = 0; i < blogComments.size(); i++) {
+			BlogCommentVO blogCommentVO = new BlogCommentVO();
+			BlogComment blogComment = blogComments.get(i);
+			KBeanUtils.copyProperties(blogComment, blogCommentVO);
+			results.add(blogCommentVO);
+		}
+		return results;
 	}
 
 	@Autowired

@@ -20,4 +20,12 @@ public interface BlogCommentService {
 	 * @return
 	 */
 	public List<BlogCommentVO> findByPostsId(String postId);
+
+	/**
+	 * 查询最新评论
+	 * 
+	 * @param num 获取条数
+	 * @return
+	 */
+	public List<BlogCommentVO> findOrderByCreateTime(int num);
 }

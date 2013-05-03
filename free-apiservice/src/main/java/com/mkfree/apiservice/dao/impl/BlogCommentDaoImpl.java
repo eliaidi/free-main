@@ -1,9 +1,13 @@
 package com.mkfree.apiservice.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -29,6 +33,17 @@ public class BlogCommentDaoImpl extends MongodbDao<BlogComment> implements BlogC
 	@Override
 	protected Class<BlogComment> getEntityClass() {
 		return BlogComment.class;
+	}
+
+	@Override
+	public List<BlogComment> findOrderByCreateTime(int num) {
+		Query query = new Query();
+		List<Order> orders = new ArrayList<Order>();
+		orders.add(new Order(Direction.ASC, "createTime"));
+		Sort sort = new Sort(orders);
+		query.with(sort);
+		query.limit(num);
+		return super.find(query);
 	}
 
 	@Autowired

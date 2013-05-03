@@ -31,12 +31,12 @@ import com.mkfree.framework.common.web.session.SessionUtils;
  */
 public class SSOFilter implements Filter {
 
+	@Override
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) resp;
 
 		this.ssoFilterService(request, response);
-		System.out.println(123);
 		chain.doFilter(request, response);
 	}
 
@@ -162,12 +162,14 @@ public class SSOFilter implements Filter {
 		return false;
 	}
 
+	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 	}
 
+	@Override
 	public void destroy() {
 
 	}
 
-	private RedisService redisService = (RedisService) SpringUtil.getBean("redisService");
+	private final RedisService redisService = (RedisService) SpringUtil.getBean("redisService");
 }

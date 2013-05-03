@@ -83,6 +83,7 @@
               </li>
               <li>喜欢一个人，是看到了他的优点；爱一个人，是包容他的缺点…喜欢是一种心情，爱是一种感情</li>
               <li class="nav-header">博客分类</li>
+              <li><a href="${mkfree_blog_url}${sso_user.account}/space">全部博客(10)</a></li>
               <li><a href="#">java(10)</a></li>
               <li><a href="#">nodejs(5)</a></li>
               <li class="nav-header">阅读排行</li>
@@ -105,43 +106,26 @@
         </div><!--/span-->
         <div class="span9">
           
-          <div class="hero-unit">
+          <div class="hero-unit" style="background-color: #FFFEF7;">
           <div class="row">
           	<div class="span">
           		<div class="btn-toolbar">
           			<a class="btn btn-primary" data-toggle="dropdown" href="#">最新博客列表</a>
-          			<a class="btn" href="${mkfree_blog_url}${sso_user.account}/space/admin/post/publish">发布新文章</a>
+          			<!-- <a class="btn" href="${mkfree_blog_url}${sso_user.account}/space/admin/post/publish">发布新文章</a> -->
           		</div>
           	</div>
-          	<div class="span" style="margin-left: -5px;">
-          		<table class="table table-striped table-bordered ">
-				  <thead>
-				    <tr>
-				      <th>标题</th>
-				      <th>发表时间</th>
-				      <th>分类</th>
-				      <th>浏览</th>
-				      <th>回复</th>
-				      <th>管理</th>
-				    </tr>
-				  </thead>
-				  <tbody style="font-weight: normal;font-size: 13px;">
-				  	<#list pages.datas as posts>
-				    <tr>
-				      <th><a href="${mkfree_blog_url}/${sso_user.account}/space/admin/post/${posts.id}">${posts.title}</a></th>
-				      <th>${posts.createTime}</th>
-				      <th>java</th>
-				      <th>${posts.views}</th>
-				      <th>23</th>
-				      <th>
-				      	<a href="${mkfree_blog_url}/${sso_user.account}/space/admin/post/edit/${posts.id}"><i class="icon-pencil"></i></a>
-				      	<a href="#"><i class="icon-remove"></i></a>
-				      </th>
-				    </tr>
-				    </#list>
-				  </tbody>
-				</table>
-          	</div>
+			<div class="row">
+				<ul class="unstyled" style="margin-left: 30px;">
+					<#list pages.datas as posts>
+					<li>
+						<div class="span13" style="border-bottom: dashed 1px #108AC6;">
+							<a href="${mkfree_blog_url}posts/${posts.id}">${posts.title}</a>
+							<p>${posts.summary}</p>
+							<p style="font-size: 11px;">发表于:<span style="color: #108AC6;">${posts.createTime}</span> &nbsp;浏览次数:<span style="color: #108AC6;">${posts.views}</span></p>
+						</div>
+					</li> </#list>
+				</ul>
+			</div>
           	<span class="pull-right">
           	<#include "../include/page.html"/>
           	</span>

@@ -77,16 +77,31 @@ public class BlogController {
 	}
 
 	/**
+	 * 个人空间主页
+	 * 
+	 * @param model
+	 * @param account
+	 * @return
+	 */
+	@RequestMapping(value = "/{account}/space")
+	public String personalSpace(Model model, @PathVariable String account) {
+		PaginationVO pages = BlogClient.getPage(1, 15);
+		pages.setPageUrl(BlogConstants.MKFREE_BLOG_URL + account + "/space");
+		model.addAttribute("pages", pages);
+		return "blog/youspace";
+	}
+
+	/**
 	 * 我的博客空间
 	 * 
 	 * @param model
 	 * @param account
 	 * @return
 	 */
-	@RequestMapping(value = "/{account}_space")
+	@RequestMapping(value = "/{account}/space/admin")
 	public String myBlogSpace(Model model, @PathVariable String account) {
 		PaginationVO pages = BlogClient.getPage(1, 15);
-		pages.setPageUrl(BlogConstants.MKFREE_BLOG_URL + account + "_space");
+		pages.setPageUrl(BlogConstants.MKFREE_BLOG_URL + account + "/space/admin");
 		model.addAttribute("pages", pages);
 		return "blog/myspace";
 	}
@@ -98,10 +113,10 @@ public class BlogController {
 	 * @param account
 	 * @return
 	 */
-	@RequestMapping(value = "/{account}_space/{pageNo}")
+	@RequestMapping(value = "/{account}/space/admin/{pageNo}")
 	public String myBlogSpace(Model model, @PathVariable String account, @PathVariable int pageNo) {
 		PaginationVO pages = BlogClient.getPage(pageNo, 15);
-		pages.setPageUrl(BlogConstants.MKFREE_BLOG_URL + account + "_space");
+		pages.setPageUrl(BlogConstants.MKFREE_BLOG_URL + account + "/space/admin");
 		model.addAttribute("pages", pages);
 		return "blog/myspace";
 	}
@@ -113,7 +128,7 @@ public class BlogController {
 	 * @param account
 	 * @return
 	 */
-	@RequestMapping(value = "/{account}_space/posts/publish", method = RequestMethod.GET)
+	@RequestMapping(value = "/{account}/space/admin/post/publish", method = RequestMethod.GET)
 	public String addBlogPosts(Model model, @PathVariable String account) {
 		return "blog/posts_publish";
 	}
@@ -126,7 +141,7 @@ public class BlogController {
 	 * @param blogPost
 	 * @param account
 	 */
-	@RequestMapping(value = "/{account}_space/posts/save", method = RequestMethod.POST)
+	@RequestMapping(value = "/{account}/space/admin/post/save", method = RequestMethod.POST)
 	public String saveBlogPosts(HttpServletRequest req, HttpServletResponse res, BlogPostVO blogPostVO, @PathVariable String account) {
 		String url = "";
 		String userid = RequestUtils.getParamValue(req, "userid");
@@ -134,7 +149,7 @@ public class BlogController {
 		blogPostVO.setSummary(HtmlUtils.filterHtmlCode(blogPostVO.getContent(), 240));
 		String id = BlogClient.save(blogPostVO);
 		if (id != null) {
-			url = BlogConstants.MKFREE_BLOG_URL + account + "_space/posts/" + id;
+			url = BlogConstants.MKFREE_BLOG_URL + account + "/space/admin/posts/" + id;
 		} else {
 			url = BlogConstants.MKFREE_STATIC_URL + BlogConstants.ERROR_HTML;
 		}
@@ -149,7 +164,7 @@ public class BlogController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/{account}_space/posts/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{account}/space/admin/post/{id}", method = RequestMethod.GET)
 	public String myBlogSpacePosts(HttpServletRequest req, Model model, @PathVariable String id) {
 		BlogPostVO bp = BlogClient.findById(id);
 		model.addAttribute("posts", bp);
@@ -165,7 +180,7 @@ public class BlogController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/{account}_space/posts/edit/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{account}/space/admin/post/edit/{id}", method = RequestMethod.GET)
 	public String editBlogPosts(HttpServletRequest req, Model model, @PathVariable String account, @PathVariable String id) {
 		BlogPostVO bp = BlogClient.findById(id);
 		model.addAttribute("posts", bp);
@@ -181,13 +196,13 @@ public class BlogController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/{account}_space/posts/update/{id}", method = RequestMethod.POST)
+	@RequestMapping(value = "/{account}/space/admin/post/update/{id}", method = RequestMethod.POST)
 	public String updateBlogPosts(Model model, @PathVariable String account, @PathVariable String id, String title, String content) {
 		Assert.notEmpty(new Object[] { title, content }, "title or content null...");
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("title", title);
 		params.put("content", content);
 		BlogClient.update(id, params);
-		return "redirect:/" + account + "_space/posts/" + id;
+		return "redirect:/" + account + "/space/admin/post/" + id;
 	}
 }
