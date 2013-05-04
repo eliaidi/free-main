@@ -47,7 +47,7 @@ public class BlogPostVO implements org.apache.thrift.TBase<BlogPostVO, BlogPostV
   private static final org.apache.thrift.protocol.TField UPDATE_TIME_FIELD_DESC = new org.apache.thrift.protocol.TField("updateTime", org.apache.thrift.protocol.TType.STRING, (short)9);
   private static final org.apache.thrift.protocol.TField BLOG_NICK_FIELD_DESC = new org.apache.thrift.protocol.TField("blogNick", org.apache.thrift.protocol.TType.STRING, (short)10);
   private static final org.apache.thrift.protocol.TField BLOG_CATEGORY_FIELD_DESC = new org.apache.thrift.protocol.TField("blogCategory", org.apache.thrift.protocol.TType.STRING, (short)11);
-  private static final org.apache.thrift.protocol.TField BLOG_USER_FIELD_DESC = new org.apache.thrift.protocol.TField("blogUser", org.apache.thrift.protocol.TType.STRING, (short)12);
+  private static final org.apache.thrift.protocol.TField USER_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("userId", org.apache.thrift.protocol.TType.STRING, (short)12);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
@@ -66,7 +66,7 @@ public class BlogPostVO implements org.apache.thrift.TBase<BlogPostVO, BlogPostV
   public String updateTime; // required
   public String blogNick; // required
   public String blogCategory; // required
-  public String blogUser; // required
+  public String userId; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -81,7 +81,7 @@ public class BlogPostVO implements org.apache.thrift.TBase<BlogPostVO, BlogPostV
     UPDATE_TIME((short)9, "updateTime"),
     BLOG_NICK((short)10, "blogNick"),
     BLOG_CATEGORY((short)11, "blogCategory"),
-    BLOG_USER((short)12, "blogUser");
+    USER_ID((short)12, "userId");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -118,8 +118,8 @@ public class BlogPostVO implements org.apache.thrift.TBase<BlogPostVO, BlogPostV
           return BLOG_NICK;
         case 11: // BLOG_CATEGORY
           return BLOG_CATEGORY;
-        case 12: // BLOG_USER
-          return BLOG_USER;
+        case 12: // USER_ID
+          return USER_ID;
         default:
           return null;
       }
@@ -188,7 +188,7 @@ public class BlogPostVO implements org.apache.thrift.TBase<BlogPostVO, BlogPostV
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.BLOG_CATEGORY, new org.apache.thrift.meta_data.FieldMetaData("blogCategory", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.BLOG_USER, new org.apache.thrift.meta_data.FieldMetaData("blogUser", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+    tmpMap.put(_Fields.USER_ID, new org.apache.thrift.meta_data.FieldMetaData("userId", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(BlogPostVO.class, metaDataMap);
@@ -209,7 +209,7 @@ public class BlogPostVO implements org.apache.thrift.TBase<BlogPostVO, BlogPostV
     String updateTime,
     String blogNick,
     String blogCategory,
-    String blogUser)
+    String userId)
   {
     this();
     this.id = id;
@@ -225,7 +225,7 @@ public class BlogPostVO implements org.apache.thrift.TBase<BlogPostVO, BlogPostV
     this.updateTime = updateTime;
     this.blogNick = blogNick;
     this.blogCategory = blogCategory;
-    this.blogUser = blogUser;
+    this.userId = userId;
   }
 
   /**
@@ -262,8 +262,8 @@ public class BlogPostVO implements org.apache.thrift.TBase<BlogPostVO, BlogPostV
     if (other.isSetBlogCategory()) {
       this.blogCategory = other.blogCategory;
     }
-    if (other.isSetBlogUser()) {
-      this.blogUser = other.blogUser;
+    if (other.isSetUserId()) {
+      this.userId = other.userId;
     }
   }
 
@@ -286,7 +286,7 @@ public class BlogPostVO implements org.apache.thrift.TBase<BlogPostVO, BlogPostV
     this.updateTime = null;
     this.blogNick = null;
     this.blogCategory = null;
-    this.blogUser = null;
+    this.userId = null;
   }
 
   public String getId() {
@@ -551,27 +551,27 @@ public class BlogPostVO implements org.apache.thrift.TBase<BlogPostVO, BlogPostV
     }
   }
 
-  public String getBlogUser() {
-    return this.blogUser;
+  public String getUserId() {
+    return this.userId;
   }
 
-  public BlogPostVO setBlogUser(String blogUser) {
-    this.blogUser = blogUser;
+  public BlogPostVO setUserId(String userId) {
+    this.userId = userId;
     return this;
   }
 
-  public void unsetBlogUser() {
-    this.blogUser = null;
+  public void unsetUserId() {
+    this.userId = null;
   }
 
-  /** Returns true if field blogUser is set (has been assigned a value) and false otherwise */
-  public boolean isSetBlogUser() {
-    return this.blogUser != null;
+  /** Returns true if field userId is set (has been assigned a value) and false otherwise */
+  public boolean isSetUserId() {
+    return this.userId != null;
   }
 
-  public void setBlogUserIsSet(boolean value) {
+  public void setUserIdIsSet(boolean value) {
     if (!value) {
-      this.blogUser = null;
+      this.userId = null;
     }
   }
 
@@ -665,11 +665,11 @@ public class BlogPostVO implements org.apache.thrift.TBase<BlogPostVO, BlogPostV
       }
       break;
 
-    case BLOG_USER:
+    case USER_ID:
       if (value == null) {
-        unsetBlogUser();
+        unsetUserId();
       } else {
-        setBlogUser((String)value);
+        setUserId((String)value);
       }
       break;
 
@@ -711,8 +711,8 @@ public class BlogPostVO implements org.apache.thrift.TBase<BlogPostVO, BlogPostV
     case BLOG_CATEGORY:
       return getBlogCategory();
 
-    case BLOG_USER:
-      return getBlogUser();
+    case USER_ID:
+      return getUserId();
 
     }
     throw new IllegalStateException();
@@ -747,8 +747,8 @@ public class BlogPostVO implements org.apache.thrift.TBase<BlogPostVO, BlogPostV
       return isSetBlogNick();
     case BLOG_CATEGORY:
       return isSetBlogCategory();
-    case BLOG_USER:
-      return isSetBlogUser();
+    case USER_ID:
+      return isSetUserId();
     }
     throw new IllegalStateException();
   }
@@ -865,12 +865,12 @@ public class BlogPostVO implements org.apache.thrift.TBase<BlogPostVO, BlogPostV
         return false;
     }
 
-    boolean this_present_blogUser = true && this.isSetBlogUser();
-    boolean that_present_blogUser = true && that.isSetBlogUser();
-    if (this_present_blogUser || that_present_blogUser) {
-      if (!(this_present_blogUser && that_present_blogUser))
+    boolean this_present_userId = true && this.isSetUserId();
+    boolean that_present_userId = true && that.isSetUserId();
+    if (this_present_userId || that_present_userId) {
+      if (!(this_present_userId && that_present_userId))
         return false;
-      if (!this.blogUser.equals(that.blogUser))
+      if (!this.userId.equals(that.userId))
         return false;
     }
 
@@ -1000,12 +1000,12 @@ public class BlogPostVO implements org.apache.thrift.TBase<BlogPostVO, BlogPostV
         return lastComparison;
       }
     }
-    lastComparison = Boolean.valueOf(isSetBlogUser()).compareTo(typedOther.isSetBlogUser());
+    lastComparison = Boolean.valueOf(isSetUserId()).compareTo(typedOther.isSetUserId());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetBlogUser()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.blogUser, typedOther.blogUser);
+    if (isSetUserId()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.userId, typedOther.userId);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -1110,11 +1110,11 @@ public class BlogPostVO implements org.apache.thrift.TBase<BlogPostVO, BlogPostV
     }
     first = false;
     if (!first) sb.append(", ");
-    sb.append("blogUser:");
-    if (this.blogUser == null) {
+    sb.append("userId:");
+    if (this.userId == null) {
       sb.append("null");
     } else {
-      sb.append(this.blogUser);
+      sb.append(this.userId);
     }
     first = false;
     sb.append(")");
@@ -1250,10 +1250,10 @@ public class BlogPostVO implements org.apache.thrift.TBase<BlogPostVO, BlogPostV
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 12: // BLOG_USER
+          case 12: // USER_ID
             if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-              struct.blogUser = iprot.readString();
-              struct.setBlogUserIsSet(true);
+              struct.userId = iprot.readString();
+              struct.setUserIdIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
@@ -1324,9 +1324,9 @@ public class BlogPostVO implements org.apache.thrift.TBase<BlogPostVO, BlogPostV
         oprot.writeString(struct.blogCategory);
         oprot.writeFieldEnd();
       }
-      if (struct.blogUser != null) {
-        oprot.writeFieldBegin(BLOG_USER_FIELD_DESC);
-        oprot.writeString(struct.blogUser);
+      if (struct.userId != null) {
+        oprot.writeFieldBegin(USER_ID_FIELD_DESC);
+        oprot.writeString(struct.userId);
         oprot.writeFieldEnd();
       }
       oprot.writeFieldStop();
@@ -1380,7 +1380,7 @@ public class BlogPostVO implements org.apache.thrift.TBase<BlogPostVO, BlogPostV
       if (struct.isSetBlogCategory()) {
         optionals.set(10);
       }
-      if (struct.isSetBlogUser()) {
+      if (struct.isSetUserId()) {
         optionals.set(11);
       }
       oprot.writeBitSet(optionals, 12);
@@ -1417,8 +1417,8 @@ public class BlogPostVO implements org.apache.thrift.TBase<BlogPostVO, BlogPostV
       if (struct.isSetBlogCategory()) {
         oprot.writeString(struct.blogCategory);
       }
-      if (struct.isSetBlogUser()) {
-        oprot.writeString(struct.blogUser);
+      if (struct.isSetUserId()) {
+        oprot.writeString(struct.userId);
       }
     }
 
@@ -1471,8 +1471,8 @@ public class BlogPostVO implements org.apache.thrift.TBase<BlogPostVO, BlogPostV
         struct.setBlogCategoryIsSet(true);
       }
       if (incoming.get(11)) {
-        struct.blogUser = iprot.readString();
-        struct.setBlogUserIsSet(true);
+        struct.userId = iprot.readString();
+        struct.setUserIdIsSet(true);
       }
     }
   }

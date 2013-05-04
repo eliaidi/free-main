@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import com.mkfree.apiservice.dao.SysUserDao;
 import com.mkfree.apiservice.domain.SysUser;
 import com.mkfree.apiservice.service.permission.SysUserService;
+import com.mkfree.apithrift.vo.SysUserVO;
+import com.mkfree.framework.common.spring.KBeanUtils;
 
 @Service("sysUserService")
 public class SysUserServiceImpl implements SysUserService {
@@ -13,8 +15,28 @@ public class SysUserServiceImpl implements SysUserService {
 	@Autowired
 	private SysUserDao sysUserDao;
 
-	public SysUser getUserByAccountAndPassword(String account, String password) {
-		return sysUserDao.findByAccountAndPassword(account, password);
+	@Override
+	public SysUserVO findByAccountAndPassword(String account, String password) {
+		SysUser sysUser = sysUserDao.findByAccountAndPassword(account, password);
+		return copyObject(sysUser);
+	}
+
+	@Override
+	public SysUserVO findByAccount(String account) {
+		SysUser sysUser = sysUserDao.findByAccount(account);
+		return copyObject(sysUser);
+	}
+
+	/**
+	 * 复制对象
+	 * 
+	 * @param sysUser
+	 * @return
+	 */
+	private SysUserVO copyObject(SysUser sysUser) {
+		SysUserVO sysUserVO = new SysUserVO();
+		KBeanUtils.copyProperties(sysUser, sysUserVO);
+		return sysUserVO;
 	}
 
 }

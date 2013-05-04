@@ -33,8 +33,8 @@ import org.slf4j.LoggerFactory;
 /**
  * 登录用户传输实体类
  */
-public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._Fields>, java.io.Serializable, Cloneable {
-  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("SSOUserVO");
+public class SysUserVO implements org.apache.thrift.TBase<SysUserVO, SysUserVO._Fields>, java.io.Serializable, Cloneable {
+  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("SysUserVO");
 
   private static final org.apache.thrift.protocol.TField ID_FIELD_DESC = new org.apache.thrift.protocol.TField("id", org.apache.thrift.protocol.TType.STRING, (short)1);
   private static final org.apache.thrift.protocol.TField ACCOUNT_FIELD_DESC = new org.apache.thrift.protocol.TField("account", org.apache.thrift.protocol.TType.STRING, (short)2);
@@ -47,14 +47,11 @@ public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._
   private static final org.apache.thrift.protocol.TField STATUS_FIELD_DESC = new org.apache.thrift.protocol.TField("status", org.apache.thrift.protocol.TType.I32, (short)9);
   private static final org.apache.thrift.protocol.TField AUTOGRAPH_FIELD_DESC = new org.apache.thrift.protocol.TField("autograph", org.apache.thrift.protocol.TType.STRING, (short)10);
   private static final org.apache.thrift.protocol.TField CREATE_TIME_FIELD_DESC = new org.apache.thrift.protocol.TField("createTime", org.apache.thrift.protocol.TType.STRING, (short)11);
-  private static final org.apache.thrift.protocol.TField TICKET_VALUE_FIELD_DESC = new org.apache.thrift.protocol.TField("ticketValue", org.apache.thrift.protocol.TType.STRING, (short)12);
-  private static final org.apache.thrift.protocol.TField TICKET_VAILD_FIELD_DESC = new org.apache.thrift.protocol.TField("ticketVaild", org.apache.thrift.protocol.TType.I32, (short)13);
-  private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.I32, (short)14);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
-    schemes.put(StandardScheme.class, new SSOUserVOStandardSchemeFactory());
-    schemes.put(TupleScheme.class, new SSOUserVOTupleSchemeFactory());
+    schemes.put(StandardScheme.class, new SysUserVOStandardSchemeFactory());
+    schemes.put(TupleScheme.class, new SysUserVOTupleSchemeFactory());
   }
 
   public String id; // required
@@ -68,9 +65,6 @@ public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._
   public int status; // required
   public String autograph; // required
   public String createTime; // required
-  public String ticketValue; // required
-  public int ticketVaild; // required
-  public int success; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -84,10 +78,7 @@ public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._
     AGE((short)8, "age"),
     STATUS((short)9, "status"),
     AUTOGRAPH((short)10, "autograph"),
-    CREATE_TIME((short)11, "createTime"),
-    TICKET_VALUE((short)12, "ticketValue"),
-    TICKET_VAILD((short)13, "ticketVaild"),
-    SUCCESS((short)14, "success");
+    CREATE_TIME((short)11, "createTime");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -124,12 +115,6 @@ public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._
           return AUTOGRAPH;
         case 11: // CREATE_TIME
           return CREATE_TIME;
-        case 12: // TICKET_VALUE
-          return TICKET_VALUE;
-        case 13: // TICKET_VAILD
-          return TICKET_VAILD;
-        case 14: // SUCCESS
-          return SUCCESS;
         default:
           return null;
       }
@@ -173,8 +158,6 @@ public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._
   private static final int __SEX_ISSET_ID = 0;
   private static final int __AGE_ISSET_ID = 1;
   private static final int __STATUS_ISSET_ID = 2;
-  private static final int __TICKETVAILD_ISSET_ID = 3;
-  private static final int __SUCCESS_ISSET_ID = 4;
   private byte __isset_bitfield = 0;
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
@@ -201,20 +184,14 @@ public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.CREATE_TIME, new org.apache.thrift.meta_data.FieldMetaData("createTime", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.TICKET_VALUE, new org.apache.thrift.meta_data.FieldMetaData("ticketValue", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.TICKET_VAILD, new org.apache.thrift.meta_data.FieldMetaData("ticketVaild", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
-    tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
-    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(SSOUserVO.class, metaDataMap);
+    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(SysUserVO.class, metaDataMap);
   }
 
-  public SSOUserVO() {
+  public SysUserVO() {
   }
 
-  public SSOUserVO(
+  public SysUserVO(
     String id,
     String account,
     String password,
@@ -225,10 +202,7 @@ public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._
     int age,
     int status,
     String autograph,
-    String createTime,
-    String ticketValue,
-    int ticketVaild,
-    int success)
+    String createTime)
   {
     this();
     this.id = id;
@@ -245,17 +219,12 @@ public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._
     setStatusIsSet(true);
     this.autograph = autograph;
     this.createTime = createTime;
-    this.ticketValue = ticketValue;
-    this.ticketVaild = ticketVaild;
-    setTicketVaildIsSet(true);
-    this.success = success;
-    setSuccessIsSet(true);
   }
 
   /**
    * Performs a deep copy on <i>other</i>.
    */
-  public SSOUserVO(SSOUserVO other) {
+  public SysUserVO(SysUserVO other) {
     __isset_bitfield = other.__isset_bitfield;
     if (other.isSetId()) {
       this.id = other.id;
@@ -284,15 +253,10 @@ public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._
     if (other.isSetCreateTime()) {
       this.createTime = other.createTime;
     }
-    if (other.isSetTicketValue()) {
-      this.ticketValue = other.ticketValue;
-    }
-    this.ticketVaild = other.ticketVaild;
-    this.success = other.success;
   }
 
-  public SSOUserVO deepCopy() {
-    return new SSOUserVO(this);
+  public SysUserVO deepCopy() {
+    return new SysUserVO(this);
   }
 
   @Override
@@ -311,18 +275,13 @@ public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._
     this.status = 0;
     this.autograph = null;
     this.createTime = null;
-    this.ticketValue = null;
-    setTicketVaildIsSet(false);
-    this.ticketVaild = 0;
-    setSuccessIsSet(false);
-    this.success = 0;
   }
 
   public String getId() {
     return this.id;
   }
 
-  public SSOUserVO setId(String id) {
+  public SysUserVO setId(String id) {
     this.id = id;
     return this;
   }
@@ -346,7 +305,7 @@ public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._
     return this.account;
   }
 
-  public SSOUserVO setAccount(String account) {
+  public SysUserVO setAccount(String account) {
     this.account = account;
     return this;
   }
@@ -370,7 +329,7 @@ public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._
     return this.password;
   }
 
-  public SSOUserVO setPassword(String password) {
+  public SysUserVO setPassword(String password) {
     this.password = password;
     return this;
   }
@@ -394,7 +353,7 @@ public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._
     return this.displayName;
   }
 
-  public SSOUserVO setDisplayName(String displayName) {
+  public SysUserVO setDisplayName(String displayName) {
     this.displayName = displayName;
     return this;
   }
@@ -418,7 +377,7 @@ public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._
     return this.nick;
   }
 
-  public SSOUserVO setNick(String nick) {
+  public SysUserVO setNick(String nick) {
     this.nick = nick;
     return this;
   }
@@ -442,7 +401,7 @@ public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._
     return this.email;
   }
 
-  public SSOUserVO setEmail(String email) {
+  public SysUserVO setEmail(String email) {
     this.email = email;
     return this;
   }
@@ -466,7 +425,7 @@ public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._
     return this.sex;
   }
 
-  public SSOUserVO setSex(int sex) {
+  public SysUserVO setSex(int sex) {
     this.sex = sex;
     setSexIsSet(true);
     return this;
@@ -489,7 +448,7 @@ public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._
     return this.age;
   }
 
-  public SSOUserVO setAge(int age) {
+  public SysUserVO setAge(int age) {
     this.age = age;
     setAgeIsSet(true);
     return this;
@@ -512,7 +471,7 @@ public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._
     return this.status;
   }
 
-  public SSOUserVO setStatus(int status) {
+  public SysUserVO setStatus(int status) {
     this.status = status;
     setStatusIsSet(true);
     return this;
@@ -535,7 +494,7 @@ public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._
     return this.autograph;
   }
 
-  public SSOUserVO setAutograph(String autograph) {
+  public SysUserVO setAutograph(String autograph) {
     this.autograph = autograph;
     return this;
   }
@@ -559,7 +518,7 @@ public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._
     return this.createTime;
   }
 
-  public SSOUserVO setCreateTime(String createTime) {
+  public SysUserVO setCreateTime(String createTime) {
     this.createTime = createTime;
     return this;
   }
@@ -577,76 +536,6 @@ public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._
     if (!value) {
       this.createTime = null;
     }
-  }
-
-  public String getTicketValue() {
-    return this.ticketValue;
-  }
-
-  public SSOUserVO setTicketValue(String ticketValue) {
-    this.ticketValue = ticketValue;
-    return this;
-  }
-
-  public void unsetTicketValue() {
-    this.ticketValue = null;
-  }
-
-  /** Returns true if field ticketValue is set (has been assigned a value) and false otherwise */
-  public boolean isSetTicketValue() {
-    return this.ticketValue != null;
-  }
-
-  public void setTicketValueIsSet(boolean value) {
-    if (!value) {
-      this.ticketValue = null;
-    }
-  }
-
-  public int getTicketVaild() {
-    return this.ticketVaild;
-  }
-
-  public SSOUserVO setTicketVaild(int ticketVaild) {
-    this.ticketVaild = ticketVaild;
-    setTicketVaildIsSet(true);
-    return this;
-  }
-
-  public void unsetTicketVaild() {
-    __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __TICKETVAILD_ISSET_ID);
-  }
-
-  /** Returns true if field ticketVaild is set (has been assigned a value) and false otherwise */
-  public boolean isSetTicketVaild() {
-    return EncodingUtils.testBit(__isset_bitfield, __TICKETVAILD_ISSET_ID);
-  }
-
-  public void setTicketVaildIsSet(boolean value) {
-    __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __TICKETVAILD_ISSET_ID, value);
-  }
-
-  public int getSuccess() {
-    return this.success;
-  }
-
-  public SSOUserVO setSuccess(int success) {
-    this.success = success;
-    setSuccessIsSet(true);
-    return this;
-  }
-
-  public void unsetSuccess() {
-    __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __SUCCESS_ISSET_ID);
-  }
-
-  /** Returns true if field success is set (has been assigned a value) and false otherwise */
-  public boolean isSetSuccess() {
-    return EncodingUtils.testBit(__isset_bitfield, __SUCCESS_ISSET_ID);
-  }
-
-  public void setSuccessIsSet(boolean value) {
-    __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __SUCCESS_ISSET_ID, value);
   }
 
   public void setFieldValue(_Fields field, Object value) {
@@ -739,30 +628,6 @@ public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._
       }
       break;
 
-    case TICKET_VALUE:
-      if (value == null) {
-        unsetTicketValue();
-      } else {
-        setTicketValue((String)value);
-      }
-      break;
-
-    case TICKET_VAILD:
-      if (value == null) {
-        unsetTicketVaild();
-      } else {
-        setTicketVaild((Integer)value);
-      }
-      break;
-
-    case SUCCESS:
-      if (value == null) {
-        unsetSuccess();
-      } else {
-        setSuccess((Integer)value);
-      }
-      break;
-
     }
   }
 
@@ -801,15 +666,6 @@ public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._
     case CREATE_TIME:
       return getCreateTime();
 
-    case TICKET_VALUE:
-      return getTicketValue();
-
-    case TICKET_VAILD:
-      return Integer.valueOf(getTicketVaild());
-
-    case SUCCESS:
-      return Integer.valueOf(getSuccess());
-
     }
     throw new IllegalStateException();
   }
@@ -843,12 +699,6 @@ public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._
       return isSetAutograph();
     case CREATE_TIME:
       return isSetCreateTime();
-    case TICKET_VALUE:
-      return isSetTicketValue();
-    case TICKET_VAILD:
-      return isSetTicketVaild();
-    case SUCCESS:
-      return isSetSuccess();
     }
     throw new IllegalStateException();
   }
@@ -857,12 +707,12 @@ public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._
   public boolean equals(Object that) {
     if (that == null)
       return false;
-    if (that instanceof SSOUserVO)
-      return this.equals((SSOUserVO)that);
+    if (that instanceof SysUserVO)
+      return this.equals((SysUserVO)that);
     return false;
   }
 
-  public boolean equals(SSOUserVO that) {
+  public boolean equals(SysUserVO that) {
     if (that == null)
       return false;
 
@@ -965,33 +815,6 @@ public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._
         return false;
     }
 
-    boolean this_present_ticketValue = true && this.isSetTicketValue();
-    boolean that_present_ticketValue = true && that.isSetTicketValue();
-    if (this_present_ticketValue || that_present_ticketValue) {
-      if (!(this_present_ticketValue && that_present_ticketValue))
-        return false;
-      if (!this.ticketValue.equals(that.ticketValue))
-        return false;
-    }
-
-    boolean this_present_ticketVaild = true;
-    boolean that_present_ticketVaild = true;
-    if (this_present_ticketVaild || that_present_ticketVaild) {
-      if (!(this_present_ticketVaild && that_present_ticketVaild))
-        return false;
-      if (this.ticketVaild != that.ticketVaild)
-        return false;
-    }
-
-    boolean this_present_success = true;
-    boolean that_present_success = true;
-    if (this_present_success || that_present_success) {
-      if (!(this_present_success && that_present_success))
-        return false;
-      if (this.success != that.success)
-        return false;
-    }
-
     return true;
   }
 
@@ -1000,13 +823,13 @@ public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._
     return 0;
   }
 
-  public int compareTo(SSOUserVO other) {
+  public int compareTo(SysUserVO other) {
     if (!getClass().equals(other.getClass())) {
       return getClass().getName().compareTo(other.getClass().getName());
     }
 
     int lastComparison = 0;
-    SSOUserVO typedOther = (SSOUserVO)other;
+    SysUserVO typedOther = (SysUserVO)other;
 
     lastComparison = Boolean.valueOf(isSetId()).compareTo(typedOther.isSetId());
     if (lastComparison != 0) {
@@ -1118,36 +941,6 @@ public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._
         return lastComparison;
       }
     }
-    lastComparison = Boolean.valueOf(isSetTicketValue()).compareTo(typedOther.isSetTicketValue());
-    if (lastComparison != 0) {
-      return lastComparison;
-    }
-    if (isSetTicketValue()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.ticketValue, typedOther.ticketValue);
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-    }
-    lastComparison = Boolean.valueOf(isSetTicketVaild()).compareTo(typedOther.isSetTicketVaild());
-    if (lastComparison != 0) {
-      return lastComparison;
-    }
-    if (isSetTicketVaild()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.ticketVaild, typedOther.ticketVaild);
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-    }
-    lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(typedOther.isSetSuccess());
-    if (lastComparison != 0) {
-      return lastComparison;
-    }
-    if (isSetSuccess()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, typedOther.success);
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-    }
     return 0;
   }
 
@@ -1165,7 +958,7 @@ public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder("SSOUserVO(");
+    StringBuilder sb = new StringBuilder("SysUserVO(");
     boolean first = true;
 
     sb.append("id:");
@@ -1243,22 +1036,6 @@ public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._
       sb.append(this.createTime);
     }
     first = false;
-    if (!first) sb.append(", ");
-    sb.append("ticketValue:");
-    if (this.ticketValue == null) {
-      sb.append("null");
-    } else {
-      sb.append(this.ticketValue);
-    }
-    first = false;
-    if (!first) sb.append(", ");
-    sb.append("ticketVaild:");
-    sb.append(this.ticketVaild);
-    first = false;
-    if (!first) sb.append(", ");
-    sb.append("success:");
-    sb.append(this.success);
-    first = false;
     sb.append(")");
     return sb.toString();
   }
@@ -1286,15 +1063,15 @@ public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._
     }
   }
 
-  private static class SSOUserVOStandardSchemeFactory implements SchemeFactory {
-    public SSOUserVOStandardScheme getScheme() {
-      return new SSOUserVOStandardScheme();
+  private static class SysUserVOStandardSchemeFactory implements SchemeFactory {
+    public SysUserVOStandardScheme getScheme() {
+      return new SysUserVOStandardScheme();
     }
   }
 
-  private static class SSOUserVOStandardScheme extends StandardScheme<SSOUserVO> {
+  private static class SysUserVOStandardScheme extends StandardScheme<SysUserVO> {
 
-    public void read(org.apache.thrift.protocol.TProtocol iprot, SSOUserVO struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol iprot, SysUserVO struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TField schemeField;
       iprot.readStructBegin();
       while (true)
@@ -1392,30 +1169,6 @@ public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 12: // TICKET_VALUE
-            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-              struct.ticketValue = iprot.readString();
-              struct.setTicketValueIsSet(true);
-            } else { 
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-            }
-            break;
-          case 13: // TICKET_VAILD
-            if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-              struct.ticketVaild = iprot.readI32();
-              struct.setTicketVaildIsSet(true);
-            } else { 
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-            }
-            break;
-          case 14: // SUCCESS
-            if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-              struct.success = iprot.readI32();
-              struct.setSuccessIsSet(true);
-            } else { 
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-            }
-            break;
           default:
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
         }
@@ -1427,7 +1180,7 @@ public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._
       struct.validate();
     }
 
-    public void write(org.apache.thrift.protocol.TProtocol oprot, SSOUserVO struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol oprot, SysUserVO struct) throws org.apache.thrift.TException {
       struct.validate();
 
       oprot.writeStructBegin(STRUCT_DESC);
@@ -1480,33 +1233,22 @@ public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._
         oprot.writeString(struct.createTime);
         oprot.writeFieldEnd();
       }
-      if (struct.ticketValue != null) {
-        oprot.writeFieldBegin(TICKET_VALUE_FIELD_DESC);
-        oprot.writeString(struct.ticketValue);
-        oprot.writeFieldEnd();
-      }
-      oprot.writeFieldBegin(TICKET_VAILD_FIELD_DESC);
-      oprot.writeI32(struct.ticketVaild);
-      oprot.writeFieldEnd();
-      oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
-      oprot.writeI32(struct.success);
-      oprot.writeFieldEnd();
       oprot.writeFieldStop();
       oprot.writeStructEnd();
     }
 
   }
 
-  private static class SSOUserVOTupleSchemeFactory implements SchemeFactory {
-    public SSOUserVOTupleScheme getScheme() {
-      return new SSOUserVOTupleScheme();
+  private static class SysUserVOTupleSchemeFactory implements SchemeFactory {
+    public SysUserVOTupleScheme getScheme() {
+      return new SysUserVOTupleScheme();
     }
   }
 
-  private static class SSOUserVOTupleScheme extends TupleScheme<SSOUserVO> {
+  private static class SysUserVOTupleScheme extends TupleScheme<SysUserVO> {
 
     @Override
-    public void write(org.apache.thrift.protocol.TProtocol prot, SSOUserVO struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol prot, SysUserVO struct) throws org.apache.thrift.TException {
       TTupleProtocol oprot = (TTupleProtocol) prot;
       BitSet optionals = new BitSet();
       if (struct.isSetId()) {
@@ -1542,16 +1284,7 @@ public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._
       if (struct.isSetCreateTime()) {
         optionals.set(10);
       }
-      if (struct.isSetTicketValue()) {
-        optionals.set(11);
-      }
-      if (struct.isSetTicketVaild()) {
-        optionals.set(12);
-      }
-      if (struct.isSetSuccess()) {
-        optionals.set(13);
-      }
-      oprot.writeBitSet(optionals, 14);
+      oprot.writeBitSet(optionals, 11);
       if (struct.isSetId()) {
         oprot.writeString(struct.id);
       }
@@ -1585,21 +1318,12 @@ public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._
       if (struct.isSetCreateTime()) {
         oprot.writeString(struct.createTime);
       }
-      if (struct.isSetTicketValue()) {
-        oprot.writeString(struct.ticketValue);
-      }
-      if (struct.isSetTicketVaild()) {
-        oprot.writeI32(struct.ticketVaild);
-      }
-      if (struct.isSetSuccess()) {
-        oprot.writeI32(struct.success);
-      }
     }
 
     @Override
-    public void read(org.apache.thrift.protocol.TProtocol prot, SSOUserVO struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol prot, SysUserVO struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
-      BitSet incoming = iprot.readBitSet(14);
+      BitSet incoming = iprot.readBitSet(11);
       if (incoming.get(0)) {
         struct.id = iprot.readString();
         struct.setIdIsSet(true);
@@ -1643,18 +1367,6 @@ public class SSOUserVO implements org.apache.thrift.TBase<SSOUserVO, SSOUserVO._
       if (incoming.get(10)) {
         struct.createTime = iprot.readString();
         struct.setCreateTimeIsSet(true);
-      }
-      if (incoming.get(11)) {
-        struct.ticketValue = iprot.readString();
-        struct.setTicketValueIsSet(true);
-      }
-      if (incoming.get(12)) {
-        struct.ticketVaild = iprot.readI32();
-        struct.setTicketVaildIsSet(true);
-      }
-      if (incoming.get(13)) {
-        struct.success = iprot.readI32();
-        struct.setSuccessIsSet(true);
       }
     }
   }

@@ -28,10 +28,11 @@ public interface BlogCommentDao {
 	public List<BlogComment> findByPostsId(String postsId);
 
 	/**
-	 * 查找最新评论
+	 * 查找某个用户最新评论
 	 * 
 	 * @param num 条数
+	 * @param userId 用户id
 	 * @return
 	 */
-	public List<BlogComment> findOrderByCreateTime(int num);
+	public List<BlogComment> findByUserIdOrderByCreateTime(String userId, int num);
 }

@@ -95,7 +95,7 @@ body {
 								style="margin-left: 20px;"><input id="inputVistorName" value="" type="text" class="span3" placeholder="留下你的网名..." /></span> </#if>
 							<textarea id="comment_content"></textarea>
 							<br>
-							<button class="btn btn-primary pull-right" onclick="saveBlogComment('${posts.id}','${commentIndex}'<#if sso_user??>,'${sso_user.id}','${sso_user.nick}'</#if>);">提 交</button>
+							<button class="btn btn-primary pull-right" onclick="saveBlogComment('${posts.id}','${posts.userId}','${commentIndex}'<#if sso_user??>,'${sso_user.id}','${sso_user.nick}'</#if>);">提 交</button>
 						</div>
 					</div>
 				</div>
@@ -165,11 +165,12 @@ body {
 		 * 异步提交对博客的评论
 		 *
 		 * param postsId 回复的博客文章ID
+		 * param blogUserId 发表博客用户id
 		 * param commentIndex 回复博客一共有多少条记录
 		 * param replyUserId 回复人的用户ID
 		 * param replyUserNick 回复人昵称,用来做页面显示,加数据沉余
 		 */
-		function saveBlogComment(postsId,commentIndex,replyUserId,replyUserNick) {
+		function saveBlogComment(postsId,blogUserId,commentIndex,replyUserId,replyUserNick) {
 			if(commentCount == undefined){
 				commentCount = commentIndex; //这篇博客的回复总数--例如:1楼,2楼.....
 			}
@@ -184,7 +185,8 @@ body {
 				url : '/comment/save',
 				data : {
 					postsId : postsId,
-					userId : replyUserId,
+					toUserId : blogUserId,
+					fromUserId : replyUserId,
 					nick : replyUserNick,
 					content :kedit.html()
 				},

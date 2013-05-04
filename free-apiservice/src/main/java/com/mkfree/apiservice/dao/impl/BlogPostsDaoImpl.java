@@ -24,7 +24,7 @@ import com.mkfree.framework.common.page.Pagination;
 public class BlogPostsDaoImpl extends MongodbDao<BlogPost> implements BlogPostsDao {
 
 	@Override
-	public List<BlogPost> findPostsBytype(int type, int startIndex, int number) {
+	public List<BlogPost> findBytype(int type, int startIndex, int number) {
 		List<BlogPost> lists = null;
 		if (type == 5) {// 列表
 			Query query = new Query();
@@ -53,6 +53,11 @@ public class BlogPostsDaoImpl extends MongodbDao<BlogPost> implements BlogPostsD
 			lists = super.find(query, "blogPosts");
 		}
 		return lists;
+	}
+
+	@Override
+	public long findTotalByUserId(String userId) {
+		return this.mongoTemplate.count(new Query(), this.getEntityClass());
 	}
 
 	@Override
@@ -86,7 +91,7 @@ public class BlogPostsDaoImpl extends MongodbDao<BlogPost> implements BlogPostsD
 		BlogPost blogPost = null;
 		Query query = new Query();
 		if (!StringUtils.isBlank(userId)) {
-			query.addCriteria(new Criteria().and("blogUser").is(userId));
+			query.addCriteria(new Criteria().and("userId").is(userId));
 		}
 		if (type == 1) {// 上一篇
 			BlogPost current = super.findById(postsid);
@@ -113,6 +118,11 @@ public class BlogPostsDaoImpl extends MongodbDao<BlogPost> implements BlogPostsD
 		Query query = new Query();
 		query.addCriteria(new Criteria().and("id").is(id));
 		super.updateFirst(query, params);
+	}
+
+	@Override
+	public List<BlogPost> findByUserId(String userId) {
+		return super.find(Query.query(new Criteria().and("userId").is(userId)));
 	}
 
 	@Override

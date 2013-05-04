@@ -27,5 +27,5 @@ public interface BlogCommentService {
 	 * @param num 获取条数
 	 * @return
 	 */
-	public List<BlogCommentVO> findOrderByCreateTime(int num);
+	public List<BlogCommentVO> findByUserIdOrderByCreateTime(String userId, int num);
 }

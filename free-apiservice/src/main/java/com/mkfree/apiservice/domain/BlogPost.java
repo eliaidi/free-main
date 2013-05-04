@@ -25,7 +25,7 @@ public class BlogPost extends IDEntity {
 	private Date updateTime;// 博客更新时间
 	private String blogNick;// 博客发布人昵称(冗余数据)
 	private String blogCategory;// 博客所属分类
-	private String blogUser;// 用户发的博客
+	private String userId;// 用户发的博客
 
 	public String getTitle() {
 		return title;
@@ -107,12 +107,13 @@ public class BlogPost extends IDEntity {
 		this.blogCategory = blogCategory;
 	}
 
-	public String getBlogUser() {
-		return blogUser;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setBlogUser(String blogUser) {
-		this.blogUser = blogUser;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
+
 
 }

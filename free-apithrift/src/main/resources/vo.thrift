@@ -16,10 +16,11 @@ struct BlogCommentVO {
 	1:string id;// mongodb id
 	2:string content; // 评论内容
 	3:string createTime; // 评论时间
-	4:string userId;// 用户id 如果userId为-1:游客 0:匿名用户 (nick 也会跟着更改)
+	4:string fromUserId;// 用户id 如果userId为-1:游客 0:匿名用户 (nick 也会跟着更改)
 	5:string postsId;// 博客id
 	6:string nick; // 用户昵称
 	7:string replyIp;// 回复者的IP地址
+	8:string toUserId;// 评论写博客的用户
 }
 
 /**
@@ -37,11 +38,26 @@ struct BlogPostVO {
 	9: string updateTime;// 博客更新时间
 	10: string blogNick;// 博客发布人昵称(冗余数据)
 	11: string blogCategory;// 博客所属分类
-	12: string blogUser;// 用户发的博客
+	12: string userId;// 用户发的博客
 }
-
 /**
- * 用户传输实体类
+ * 登录用户传输实体类
+ */
+struct SysUserVO{
+	1: string id;//用户id
+	2: string account;// 用户帐号
+	3: string password;// 用户密码
+	4: string displayName;// 用户真实姓名
+	5: string nick;// 博客用户昵称
+	6: string email;// 博客用户邮箱
+	7: i32 sex;// 博客用户性别(-1:未知,0:男,1女)
+	8: i32 age;// 博客用户年龄(-1:未知)
+	9: i32 status;// 博客用户状态 (0:禁用,1:正常, ...)
+	10: string autograph;// 博客用户个性签名
+	11: string createTime;// 博客用户创建时间
+}
+/**
+ * 登录用户传输实体类
  */
 struct SSOUserVO{
 	1: string id;//用户id

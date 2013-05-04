@@ -1,6 +1,6 @@
 package com.mkfree.apiservice.service.permission;
 
-import com.mkfree.apiservice.domain.SysUser;
+import com.mkfree.apithrift.vo.SysUserVO;
 
 /**
  * 系统用户服务接口
@@ -18,5 +18,13 @@ public interface SysUserService {
 	 * @param password
 	 * @return
 	 */
-	public SysUser getUserByAccountAndPassword(String account, String password);
+	public SysUserVO findByAccountAndPassword(String account, String password);
+
+	/**
+	 * 通过用户帐号去查找用户(用户帐号是唯一的)
+	 * 
+	 * @param account
+	 * @return
+	 */
+	public SysUserVO findByAccount(String account);
 }

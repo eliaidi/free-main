@@ -83,6 +83,13 @@ public class ApiService {
     public List<com.mkfree.apithrift.vo.BlogPostVO> findBlogPostByIds(List<String> ids) throws org.apache.thrift.TException;
 
     /**
+     * 获取用户的文章总数
+     * 
+     * @param userId
+     */
+    public long findBlogPostTotalByUserId(String userId) throws org.apache.thrift.TException;
+
+    /**
      * 获取博客分页数据
      * 
      * @param pageNo
@@ -103,6 +110,14 @@ public class ApiService {
      * @param blogCommentVO
      */
     public com.mkfree.apithrift.vo.BlogCommentVO saveBlogComment(com.mkfree.apithrift.vo.BlogCommentVO blogCommentVO) throws org.apache.thrift.TException;
+
+    /**
+     * 获取用户的最新评论
+     * 
+     * @param userId
+     * @param num
+     */
+    public List<com.mkfree.apithrift.vo.BlogCommentVO> findByUserIdOrderByCreateTime(String userId, int num) throws org.apache.thrift.TException;
 
     /**
      * 搜索博客
@@ -140,6 +155,13 @@ public class ApiService {
      */
     public com.mkfree.apithrift.vo.SSOUserVO loginByTicket(String ticketValue) throws org.apache.thrift.TException;
 
+    /**
+     * 通过用户帐号查询一个用户
+     * 
+     * @param account
+     */
+    public com.mkfree.apithrift.vo.SysUserVO findUserByAccount(String account) throws org.apache.thrift.TException;
+
   }
 
   public interface AsyncIface extends com.mkfree.apithrift.BaseService .AsyncIface {
@@ -156,11 +178,15 @@ public class ApiService {
 
     public void findBlogPostByIds(List<String> ids, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.findBlogPostByIds_call> resultHandler) throws org.apache.thrift.TException;
 
+    public void findBlogPostTotalByUserId(String userId, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.findBlogPostTotalByUserId_call> resultHandler) throws org.apache.thrift.TException;
+
     public void getBlogPostPage(int pageNo, int pageSize, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.getBlogPostPage_call> resultHandler) throws org.apache.thrift.TException;
 
     public void findBlogCommentByPostsId(String postId, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.findBlogCommentByPostsId_call> resultHandler) throws org.apache.thrift.TException;
 
     public void saveBlogComment(com.mkfree.apithrift.vo.BlogCommentVO blogCommentVO, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.saveBlogComment_call> resultHandler) throws org.apache.thrift.TException;
+
+    public void findByUserIdOrderByCreateTime(String userId, int num, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.findByUserIdOrderByCreateTime_call> resultHandler) throws org.apache.thrift.TException;
 
     public void search(String q, int startIndex, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.search_call> resultHandler) throws org.apache.thrift.TException;
 
@@ -171,6 +197,8 @@ public class ApiService {
     public void loginByAccountAndPassword(String account, String password, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.loginByAccountAndPassword_call> resultHandler) throws org.apache.thrift.TException;
 
     public void loginByTicket(String ticketValue, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.loginByTicket_call> resultHandler) throws org.apache.thrift.TException;
+
+    public void findUserByAccount(String account, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.findUserByAccount_call> resultHandler) throws org.apache.thrift.TException;
 
   }
 
@@ -335,6 +363,29 @@ public class ApiService {
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "findBlogPostByIds failed: unknown result");
     }
 
+    public long findBlogPostTotalByUserId(String userId) throws org.apache.thrift.TException
+    {
+      send_findBlogPostTotalByUserId(userId);
+      return recv_findBlogPostTotalByUserId();
+    }
+
+    public void send_findBlogPostTotalByUserId(String userId) throws org.apache.thrift.TException
+    {
+      findBlogPostTotalByUserId_args args = new findBlogPostTotalByUserId_args();
+      args.setUserId(userId);
+      sendBase("findBlogPostTotalByUserId", args);
+    }
+
+    public long recv_findBlogPostTotalByUserId() throws org.apache.thrift.TException
+    {
+      findBlogPostTotalByUserId_result result = new findBlogPostTotalByUserId_result();
+      receiveBase(result, "findBlogPostTotalByUserId");
+      if (result.isSetSuccess()) {
+        return result.success;
+      }
+      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "findBlogPostTotalByUserId failed: unknown result");
+    }
+
     public com.mkfree.apithrift.vo.PaginationVO getBlogPostPage(int pageNo, int pageSize) throws org.apache.thrift.TException
     {
       send_getBlogPostPage(pageNo, pageSize);
@@ -403,6 +454,30 @@ public class ApiService {
         return result.success;
       }
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "saveBlogComment failed: unknown result");
+    }
+
+    public List<com.mkfree.apithrift.vo.BlogCommentVO> findByUserIdOrderByCreateTime(String userId, int num) throws org.apache.thrift.TException
+    {
+      send_findByUserIdOrderByCreateTime(userId, num);
+      return recv_findByUserIdOrderByCreateTime();
+    }
+
+    public void send_findByUserIdOrderByCreateTime(String userId, int num) throws org.apache.thrift.TException
+    {
+      findByUserIdOrderByCreateTime_args args = new findByUserIdOrderByCreateTime_args();
+      args.setUserId(userId);
+      args.setNum(num);
+      sendBase("findByUserIdOrderByCreateTime", args);
+    }
+
+    public List<com.mkfree.apithrift.vo.BlogCommentVO> recv_findByUserIdOrderByCreateTime() throws org.apache.thrift.TException
+    {
+      findByUserIdOrderByCreateTime_result result = new findByUserIdOrderByCreateTime_result();
+      receiveBase(result, "findByUserIdOrderByCreateTime");
+      if (result.isSetSuccess()) {
+        return result.success;
+      }
+      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "findByUserIdOrderByCreateTime failed: unknown result");
     }
 
     public com.mkfree.apithrift.vo.SearchResultVO search(String q, int startIndex) throws org.apache.thrift.TException
@@ -517,6 +592,29 @@ public class ApiService {
         return result.success;
       }
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "loginByTicket failed: unknown result");
+    }
+
+    public com.mkfree.apithrift.vo.SysUserVO findUserByAccount(String account) throws org.apache.thrift.TException
+    {
+      send_findUserByAccount(account);
+      return recv_findUserByAccount();
+    }
+
+    public void send_findUserByAccount(String account) throws org.apache.thrift.TException
+    {
+      findUserByAccount_args args = new findUserByAccount_args();
+      args.setAccount(account);
+      sendBase("findUserByAccount", args);
+    }
+
+    public com.mkfree.apithrift.vo.SysUserVO recv_findUserByAccount() throws org.apache.thrift.TException
+    {
+      findUserByAccount_result result = new findUserByAccount_result();
+      receiveBase(result, "findUserByAccount");
+      if (result.isSetSuccess()) {
+        return result.success;
+      }
+      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "findUserByAccount failed: unknown result");
     }
 
   }
@@ -747,6 +845,38 @@ public class ApiService {
       }
     }
 
+    public void findBlogPostTotalByUserId(String userId, org.apache.thrift.async.AsyncMethodCallback<findBlogPostTotalByUserId_call> resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      findBlogPostTotalByUserId_call method_call = new findBlogPostTotalByUserId_call(userId, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class findBlogPostTotalByUserId_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private String userId;
+      public findBlogPostTotalByUserId_call(String userId, org.apache.thrift.async.AsyncMethodCallback<findBlogPostTotalByUserId_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.userId = userId;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("findBlogPostTotalByUserId", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        findBlogPostTotalByUserId_args args = new findBlogPostTotalByUserId_args();
+        args.setUserId(userId);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public long getResult() throws org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return (new Client(prot)).recv_findBlogPostTotalByUserId();
+      }
+    }
+
     public void getBlogPostPage(int pageNo, int pageSize, org.apache.thrift.async.AsyncMethodCallback<getBlogPostPage_call> resultHandler) throws org.apache.thrift.TException {
       checkReady();
       getBlogPostPage_call method_call = new getBlogPostPage_call(pageNo, pageSize, resultHandler, this, ___protocolFactory, ___transport);
@@ -843,6 +973,41 @@ public class ApiService {
         org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
         org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
         return (new Client(prot)).recv_saveBlogComment();
+      }
+    }
+
+    public void findByUserIdOrderByCreateTime(String userId, int num, org.apache.thrift.async.AsyncMethodCallback<findByUserIdOrderByCreateTime_call> resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      findByUserIdOrderByCreateTime_call method_call = new findByUserIdOrderByCreateTime_call(userId, num, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class findByUserIdOrderByCreateTime_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private String userId;
+      private int num;
+      public findByUserIdOrderByCreateTime_call(String userId, int num, org.apache.thrift.async.AsyncMethodCallback<findByUserIdOrderByCreateTime_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.userId = userId;
+        this.num = num;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("findByUserIdOrderByCreateTime", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        findByUserIdOrderByCreateTime_args args = new findByUserIdOrderByCreateTime_args();
+        args.setUserId(userId);
+        args.setNum(num);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public List<com.mkfree.apithrift.vo.BlogCommentVO> getResult() throws org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return (new Client(prot)).recv_findByUserIdOrderByCreateTime();
       }
     }
 
@@ -1012,6 +1177,38 @@ public class ApiService {
       }
     }
 
+    public void findUserByAccount(String account, org.apache.thrift.async.AsyncMethodCallback<findUserByAccount_call> resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      findUserByAccount_call method_call = new findUserByAccount_call(account, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class findUserByAccount_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private String account;
+      public findUserByAccount_call(String account, org.apache.thrift.async.AsyncMethodCallback<findUserByAccount_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.account = account;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("findUserByAccount", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        findUserByAccount_args args = new findUserByAccount_args();
+        args.setAccount(account);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public com.mkfree.apithrift.vo.SysUserVO getResult() throws org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return (new Client(prot)).recv_findUserByAccount();
+      }
+    }
+
   }
 
   public static class Processor<I extends Iface> extends com.mkfree.apithrift.BaseService.Processor<I> implements org.apache.thrift.TProcessor {
@@ -1031,14 +1228,17 @@ public class ApiService {
       processMap.put("findUpNextPost", new findUpNextPost());
       processMap.put("findBlogPostByType", new findBlogPostByType());
       processMap.put("findBlogPostByIds", new findBlogPostByIds());
+      processMap.put("findBlogPostTotalByUserId", new findBlogPostTotalByUserId());
       processMap.put("getBlogPostPage", new getBlogPostPage());
       processMap.put("findBlogCommentByPostsId", new findBlogCommentByPostsId());
       processMap.put("saveBlogComment", new saveBlogComment());
+      processMap.put("findByUserIdOrderByCreateTime", new findByUserIdOrderByCreateTime());
       processMap.put("search", new search());
       processMap.put("createIndex", new createIndex());
       processMap.put("deleteIndexByType", new deleteIndexByType());
       processMap.put("loginByAccountAndPassword", new loginByAccountAndPassword());
       processMap.put("loginByTicket", new loginByTicket());
+      processMap.put("findUserByAccount", new findUserByAccount());
       return processMap;
     }
 
@@ -1162,6 +1362,27 @@ public class ApiService {
       }
     }
 
+    public static class findBlogPostTotalByUserId<I extends Iface> extends org.apache.thrift.ProcessFunction<I, findBlogPostTotalByUserId_args> {
+      public findBlogPostTotalByUserId() {
+        super("findBlogPostTotalByUserId");
+      }
+
+      public findBlogPostTotalByUserId_args getEmptyArgsInstance() {
+        return new findBlogPostTotalByUserId_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public findBlogPostTotalByUserId_result getResult(I iface, findBlogPostTotalByUserId_args args) throws org.apache.thrift.TException {
+        findBlogPostTotalByUserId_result result = new findBlogPostTotalByUserId_result();
+        result.success = iface.findBlogPostTotalByUserId(args.userId);
+        result.setSuccessIsSet(true);
+        return result;
+      }
+    }
+
     public static class getBlogPostPage<I extends Iface> extends org.apache.thrift.ProcessFunction<I, getBlogPostPage_args> {
       public getBlogPostPage() {
         super("getBlogPostPage");
@@ -1218,6 +1439,26 @@ public class ApiService {
       public saveBlogComment_result getResult(I iface, saveBlogComment_args args) throws org.apache.thrift.TException {
         saveBlogComment_result result = new saveBlogComment_result();
         result.success = iface.saveBlogComment(args.blogCommentVO);
+        return result;
+      }
+    }
+
+    public static class findByUserIdOrderByCreateTime<I extends Iface> extends org.apache.thrift.ProcessFunction<I, findByUserIdOrderByCreateTime_args> {
+      public findByUserIdOrderByCreateTime() {
+        super("findByUserIdOrderByCreateTime");
+      }
+
+      public findByUserIdOrderByCreateTime_args getEmptyArgsInstance() {
+        return new findByUserIdOrderByCreateTime_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public findByUserIdOrderByCreateTime_result getResult(I iface, findByUserIdOrderByCreateTime_args args) throws org.apache.thrift.TException {
+        findByUserIdOrderByCreateTime_result result = new findByUserIdOrderByCreateTime_result();
+        result.success = iface.findByUserIdOrderByCreateTime(args.userId, args.num);
         return result;
       }
     }
@@ -1319,6 +1560,26 @@ public class ApiService {
       public loginByTicket_result getResult(I iface, loginByTicket_args args) throws org.apache.thrift.TException {
         loginByTicket_result result = new loginByTicket_result();
         result.success = iface.loginByTicket(args.ticketValue);
+        return result;
+      }
+    }
+
+    public static class findUserByAccount<I extends Iface> extends org.apache.thrift.ProcessFunction<I, findUserByAccount_args> {
+      public findUserByAccount() {
+        super("findUserByAccount");
+      }
+
+      public findUserByAccount_args getEmptyArgsInstance() {
+        return new findUserByAccount_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public findUserByAccount_result getResult(I iface, findUserByAccount_args args) throws org.apache.thrift.TException {
+        findUserByAccount_result result = new findUserByAccount_result();
+        result.success = iface.findUserByAccount(args.account);
         return result;
       }
     }
@@ -6281,6 +6542,714 @@ public class ApiService {
 
   }
 
+  public static class findBlogPostTotalByUserId_args implements org.apache.thrift.TBase<findBlogPostTotalByUserId_args, findBlogPostTotalByUserId_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("findBlogPostTotalByUserId_args");
+
+    private static final org.apache.thrift.protocol.TField USER_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("userId", org.apache.thrift.protocol.TType.STRING, (short)1);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new findBlogPostTotalByUserId_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new findBlogPostTotalByUserId_argsTupleSchemeFactory());
+    }
+
+    public String userId; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      USER_ID((short)1, "userId");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // USER_ID
+            return USER_ID;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.USER_ID, new org.apache.thrift.meta_data.FieldMetaData("userId", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(findBlogPostTotalByUserId_args.class, metaDataMap);
+    }
+
+    public findBlogPostTotalByUserId_args() {
+    }
+
+    public findBlogPostTotalByUserId_args(
+      String userId)
+    {
+      this();
+      this.userId = userId;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public findBlogPostTotalByUserId_args(findBlogPostTotalByUserId_args other) {
+      if (other.isSetUserId()) {
+        this.userId = other.userId;
+      }
+    }
+
+    public findBlogPostTotalByUserId_args deepCopy() {
+      return new findBlogPostTotalByUserId_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.userId = null;
+    }
+
+    public String getUserId() {
+      return this.userId;
+    }
+
+    public findBlogPostTotalByUserId_args setUserId(String userId) {
+      this.userId = userId;
+      return this;
+    }
+
+    public void unsetUserId() {
+      this.userId = null;
+    }
+
+    /** Returns true if field userId is set (has been assigned a value) and false otherwise */
+    public boolean isSetUserId() {
+      return this.userId != null;
+    }
+
+    public void setUserIdIsSet(boolean value) {
+      if (!value) {
+        this.userId = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case USER_ID:
+        if (value == null) {
+          unsetUserId();
+        } else {
+          setUserId((String)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case USER_ID:
+        return getUserId();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case USER_ID:
+        return isSetUserId();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof findBlogPostTotalByUserId_args)
+        return this.equals((findBlogPostTotalByUserId_args)that);
+      return false;
+    }
+
+    public boolean equals(findBlogPostTotalByUserId_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_userId = true && this.isSetUserId();
+      boolean that_present_userId = true && that.isSetUserId();
+      if (this_present_userId || that_present_userId) {
+        if (!(this_present_userId && that_present_userId))
+          return false;
+        if (!this.userId.equals(that.userId))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(findBlogPostTotalByUserId_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      findBlogPostTotalByUserId_args typedOther = (findBlogPostTotalByUserId_args)other;
+
+      lastComparison = Boolean.valueOf(isSetUserId()).compareTo(typedOther.isSetUserId());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetUserId()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.userId, typedOther.userId);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("findBlogPostTotalByUserId_args(");
+      boolean first = true;
+
+      sb.append("userId:");
+      if (this.userId == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.userId);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class findBlogPostTotalByUserId_argsStandardSchemeFactory implements SchemeFactory {
+      public findBlogPostTotalByUserId_argsStandardScheme getScheme() {
+        return new findBlogPostTotalByUserId_argsStandardScheme();
+      }
+    }
+
+    private static class findBlogPostTotalByUserId_argsStandardScheme extends StandardScheme<findBlogPostTotalByUserId_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, findBlogPostTotalByUserId_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // USER_ID
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.userId = iprot.readString();
+                struct.setUserIdIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, findBlogPostTotalByUserId_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.userId != null) {
+          oprot.writeFieldBegin(USER_ID_FIELD_DESC);
+          oprot.writeString(struct.userId);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class findBlogPostTotalByUserId_argsTupleSchemeFactory implements SchemeFactory {
+      public findBlogPostTotalByUserId_argsTupleScheme getScheme() {
+        return new findBlogPostTotalByUserId_argsTupleScheme();
+      }
+    }
+
+    private static class findBlogPostTotalByUserId_argsTupleScheme extends TupleScheme<findBlogPostTotalByUserId_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, findBlogPostTotalByUserId_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetUserId()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetUserId()) {
+          oprot.writeString(struct.userId);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, findBlogPostTotalByUserId_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.userId = iprot.readString();
+          struct.setUserIdIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class findBlogPostTotalByUserId_result implements org.apache.thrift.TBase<findBlogPostTotalByUserId_result, findBlogPostTotalByUserId_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("findBlogPostTotalByUserId_result");
+
+    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.I64, (short)0);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new findBlogPostTotalByUserId_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new findBlogPostTotalByUserId_resultTupleSchemeFactory());
+    }
+
+    public long success; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      SUCCESS((short)0, "success");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 0: // SUCCESS
+            return SUCCESS;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    private static final int __SUCCESS_ISSET_ID = 0;
+    private byte __isset_bitfield = 0;
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(findBlogPostTotalByUserId_result.class, metaDataMap);
+    }
+
+    public findBlogPostTotalByUserId_result() {
+    }
+
+    public findBlogPostTotalByUserId_result(
+      long success)
+    {
+      this();
+      this.success = success;
+      setSuccessIsSet(true);
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public findBlogPostTotalByUserId_result(findBlogPostTotalByUserId_result other) {
+      __isset_bitfield = other.__isset_bitfield;
+      this.success = other.success;
+    }
+
+    public findBlogPostTotalByUserId_result deepCopy() {
+      return new findBlogPostTotalByUserId_result(this);
+    }
+
+    @Override
+    public void clear() {
+      setSuccessIsSet(false);
+      this.success = 0;
+    }
+
+    public long getSuccess() {
+      return this.success;
+    }
+
+    public findBlogPostTotalByUserId_result setSuccess(long success) {
+      this.success = success;
+      setSuccessIsSet(true);
+      return this;
+    }
+
+    public void unsetSuccess() {
+      __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __SUCCESS_ISSET_ID);
+    }
+
+    /** Returns true if field success is set (has been assigned a value) and false otherwise */
+    public boolean isSetSuccess() {
+      return EncodingUtils.testBit(__isset_bitfield, __SUCCESS_ISSET_ID);
+    }
+
+    public void setSuccessIsSet(boolean value) {
+      __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __SUCCESS_ISSET_ID, value);
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case SUCCESS:
+        if (value == null) {
+          unsetSuccess();
+        } else {
+          setSuccess((Long)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case SUCCESS:
+        return Long.valueOf(getSuccess());
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case SUCCESS:
+        return isSetSuccess();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof findBlogPostTotalByUserId_result)
+        return this.equals((findBlogPostTotalByUserId_result)that);
+      return false;
+    }
+
+    public boolean equals(findBlogPostTotalByUserId_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_success = true;
+      boolean that_present_success = true;
+      if (this_present_success || that_present_success) {
+        if (!(this_present_success && that_present_success))
+          return false;
+        if (this.success != that.success)
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(findBlogPostTotalByUserId_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      findBlogPostTotalByUserId_result typedOther = (findBlogPostTotalByUserId_result)other;
+
+      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(typedOther.isSetSuccess());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSuccess()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, typedOther.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+      }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("findBlogPostTotalByUserId_result(");
+      boolean first = true;
+
+      sb.append("success:");
+      sb.append(this.success);
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        // it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
+        __isset_bitfield = 0;
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class findBlogPostTotalByUserId_resultStandardSchemeFactory implements SchemeFactory {
+      public findBlogPostTotalByUserId_resultStandardScheme getScheme() {
+        return new findBlogPostTotalByUserId_resultStandardScheme();
+      }
+    }
+
+    private static class findBlogPostTotalByUserId_resultStandardScheme extends StandardScheme<findBlogPostTotalByUserId_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, findBlogPostTotalByUserId_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 0: // SUCCESS
+              if (schemeField.type == org.apache.thrift.protocol.TType.I64) {
+                struct.success = iprot.readI64();
+                struct.setSuccessIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, findBlogPostTotalByUserId_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.isSetSuccess()) {
+          oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
+          oprot.writeI64(struct.success);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class findBlogPostTotalByUserId_resultTupleSchemeFactory implements SchemeFactory {
+      public findBlogPostTotalByUserId_resultTupleScheme getScheme() {
+        return new findBlogPostTotalByUserId_resultTupleScheme();
+      }
+    }
+
+    private static class findBlogPostTotalByUserId_resultTupleScheme extends TupleScheme<findBlogPostTotalByUserId_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, findBlogPostTotalByUserId_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetSuccess()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetSuccess()) {
+          oprot.writeI64(struct.success);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, findBlogPostTotalByUserId_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.success = iprot.readI64();
+          struct.setSuccessIsSet(true);
+        }
+      }
+    }
+
+  }
+
   public static class getBlogPostPage_args implements org.apache.thrift.TBase<getBlogPostPage_args, getBlogPostPage_args._Fields>, java.io.Serializable, Cloneable   {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getBlogPostPage_args");
 
@@ -8559,6 +9528,866 @@ public class ApiService {
         if (incoming.get(0)) {
           struct.success = new com.mkfree.apithrift.vo.BlogCommentVO();
           struct.success.read(iprot);
+          struct.setSuccessIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class findByUserIdOrderByCreateTime_args implements org.apache.thrift.TBase<findByUserIdOrderByCreateTime_args, findByUserIdOrderByCreateTime_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("findByUserIdOrderByCreateTime_args");
+
+    private static final org.apache.thrift.protocol.TField USER_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("userId", org.apache.thrift.protocol.TType.STRING, (short)1);
+    private static final org.apache.thrift.protocol.TField NUM_FIELD_DESC = new org.apache.thrift.protocol.TField("num", org.apache.thrift.protocol.TType.I32, (short)2);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new findByUserIdOrderByCreateTime_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new findByUserIdOrderByCreateTime_argsTupleSchemeFactory());
+    }
+
+    public String userId; // required
+    public int num; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      USER_ID((short)1, "userId"),
+      NUM((short)2, "num");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // USER_ID
+            return USER_ID;
+          case 2: // NUM
+            return NUM;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    private static final int __NUM_ISSET_ID = 0;
+    private byte __isset_bitfield = 0;
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.USER_ID, new org.apache.thrift.meta_data.FieldMetaData("userId", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.NUM, new org.apache.thrift.meta_data.FieldMetaData("num", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(findByUserIdOrderByCreateTime_args.class, metaDataMap);
+    }
+
+    public findByUserIdOrderByCreateTime_args() {
+    }
+
+    public findByUserIdOrderByCreateTime_args(
+      String userId,
+      int num)
+    {
+      this();
+      this.userId = userId;
+      this.num = num;
+      setNumIsSet(true);
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public findByUserIdOrderByCreateTime_args(findByUserIdOrderByCreateTime_args other) {
+      __isset_bitfield = other.__isset_bitfield;
+      if (other.isSetUserId()) {
+        this.userId = other.userId;
+      }
+      this.num = other.num;
+    }
+
+    public findByUserIdOrderByCreateTime_args deepCopy() {
+      return new findByUserIdOrderByCreateTime_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.userId = null;
+      setNumIsSet(false);
+      this.num = 0;
+    }
+
+    public String getUserId() {
+      return this.userId;
+    }
+
+    public findByUserIdOrderByCreateTime_args setUserId(String userId) {
+      this.userId = userId;
+      return this;
+    }
+
+    public void unsetUserId() {
+      this.userId = null;
+    }
+
+    /** Returns true if field userId is set (has been assigned a value) and false otherwise */
+    public boolean isSetUserId() {
+      return this.userId != null;
+    }
+
+    public void setUserIdIsSet(boolean value) {
+      if (!value) {
+        this.userId = null;
+      }
+    }
+
+    public int getNum() {
+      return this.num;
+    }
+
+    public findByUserIdOrderByCreateTime_args setNum(int num) {
+      this.num = num;
+      setNumIsSet(true);
+      return this;
+    }
+
+    public void unsetNum() {
+      __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __NUM_ISSET_ID);
+    }
+
+    /** Returns true if field num is set (has been assigned a value) and false otherwise */
+    public boolean isSetNum() {
+      return EncodingUtils.testBit(__isset_bitfield, __NUM_ISSET_ID);
+    }
+
+    public void setNumIsSet(boolean value) {
+      __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __NUM_ISSET_ID, value);
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case USER_ID:
+        if (value == null) {
+          unsetUserId();
+        } else {
+          setUserId((String)value);
+        }
+        break;
+
+      case NUM:
+        if (value == null) {
+          unsetNum();
+        } else {
+          setNum((Integer)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case USER_ID:
+        return getUserId();
+
+      case NUM:
+        return Integer.valueOf(getNum());
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case USER_ID:
+        return isSetUserId();
+      case NUM:
+        return isSetNum();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof findByUserIdOrderByCreateTime_args)
+        return this.equals((findByUserIdOrderByCreateTime_args)that);
+      return false;
+    }
+
+    public boolean equals(findByUserIdOrderByCreateTime_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_userId = true && this.isSetUserId();
+      boolean that_present_userId = true && that.isSetUserId();
+      if (this_present_userId || that_present_userId) {
+        if (!(this_present_userId && that_present_userId))
+          return false;
+        if (!this.userId.equals(that.userId))
+          return false;
+      }
+
+      boolean this_present_num = true;
+      boolean that_present_num = true;
+      if (this_present_num || that_present_num) {
+        if (!(this_present_num && that_present_num))
+          return false;
+        if (this.num != that.num)
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(findByUserIdOrderByCreateTime_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      findByUserIdOrderByCreateTime_args typedOther = (findByUserIdOrderByCreateTime_args)other;
+
+      lastComparison = Boolean.valueOf(isSetUserId()).compareTo(typedOther.isSetUserId());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetUserId()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.userId, typedOther.userId);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetNum()).compareTo(typedOther.isSetNum());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetNum()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.num, typedOther.num);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("findByUserIdOrderByCreateTime_args(");
+      boolean first = true;
+
+      sb.append("userId:");
+      if (this.userId == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.userId);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("num:");
+      sb.append(this.num);
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        // it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
+        __isset_bitfield = 0;
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class findByUserIdOrderByCreateTime_argsStandardSchemeFactory implements SchemeFactory {
+      public findByUserIdOrderByCreateTime_argsStandardScheme getScheme() {
+        return new findByUserIdOrderByCreateTime_argsStandardScheme();
+      }
+    }
+
+    private static class findByUserIdOrderByCreateTime_argsStandardScheme extends StandardScheme<findByUserIdOrderByCreateTime_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, findByUserIdOrderByCreateTime_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // USER_ID
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.userId = iprot.readString();
+                struct.setUserIdIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 2: // NUM
+              if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
+                struct.num = iprot.readI32();
+                struct.setNumIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, findByUserIdOrderByCreateTime_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.userId != null) {
+          oprot.writeFieldBegin(USER_ID_FIELD_DESC);
+          oprot.writeString(struct.userId);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldBegin(NUM_FIELD_DESC);
+        oprot.writeI32(struct.num);
+        oprot.writeFieldEnd();
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class findByUserIdOrderByCreateTime_argsTupleSchemeFactory implements SchemeFactory {
+      public findByUserIdOrderByCreateTime_argsTupleScheme getScheme() {
+        return new findByUserIdOrderByCreateTime_argsTupleScheme();
+      }
+    }
+
+    private static class findByUserIdOrderByCreateTime_argsTupleScheme extends TupleScheme<findByUserIdOrderByCreateTime_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, findByUserIdOrderByCreateTime_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetUserId()) {
+          optionals.set(0);
+        }
+        if (struct.isSetNum()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
+        if (struct.isSetUserId()) {
+          oprot.writeString(struct.userId);
+        }
+        if (struct.isSetNum()) {
+          oprot.writeI32(struct.num);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, findByUserIdOrderByCreateTime_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(2);
+        if (incoming.get(0)) {
+          struct.userId = iprot.readString();
+          struct.setUserIdIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.num = iprot.readI32();
+          struct.setNumIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class findByUserIdOrderByCreateTime_result implements org.apache.thrift.TBase<findByUserIdOrderByCreateTime_result, findByUserIdOrderByCreateTime_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("findByUserIdOrderByCreateTime_result");
+
+    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.LIST, (short)0);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new findByUserIdOrderByCreateTime_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new findByUserIdOrderByCreateTime_resultTupleSchemeFactory());
+    }
+
+    public List<com.mkfree.apithrift.vo.BlogCommentVO> success; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      SUCCESS((short)0, "success");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 0: // SUCCESS
+            return SUCCESS;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
+              new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, com.mkfree.apithrift.vo.BlogCommentVO.class))));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(findByUserIdOrderByCreateTime_result.class, metaDataMap);
+    }
+
+    public findByUserIdOrderByCreateTime_result() {
+    }
+
+    public findByUserIdOrderByCreateTime_result(
+      List<com.mkfree.apithrift.vo.BlogCommentVO> success)
+    {
+      this();
+      this.success = success;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public findByUserIdOrderByCreateTime_result(findByUserIdOrderByCreateTime_result other) {
+      if (other.isSetSuccess()) {
+        List<com.mkfree.apithrift.vo.BlogCommentVO> __this__success = new ArrayList<com.mkfree.apithrift.vo.BlogCommentVO>();
+        for (com.mkfree.apithrift.vo.BlogCommentVO other_element : other.success) {
+          __this__success.add(new com.mkfree.apithrift.vo.BlogCommentVO(other_element));
+        }
+        this.success = __this__success;
+      }
+    }
+
+    public findByUserIdOrderByCreateTime_result deepCopy() {
+      return new findByUserIdOrderByCreateTime_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.success = null;
+    }
+
+    public int getSuccessSize() {
+      return (this.success == null) ? 0 : this.success.size();
+    }
+
+    public java.util.Iterator<com.mkfree.apithrift.vo.BlogCommentVO> getSuccessIterator() {
+      return (this.success == null) ? null : this.success.iterator();
+    }
+
+    public void addToSuccess(com.mkfree.apithrift.vo.BlogCommentVO elem) {
+      if (this.success == null) {
+        this.success = new ArrayList<com.mkfree.apithrift.vo.BlogCommentVO>();
+      }
+      this.success.add(elem);
+    }
+
+    public List<com.mkfree.apithrift.vo.BlogCommentVO> getSuccess() {
+      return this.success;
+    }
+
+    public findByUserIdOrderByCreateTime_result setSuccess(List<com.mkfree.apithrift.vo.BlogCommentVO> success) {
+      this.success = success;
+      return this;
+    }
+
+    public void unsetSuccess() {
+      this.success = null;
+    }
+
+    /** Returns true if field success is set (has been assigned a value) and false otherwise */
+    public boolean isSetSuccess() {
+      return this.success != null;
+    }
+
+    public void setSuccessIsSet(boolean value) {
+      if (!value) {
+        this.success = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case SUCCESS:
+        if (value == null) {
+          unsetSuccess();
+        } else {
+          setSuccess((List<com.mkfree.apithrift.vo.BlogCommentVO>)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case SUCCESS:
+        return getSuccess();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case SUCCESS:
+        return isSetSuccess();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof findByUserIdOrderByCreateTime_result)
+        return this.equals((findByUserIdOrderByCreateTime_result)that);
+      return false;
+    }
+
+    public boolean equals(findByUserIdOrderByCreateTime_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_success = true && this.isSetSuccess();
+      boolean that_present_success = true && that.isSetSuccess();
+      if (this_present_success || that_present_success) {
+        if (!(this_present_success && that_present_success))
+          return false;
+        if (!this.success.equals(that.success))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(findByUserIdOrderByCreateTime_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      findByUserIdOrderByCreateTime_result typedOther = (findByUserIdOrderByCreateTime_result)other;
+
+      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(typedOther.isSetSuccess());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSuccess()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, typedOther.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+      }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("findByUserIdOrderByCreateTime_result(");
+      boolean first = true;
+
+      sb.append("success:");
+      if (this.success == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.success);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class findByUserIdOrderByCreateTime_resultStandardSchemeFactory implements SchemeFactory {
+      public findByUserIdOrderByCreateTime_resultStandardScheme getScheme() {
+        return new findByUserIdOrderByCreateTime_resultStandardScheme();
+      }
+    }
+
+    private static class findByUserIdOrderByCreateTime_resultStandardScheme extends StandardScheme<findByUserIdOrderByCreateTime_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, findByUserIdOrderByCreateTime_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 0: // SUCCESS
+              if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
+                {
+                  org.apache.thrift.protocol.TList _list42 = iprot.readListBegin();
+                  struct.success = new ArrayList<com.mkfree.apithrift.vo.BlogCommentVO>(_list42.size);
+                  for (int _i43 = 0; _i43 < _list42.size; ++_i43)
+                  {
+                    com.mkfree.apithrift.vo.BlogCommentVO _elem44; // required
+                    _elem44 = new com.mkfree.apithrift.vo.BlogCommentVO();
+                    _elem44.read(iprot);
+                    struct.success.add(_elem44);
+                  }
+                  iprot.readListEnd();
+                }
+                struct.setSuccessIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, findByUserIdOrderByCreateTime_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.success != null) {
+          oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
+          {
+            oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
+            for (com.mkfree.apithrift.vo.BlogCommentVO _iter45 : struct.success)
+            {
+              _iter45.write(oprot);
+            }
+            oprot.writeListEnd();
+          }
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class findByUserIdOrderByCreateTime_resultTupleSchemeFactory implements SchemeFactory {
+      public findByUserIdOrderByCreateTime_resultTupleScheme getScheme() {
+        return new findByUserIdOrderByCreateTime_resultTupleScheme();
+      }
+    }
+
+    private static class findByUserIdOrderByCreateTime_resultTupleScheme extends TupleScheme<findByUserIdOrderByCreateTime_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, findByUserIdOrderByCreateTime_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetSuccess()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetSuccess()) {
+          {
+            oprot.writeI32(struct.success.size());
+            for (com.mkfree.apithrift.vo.BlogCommentVO _iter46 : struct.success)
+            {
+              _iter46.write(oprot);
+            }
+          }
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, findByUserIdOrderByCreateTime_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          {
+            org.apache.thrift.protocol.TList _list47 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<com.mkfree.apithrift.vo.BlogCommentVO>(_list47.size);
+            for (int _i48 = 0; _i48 < _list47.size; ++_i48)
+            {
+              com.mkfree.apithrift.vo.BlogCommentVO _elem49; // required
+              _elem49 = new com.mkfree.apithrift.vo.BlogCommentVO();
+              _elem49.read(iprot);
+              struct.success.add(_elem49);
+            }
+          }
           struct.setSuccessIsSet(true);
         }
       }
@@ -12195,6 +14024,719 @@ public class ApiService {
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
           struct.success = new com.mkfree.apithrift.vo.SSOUserVO();
+          struct.success.read(iprot);
+          struct.setSuccessIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class findUserByAccount_args implements org.apache.thrift.TBase<findUserByAccount_args, findUserByAccount_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("findUserByAccount_args");
+
+    private static final org.apache.thrift.protocol.TField ACCOUNT_FIELD_DESC = new org.apache.thrift.protocol.TField("account", org.apache.thrift.protocol.TType.STRING, (short)1);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new findUserByAccount_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new findUserByAccount_argsTupleSchemeFactory());
+    }
+
+    public String account; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      ACCOUNT((short)1, "account");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // ACCOUNT
+            return ACCOUNT;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.ACCOUNT, new org.apache.thrift.meta_data.FieldMetaData("account", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(findUserByAccount_args.class, metaDataMap);
+    }
+
+    public findUserByAccount_args() {
+    }
+
+    public findUserByAccount_args(
+      String account)
+    {
+      this();
+      this.account = account;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public findUserByAccount_args(findUserByAccount_args other) {
+      if (other.isSetAccount()) {
+        this.account = other.account;
+      }
+    }
+
+    public findUserByAccount_args deepCopy() {
+      return new findUserByAccount_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.account = null;
+    }
+
+    public String getAccount() {
+      return this.account;
+    }
+
+    public findUserByAccount_args setAccount(String account) {
+      this.account = account;
+      return this;
+    }
+
+    public void unsetAccount() {
+      this.account = null;
+    }
+
+    /** Returns true if field account is set (has been assigned a value) and false otherwise */
+    public boolean isSetAccount() {
+      return this.account != null;
+    }
+
+    public void setAccountIsSet(boolean value) {
+      if (!value) {
+        this.account = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case ACCOUNT:
+        if (value == null) {
+          unsetAccount();
+        } else {
+          setAccount((String)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case ACCOUNT:
+        return getAccount();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case ACCOUNT:
+        return isSetAccount();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof findUserByAccount_args)
+        return this.equals((findUserByAccount_args)that);
+      return false;
+    }
+
+    public boolean equals(findUserByAccount_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_account = true && this.isSetAccount();
+      boolean that_present_account = true && that.isSetAccount();
+      if (this_present_account || that_present_account) {
+        if (!(this_present_account && that_present_account))
+          return false;
+        if (!this.account.equals(that.account))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(findUserByAccount_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      findUserByAccount_args typedOther = (findUserByAccount_args)other;
+
+      lastComparison = Boolean.valueOf(isSetAccount()).compareTo(typedOther.isSetAccount());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetAccount()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.account, typedOther.account);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("findUserByAccount_args(");
+      boolean first = true;
+
+      sb.append("account:");
+      if (this.account == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.account);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class findUserByAccount_argsStandardSchemeFactory implements SchemeFactory {
+      public findUserByAccount_argsStandardScheme getScheme() {
+        return new findUserByAccount_argsStandardScheme();
+      }
+    }
+
+    private static class findUserByAccount_argsStandardScheme extends StandardScheme<findUserByAccount_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, findUserByAccount_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // ACCOUNT
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.account = iprot.readString();
+                struct.setAccountIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, findUserByAccount_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.account != null) {
+          oprot.writeFieldBegin(ACCOUNT_FIELD_DESC);
+          oprot.writeString(struct.account);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class findUserByAccount_argsTupleSchemeFactory implements SchemeFactory {
+      public findUserByAccount_argsTupleScheme getScheme() {
+        return new findUserByAccount_argsTupleScheme();
+      }
+    }
+
+    private static class findUserByAccount_argsTupleScheme extends TupleScheme<findUserByAccount_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, findUserByAccount_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetAccount()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetAccount()) {
+          oprot.writeString(struct.account);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, findUserByAccount_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.account = iprot.readString();
+          struct.setAccountIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class findUserByAccount_result implements org.apache.thrift.TBase<findUserByAccount_result, findUserByAccount_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("findUserByAccount_result");
+
+    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.STRUCT, (short)0);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new findUserByAccount_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new findUserByAccount_resultTupleSchemeFactory());
+    }
+
+    public com.mkfree.apithrift.vo.SysUserVO success; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      SUCCESS((short)0, "success");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 0: // SUCCESS
+            return SUCCESS;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, com.mkfree.apithrift.vo.SysUserVO.class)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(findUserByAccount_result.class, metaDataMap);
+    }
+
+    public findUserByAccount_result() {
+    }
+
+    public findUserByAccount_result(
+      com.mkfree.apithrift.vo.SysUserVO success)
+    {
+      this();
+      this.success = success;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public findUserByAccount_result(findUserByAccount_result other) {
+      if (other.isSetSuccess()) {
+        this.success = new com.mkfree.apithrift.vo.SysUserVO(other.success);
+      }
+    }
+
+    public findUserByAccount_result deepCopy() {
+      return new findUserByAccount_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.success = null;
+    }
+
+    public com.mkfree.apithrift.vo.SysUserVO getSuccess() {
+      return this.success;
+    }
+
+    public findUserByAccount_result setSuccess(com.mkfree.apithrift.vo.SysUserVO success) {
+      this.success = success;
+      return this;
+    }
+
+    public void unsetSuccess() {
+      this.success = null;
+    }
+
+    /** Returns true if field success is set (has been assigned a value) and false otherwise */
+    public boolean isSetSuccess() {
+      return this.success != null;
+    }
+
+    public void setSuccessIsSet(boolean value) {
+      if (!value) {
+        this.success = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case SUCCESS:
+        if (value == null) {
+          unsetSuccess();
+        } else {
+          setSuccess((com.mkfree.apithrift.vo.SysUserVO)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case SUCCESS:
+        return getSuccess();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case SUCCESS:
+        return isSetSuccess();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof findUserByAccount_result)
+        return this.equals((findUserByAccount_result)that);
+      return false;
+    }
+
+    public boolean equals(findUserByAccount_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_success = true && this.isSetSuccess();
+      boolean that_present_success = true && that.isSetSuccess();
+      if (this_present_success || that_present_success) {
+        if (!(this_present_success && that_present_success))
+          return false;
+        if (!this.success.equals(that.success))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(findUserByAccount_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      findUserByAccount_result typedOther = (findUserByAccount_result)other;
+
+      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(typedOther.isSetSuccess());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSuccess()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, typedOther.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+      }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("findUserByAccount_result(");
+      boolean first = true;
+
+      sb.append("success:");
+      if (this.success == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.success);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+      if (success != null) {
+        success.validate();
+      }
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class findUserByAccount_resultStandardSchemeFactory implements SchemeFactory {
+      public findUserByAccount_resultStandardScheme getScheme() {
+        return new findUserByAccount_resultStandardScheme();
+      }
+    }
+
+    private static class findUserByAccount_resultStandardScheme extends StandardScheme<findUserByAccount_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, findUserByAccount_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 0: // SUCCESS
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.success = new com.mkfree.apithrift.vo.SysUserVO();
+                struct.success.read(iprot);
+                struct.setSuccessIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, findUserByAccount_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.success != null) {
+          oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
+          struct.success.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class findUserByAccount_resultTupleSchemeFactory implements SchemeFactory {
+      public findUserByAccount_resultTupleScheme getScheme() {
+        return new findUserByAccount_resultTupleScheme();
+      }
+    }
+
+    private static class findUserByAccount_resultTupleScheme extends TupleScheme<findUserByAccount_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, findUserByAccount_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetSuccess()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetSuccess()) {
+          struct.success.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, findUserByAccount_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.success = new com.mkfree.apithrift.vo.SysUserVO();
           struct.success.read(iprot);
           struct.setSuccessIsSet(true);
         }

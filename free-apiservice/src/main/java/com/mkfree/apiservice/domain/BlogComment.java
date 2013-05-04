@@ -19,17 +19,26 @@ public class BlogComment extends IDEntity {
 
 	private String content; // 评论内容
 	private Date createTime; // 评论时间
-	private String userId;// 用户id 如果userId为-1:游客 0:匿名用户 (nick 也会跟着更改)
+	private String fromUserId;// 评论用户id 如果userId为-1:游客 0:匿名用户 (nick 也会跟着更改)
 	private String postsId;// 博客id
 	private String nick; // 用户昵称
 	private String replyIp;// 回复者的IP地址
+	private String toUserId;// 评论写博客的用户
 
-	public String getUserId() {
-		return userId;
+	public String getFromUserId() {
+		return fromUserId;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setFromUserId(String fromUserId) {
+		this.fromUserId = fromUserId;
+	}
+
+	public String getToUserId() {
+		return toUserId;
+	}
+
+	public void setToUserId(String toUserId) {
+		this.toUserId = toUserId;
 	}
 
 	public String getPostsId() {

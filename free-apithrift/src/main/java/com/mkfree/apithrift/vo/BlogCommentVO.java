@@ -39,10 +39,11 @@ public class BlogCommentVO implements org.apache.thrift.TBase<BlogCommentVO, Blo
   private static final org.apache.thrift.protocol.TField ID_FIELD_DESC = new org.apache.thrift.protocol.TField("id", org.apache.thrift.protocol.TType.STRING, (short)1);
   private static final org.apache.thrift.protocol.TField CONTENT_FIELD_DESC = new org.apache.thrift.protocol.TField("content", org.apache.thrift.protocol.TType.STRING, (short)2);
   private static final org.apache.thrift.protocol.TField CREATE_TIME_FIELD_DESC = new org.apache.thrift.protocol.TField("createTime", org.apache.thrift.protocol.TType.STRING, (short)3);
-  private static final org.apache.thrift.protocol.TField USER_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("userId", org.apache.thrift.protocol.TType.STRING, (short)4);
+  private static final org.apache.thrift.protocol.TField FROM_USER_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("fromUserId", org.apache.thrift.protocol.TType.STRING, (short)4);
   private static final org.apache.thrift.protocol.TField POSTS_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("postsId", org.apache.thrift.protocol.TType.STRING, (short)5);
   private static final org.apache.thrift.protocol.TField NICK_FIELD_DESC = new org.apache.thrift.protocol.TField("nick", org.apache.thrift.protocol.TType.STRING, (short)6);
   private static final org.apache.thrift.protocol.TField REPLY_IP_FIELD_DESC = new org.apache.thrift.protocol.TField("replyIp", org.apache.thrift.protocol.TType.STRING, (short)7);
+  private static final org.apache.thrift.protocol.TField TO_USER_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("toUserId", org.apache.thrift.protocol.TType.STRING, (short)8);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
@@ -53,20 +54,22 @@ public class BlogCommentVO implements org.apache.thrift.TBase<BlogCommentVO, Blo
   public String id; // required
   public String content; // required
   public String createTime; // required
-  public String userId; // required
+  public String fromUserId; // required
   public String postsId; // required
   public String nick; // required
   public String replyIp; // required
+  public String toUserId; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     ID((short)1, "id"),
     CONTENT((short)2, "content"),
     CREATE_TIME((short)3, "createTime"),
-    USER_ID((short)4, "userId"),
+    FROM_USER_ID((short)4, "fromUserId"),
     POSTS_ID((short)5, "postsId"),
     NICK((short)6, "nick"),
-    REPLY_IP((short)7, "replyIp");
+    REPLY_IP((short)7, "replyIp"),
+    TO_USER_ID((short)8, "toUserId");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -87,14 +90,16 @@ public class BlogCommentVO implements org.apache.thrift.TBase<BlogCommentVO, Blo
           return CONTENT;
         case 3: // CREATE_TIME
           return CREATE_TIME;
-        case 4: // USER_ID
-          return USER_ID;
+        case 4: // FROM_USER_ID
+          return FROM_USER_ID;
         case 5: // POSTS_ID
           return POSTS_ID;
         case 6: // NICK
           return NICK;
         case 7: // REPLY_IP
           return REPLY_IP;
+        case 8: // TO_USER_ID
+          return TO_USER_ID;
         default:
           return null;
       }
@@ -144,13 +149,15 @@ public class BlogCommentVO implements org.apache.thrift.TBase<BlogCommentVO, Blo
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.CREATE_TIME, new org.apache.thrift.meta_data.FieldMetaData("createTime", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.USER_ID, new org.apache.thrift.meta_data.FieldMetaData("userId", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+    tmpMap.put(_Fields.FROM_USER_ID, new org.apache.thrift.meta_data.FieldMetaData("fromUserId", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.POSTS_ID, new org.apache.thrift.meta_data.FieldMetaData("postsId", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.NICK, new org.apache.thrift.meta_data.FieldMetaData("nick", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.REPLY_IP, new org.apache.thrift.meta_data.FieldMetaData("replyIp", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.TO_USER_ID, new org.apache.thrift.meta_data.FieldMetaData("toUserId", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(BlogCommentVO.class, metaDataMap);
@@ -163,19 +170,21 @@ public class BlogCommentVO implements org.apache.thrift.TBase<BlogCommentVO, Blo
     String id,
     String content,
     String createTime,
-    String userId,
+    String fromUserId,
     String postsId,
     String nick,
-    String replyIp)
+    String replyIp,
+    String toUserId)
   {
     this();
     this.id = id;
     this.content = content;
     this.createTime = createTime;
-    this.userId = userId;
+    this.fromUserId = fromUserId;
     this.postsId = postsId;
     this.nick = nick;
     this.replyIp = replyIp;
+    this.toUserId = toUserId;
   }
 
   /**
@@ -191,8 +200,8 @@ public class BlogCommentVO implements org.apache.thrift.TBase<BlogCommentVO, Blo
     if (other.isSetCreateTime()) {
       this.createTime = other.createTime;
     }
-    if (other.isSetUserId()) {
-      this.userId = other.userId;
+    if (other.isSetFromUserId()) {
+      this.fromUserId = other.fromUserId;
     }
     if (other.isSetPostsId()) {
       this.postsId = other.postsId;
@@ -202,6 +211,9 @@ public class BlogCommentVO implements org.apache.thrift.TBase<BlogCommentVO, Blo
     }
     if (other.isSetReplyIp()) {
       this.replyIp = other.replyIp;
+    }
+    if (other.isSetToUserId()) {
+      this.toUserId = other.toUserId;
     }
   }
 
@@ -214,10 +226,11 @@ public class BlogCommentVO implements org.apache.thrift.TBase<BlogCommentVO, Blo
     this.id = null;
     this.content = null;
     this.createTime = null;
-    this.userId = null;
+    this.fromUserId = null;
     this.postsId = null;
     this.nick = null;
     this.replyIp = null;
+    this.toUserId = null;
   }
 
   public String getId() {
@@ -292,27 +305,27 @@ public class BlogCommentVO implements org.apache.thrift.TBase<BlogCommentVO, Blo
     }
   }
 
-  public String getUserId() {
-    return this.userId;
+  public String getFromUserId() {
+    return this.fromUserId;
   }
 
-  public BlogCommentVO setUserId(String userId) {
-    this.userId = userId;
+  public BlogCommentVO setFromUserId(String fromUserId) {
+    this.fromUserId = fromUserId;
     return this;
   }
 
-  public void unsetUserId() {
-    this.userId = null;
+  public void unsetFromUserId() {
+    this.fromUserId = null;
   }
 
-  /** Returns true if field userId is set (has been assigned a value) and false otherwise */
-  public boolean isSetUserId() {
-    return this.userId != null;
+  /** Returns true if field fromUserId is set (has been assigned a value) and false otherwise */
+  public boolean isSetFromUserId() {
+    return this.fromUserId != null;
   }
 
-  public void setUserIdIsSet(boolean value) {
+  public void setFromUserIdIsSet(boolean value) {
     if (!value) {
-      this.userId = null;
+      this.fromUserId = null;
     }
   }
 
@@ -388,6 +401,30 @@ public class BlogCommentVO implements org.apache.thrift.TBase<BlogCommentVO, Blo
     }
   }
 
+  public String getToUserId() {
+    return this.toUserId;
+  }
+
+  public BlogCommentVO setToUserId(String toUserId) {
+    this.toUserId = toUserId;
+    return this;
+  }
+
+  public void unsetToUserId() {
+    this.toUserId = null;
+  }
+
+  /** Returns true if field toUserId is set (has been assigned a value) and false otherwise */
+  public boolean isSetToUserId() {
+    return this.toUserId != null;
+  }
+
+  public void setToUserIdIsSet(boolean value) {
+    if (!value) {
+      this.toUserId = null;
+    }
+  }
+
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
     case ID:
@@ -414,11 +451,11 @@ public class BlogCommentVO implements org.apache.thrift.TBase<BlogCommentVO, Blo
       }
       break;
 
-    case USER_ID:
+    case FROM_USER_ID:
       if (value == null) {
-        unsetUserId();
+        unsetFromUserId();
       } else {
-        setUserId((String)value);
+        setFromUserId((String)value);
       }
       break;
 
@@ -446,6 +483,14 @@ public class BlogCommentVO implements org.apache.thrift.TBase<BlogCommentVO, Blo
       }
       break;
 
+    case TO_USER_ID:
+      if (value == null) {
+        unsetToUserId();
+      } else {
+        setToUserId((String)value);
+      }
+      break;
+
     }
   }
 
@@ -460,8 +505,8 @@ public class BlogCommentVO implements org.apache.thrift.TBase<BlogCommentVO, Blo
     case CREATE_TIME:
       return getCreateTime();
 
-    case USER_ID:
-      return getUserId();
+    case FROM_USER_ID:
+      return getFromUserId();
 
     case POSTS_ID:
       return getPostsId();
@@ -471,6 +516,9 @@ public class BlogCommentVO implements org.apache.thrift.TBase<BlogCommentVO, Blo
 
     case REPLY_IP:
       return getReplyIp();
+
+    case TO_USER_ID:
+      return getToUserId();
 
     }
     throw new IllegalStateException();
@@ -489,14 +537,16 @@ public class BlogCommentVO implements org.apache.thrift.TBase<BlogCommentVO, Blo
       return isSetContent();
     case CREATE_TIME:
       return isSetCreateTime();
-    case USER_ID:
-      return isSetUserId();
+    case FROM_USER_ID:
+      return isSetFromUserId();
     case POSTS_ID:
       return isSetPostsId();
     case NICK:
       return isSetNick();
     case REPLY_IP:
       return isSetReplyIp();
+    case TO_USER_ID:
+      return isSetToUserId();
     }
     throw new IllegalStateException();
   }
@@ -541,12 +591,12 @@ public class BlogCommentVO implements org.apache.thrift.TBase<BlogCommentVO, Blo
         return false;
     }
 
-    boolean this_present_userId = true && this.isSetUserId();
-    boolean that_present_userId = true && that.isSetUserId();
-    if (this_present_userId || that_present_userId) {
-      if (!(this_present_userId && that_present_userId))
+    boolean this_present_fromUserId = true && this.isSetFromUserId();
+    boolean that_present_fromUserId = true && that.isSetFromUserId();
+    if (this_present_fromUserId || that_present_fromUserId) {
+      if (!(this_present_fromUserId && that_present_fromUserId))
         return false;
-      if (!this.userId.equals(that.userId))
+      if (!this.fromUserId.equals(that.fromUserId))
         return false;
     }
 
@@ -574,6 +624,15 @@ public class BlogCommentVO implements org.apache.thrift.TBase<BlogCommentVO, Blo
       if (!(this_present_replyIp && that_present_replyIp))
         return false;
       if (!this.replyIp.equals(that.replyIp))
+        return false;
+    }
+
+    boolean this_present_toUserId = true && this.isSetToUserId();
+    boolean that_present_toUserId = true && that.isSetToUserId();
+    if (this_present_toUserId || that_present_toUserId) {
+      if (!(this_present_toUserId && that_present_toUserId))
+        return false;
+      if (!this.toUserId.equals(that.toUserId))
         return false;
     }
 
@@ -623,12 +682,12 @@ public class BlogCommentVO implements org.apache.thrift.TBase<BlogCommentVO, Blo
         return lastComparison;
       }
     }
-    lastComparison = Boolean.valueOf(isSetUserId()).compareTo(typedOther.isSetUserId());
+    lastComparison = Boolean.valueOf(isSetFromUserId()).compareTo(typedOther.isSetFromUserId());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetUserId()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.userId, typedOther.userId);
+    if (isSetFromUserId()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.fromUserId, typedOther.fromUserId);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -659,6 +718,16 @@ public class BlogCommentVO implements org.apache.thrift.TBase<BlogCommentVO, Blo
     }
     if (isSetReplyIp()) {
       lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.replyIp, typedOther.replyIp);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = Boolean.valueOf(isSetToUserId()).compareTo(typedOther.isSetToUserId());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetToUserId()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.toUserId, typedOther.toUserId);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -707,11 +776,11 @@ public class BlogCommentVO implements org.apache.thrift.TBase<BlogCommentVO, Blo
     }
     first = false;
     if (!first) sb.append(", ");
-    sb.append("userId:");
-    if (this.userId == null) {
+    sb.append("fromUserId:");
+    if (this.fromUserId == null) {
       sb.append("null");
     } else {
-      sb.append(this.userId);
+      sb.append(this.fromUserId);
     }
     first = false;
     if (!first) sb.append(", ");
@@ -736,6 +805,14 @@ public class BlogCommentVO implements org.apache.thrift.TBase<BlogCommentVO, Blo
       sb.append("null");
     } else {
       sb.append(this.replyIp);
+    }
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("toUserId:");
+    if (this.toUserId == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.toUserId);
     }
     first = false;
     sb.append(")");
@@ -805,10 +882,10 @@ public class BlogCommentVO implements org.apache.thrift.TBase<BlogCommentVO, Blo
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 4: // USER_ID
+          case 4: // FROM_USER_ID
             if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-              struct.userId = iprot.readString();
-              struct.setUserIdIsSet(true);
+              struct.fromUserId = iprot.readString();
+              struct.setFromUserIdIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
@@ -833,6 +910,14 @@ public class BlogCommentVO implements org.apache.thrift.TBase<BlogCommentVO, Blo
             if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
               struct.replyIp = iprot.readString();
               struct.setReplyIpIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
+          case 8: // TO_USER_ID
+            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+              struct.toUserId = iprot.readString();
+              struct.setToUserIdIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
@@ -867,9 +952,9 @@ public class BlogCommentVO implements org.apache.thrift.TBase<BlogCommentVO, Blo
         oprot.writeString(struct.createTime);
         oprot.writeFieldEnd();
       }
-      if (struct.userId != null) {
-        oprot.writeFieldBegin(USER_ID_FIELD_DESC);
-        oprot.writeString(struct.userId);
+      if (struct.fromUserId != null) {
+        oprot.writeFieldBegin(FROM_USER_ID_FIELD_DESC);
+        oprot.writeString(struct.fromUserId);
         oprot.writeFieldEnd();
       }
       if (struct.postsId != null) {
@@ -885,6 +970,11 @@ public class BlogCommentVO implements org.apache.thrift.TBase<BlogCommentVO, Blo
       if (struct.replyIp != null) {
         oprot.writeFieldBegin(REPLY_IP_FIELD_DESC);
         oprot.writeString(struct.replyIp);
+        oprot.writeFieldEnd();
+      }
+      if (struct.toUserId != null) {
+        oprot.writeFieldBegin(TO_USER_ID_FIELD_DESC);
+        oprot.writeString(struct.toUserId);
         oprot.writeFieldEnd();
       }
       oprot.writeFieldStop();
@@ -914,7 +1004,7 @@ public class BlogCommentVO implements org.apache.thrift.TBase<BlogCommentVO, Blo
       if (struct.isSetCreateTime()) {
         optionals.set(2);
       }
-      if (struct.isSetUserId()) {
+      if (struct.isSetFromUserId()) {
         optionals.set(3);
       }
       if (struct.isSetPostsId()) {
@@ -926,7 +1016,10 @@ public class BlogCommentVO implements org.apache.thrift.TBase<BlogCommentVO, Blo
       if (struct.isSetReplyIp()) {
         optionals.set(6);
       }
-      oprot.writeBitSet(optionals, 7);
+      if (struct.isSetToUserId()) {
+        optionals.set(7);
+      }
+      oprot.writeBitSet(optionals, 8);
       if (struct.isSetId()) {
         oprot.writeString(struct.id);
       }
@@ -936,8 +1029,8 @@ public class BlogCommentVO implements org.apache.thrift.TBase<BlogCommentVO, Blo
       if (struct.isSetCreateTime()) {
         oprot.writeString(struct.createTime);
       }
-      if (struct.isSetUserId()) {
-        oprot.writeString(struct.userId);
+      if (struct.isSetFromUserId()) {
+        oprot.writeString(struct.fromUserId);
       }
       if (struct.isSetPostsId()) {
         oprot.writeString(struct.postsId);
@@ -948,12 +1041,15 @@ public class BlogCommentVO implements org.apache.thrift.TBase<BlogCommentVO, Blo
       if (struct.isSetReplyIp()) {
         oprot.writeString(struct.replyIp);
       }
+      if (struct.isSetToUserId()) {
+        oprot.writeString(struct.toUserId);
+      }
     }
 
     @Override
     public void read(org.apache.thrift.protocol.TProtocol prot, BlogCommentVO struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
-      BitSet incoming = iprot.readBitSet(7);
+      BitSet incoming = iprot.readBitSet(8);
       if (incoming.get(0)) {
         struct.id = iprot.readString();
         struct.setIdIsSet(true);
@@ -967,8 +1063,8 @@ public class BlogCommentVO implements org.apache.thrift.TBase<BlogCommentVO, Blo
         struct.setCreateTimeIsSet(true);
       }
       if (incoming.get(3)) {
-        struct.userId = iprot.readString();
-        struct.setUserIdIsSet(true);
+        struct.fromUserId = iprot.readString();
+        struct.setFromUserIdIsSet(true);
       }
       if (incoming.get(4)) {
         struct.postsId = iprot.readString();
@@ -981,6 +1077,10 @@ public class BlogCommentVO implements org.apache.thrift.TBase<BlogCommentVO, Blo
       if (incoming.get(6)) {
         struct.replyIp = iprot.readString();
         struct.setReplyIpIsSet(true);
+      }
+      if (incoming.get(7)) {
+        struct.toUserId = iprot.readString();
+        struct.setToUserIdIsSet(true);
       }
     }
   }

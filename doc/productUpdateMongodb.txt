@@ -1,0 +1,5 @@
+- 2013.05.04
+db.blogPosts.update({},{$rename:{"blogUser":"userId"}},false,true);
+db.blogComments.update({},{$rename:{"userId":"fromUserId"}},false,true);
+
+db.blogComments.update({},{$set:{"toUserId":"510398ed3b9034b2008836c2"}},false,true);

@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mkfree.apiclient.blog.BlogClient;
 import com.mkfree.apiclient.blog.BlogCommentClient;
+import com.mkfree.apiclient.common.SysUserClient;
 import com.mkfree.apithrift.vo.BlogCommentVO;
 import com.mkfree.apithrift.vo.BlogPostVO;
 import com.mkfree.apithrift.vo.PaginationVO;
+import com.mkfree.apithrift.vo.SysUserVO;
 import com.mkfree.framework.common.constants.BlogConstants;
 import com.mkfree.framework.common.web.html.HtmlUtils;
 import com.mkfree.framework.common.web.request.RequestUtils;
@@ -88,6 +90,26 @@ public class BlogController {
 		PaginationVO pages = BlogClient.getPage(1, 15);
 		pages.setPageUrl(BlogConstants.MKFREE_BLOG_URL + account + "/space");
 		model.addAttribute("pages", pages);
+		SysUserVO sysUserVO = SysUserClient.findUserByAccount(account);
+		model.addAttribute("user", sysUserVO);
+		List<BlogCommentVO> blogCommentVOs = BlogCommentClient.findByUserIdOrderByCreateTime(sysUserVO.getId(), 10);
+		model.addAttribute("blogComments", blogCommentVOs);
+		long blogPostTotal = BlogClient.findTotalByUserId(sysUserVO.getId());
+		model.addAttribute("blogPostTotal", blogPostTotal);
+		return "blog/youspace";
+	}
+
+	@RequestMapping(value = "/{account}/space/{pageNo}")
+	public String personalSpace(Model model, @PathVariable String account, @PathVariable int pageNo) {
+		PaginationVO pages = BlogClient.getPage(pageNo, 15);
+		pages.setPageUrl(BlogConstants.MKFREE_BLOG_URL + account + "/space");
+		model.addAttribute("pages", pages);
+		SysUserVO sysUserVO = SysUserClient.findUserByAccount(account);
+		model.addAttribute("user", sysUserVO);
+		List<BlogCommentVO> blogCommentVOs = BlogCommentClient.findByUserIdOrderByCreateTime(sysUserVO.getId(), 10);
+		model.addAttribute("blogComments", blogCommentVOs);
+		long blogPostTotal = BlogClient.findTotalByUserId(sysUserVO.getId());
+		model.addAttribute("blogPostTotal", blogPostTotal);
 		return "blog/youspace";
 	}
 
@@ -145,7 +167,7 @@ public class BlogController {
 	public String saveBlogPosts(HttpServletRequest req, HttpServletResponse res, BlogPostVO blogPostVO, @PathVariable String account) {
 		String url = "";
 		String userid = RequestUtils.getParamValue(req, "userid");
-		blogPostVO.setBlogUser(userid);
+		blogPostVO.setUserId(userid);
 		blogPostVO.setSummary(HtmlUtils.filterHtmlCode(blogPostVO.getContent(), 240));
 		String id = BlogClient.save(blogPostVO);
 		if (id != null) {

@@ -42,17 +42,18 @@ public class BlogCommentServiceImpl implements BlogCommentService {
 		} else if (StringUtils.isBlank(HtmlUtils.filterHtmlCode(commentVO.getContent()))) {
 			return commentVO;
 		} else {
-			if (commentVO.getUserId() == null || commentVO.getUserId().trim().length() == 0) {// 游客
-				commentVO.setUserId(BlogConstants.noLoginUserId);
+			if (commentVO.getFromUserId() == null || commentVO.getFromUserId().trim().length() == 0) {// 游客
+				commentVO.setFromUserId(BlogConstants.noLoginUserId);
 				if (commentVO.getNick() == null || commentVO.getNick().trim().length() == 0) {// 有可能游客会填写自己的姓名
 					blogComment.setNick(BlogConstants.noLoginUserNick);
 				}
-			} else if (commentVO.getUserId().equals(BlogConstants.anonymityUserId)) {// 匿名用户
+			} else if (commentVO.getFromUserId().equals(BlogConstants.anonymityUserId)) {// 匿名用户
 				blogComment.setNick(BlogConstants.anonymityNetFriend);
 			}
 			blogComment.setPostsId(commentVO.getPostsId());
-			blogComment.setUserId(commentVO.getUserId());
+			blogComment.setFromUserId(commentVO.getFromUserId());
 			blogComment.setReplyIp(commentVO.getReplyIp());
+			blogComment.setToUserId(commentVO.getToUserId());
 			// 下面都是登录用户了
 			blogComment.setCreateTime(VpsTimeUtil.getVPSTime());
 			// 防止黑客,xss攻击
@@ -65,8 +66,8 @@ public class BlogCommentServiceImpl implements BlogCommentService {
 	}
 
 	@Override
-	public List<BlogCommentVO> findOrderByCreateTime(int num) {
-		List<BlogComment> blogComments = blogCommentDao.findOrderByCreateTime(num);
+	public List<BlogCommentVO> findByUserIdOrderByCreateTime(String userId, int num) {
+		List<BlogComment> blogComments = blogCommentDao.findByUserIdOrderByCreateTime(userId, num);
 		return copyList(blogComments);
 	}
 
@@ -81,6 +82,7 @@ public class BlogCommentServiceImpl implements BlogCommentService {
 		for (int i = 0; i < blogComments.size(); i++) {
 			BlogCommentVO blogCommentVO = new BlogCommentVO();
 			BlogComment blogComment = blogComments.get(i);
+			blogComment.setContent(HtmlUtils.filterHtmlCode(blogComment.getContent()));
 			KBeanUtils.copyProperties(blogComment, blogCommentVO);
 			results.add(blogCommentVO);
 		}

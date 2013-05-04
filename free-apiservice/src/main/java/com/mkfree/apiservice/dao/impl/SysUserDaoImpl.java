@@ -23,6 +23,11 @@ public class SysUserDaoImpl extends MongodbDao<SysUser> implements SysUserDao {
 	}
 
 	@Override
+	public SysUser findByAccount(String account) {
+		return super.findOne(Query.query(new Criteria().and("account").is(account)));
+	}
+
+	@Override
 	protected Class<SysUser> getEntityClass() {
 		return SysUser.class;
 	}

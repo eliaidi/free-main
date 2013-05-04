@@ -20,4 +20,12 @@ public interface SysUserDao {
 	 * @return
 	 */
 	public SysUser findById(String id);
+
+	/**
+	 * 通过用户帐号去查找用户(用户帐号是唯一的)
+	 * 
+	 * @param account
+	 * @return
+	 */
+	public SysUser findByAccount(String account);
 }

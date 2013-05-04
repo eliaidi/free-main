@@ -33,7 +33,7 @@ public class BlogPostServiceImpl implements BlogPostService {
 	@Override
 	public List<BlogPostVO> findBytype(int type, int startIndex, int number, int length) {
 		List<BlogPostVO> results = new ArrayList<BlogPostVO>();
-		List<BlogPost> blogPosts = blogPostsDao.findPostsBytype(type, startIndex, number);
+		List<BlogPost> blogPosts = blogPostsDao.findBytype(type, startIndex, number);
 		for (int i = 0; i < blogPosts.size(); i++) {
 			BlogPost blogPost = blogPosts.get(i);
 			String title = blogPost.getTitle();
@@ -109,6 +109,11 @@ public class BlogPostServiceImpl implements BlogPostService {
 		}
 		bp.setUpdateTime(new Date());
 		blogPostsDao.update(id, params);
+	}
+
+	@Override
+	public long findTotalByUserId(String userId) {
+		return blogPostsDao.findTotalByUserId(userId);
 	}
 
 	@Autowired

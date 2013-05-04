@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.mkfree.apiservice.service.blog.BlogCommentService;
 import com.mkfree.apiservice.service.blog.BlogPostService;
+import com.mkfree.apiservice.service.permission.SysUserService;
 import com.mkfree.apiservice.service.so.SOService;
 import com.mkfree.apiservice.service.sso.SSOService;
 import com.mkfree.apithrift.ApiService.Iface;
@@ -17,6 +18,7 @@ import com.mkfree.apithrift.vo.BlogPostVO;
 import com.mkfree.apithrift.vo.PaginationVO;
 import com.mkfree.apithrift.vo.SSOUserVO;
 import com.mkfree.apithrift.vo.SearchResultVO;
+import com.mkfree.apithrift.vo.SysUserVO;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 @Service(value = "apiService")
@@ -54,6 +56,11 @@ public class ApiServiceImpl implements Iface {
 	}
 
 	@Override
+	public long findBlogPostTotalByUserId(String userId) throws TException {
+		return blogPostService.findTotalByUserId(userId);
+	}
+
+	@Override
 	public PaginationVO getBlogPostPage(int pageNo, int pageSize) throws TException {
 		return blogPostService.getPage(pageNo, pageSize);
 	}
@@ -66,6 +73,11 @@ public class ApiServiceImpl implements Iface {
 	@Override
 	public BlogCommentVO saveBlogComment(BlogCommentVO blogCommentVO) throws TException {
 		return blogCommentService.save(blogCommentVO);
+	}
+
+	@Override
+	public List<BlogCommentVO> findByUserIdOrderByCreateTime(String userId, int num) throws TException {
+		return blogCommentService.findByUserIdOrderByCreateTime(userId, num);
 	}
 
 	// so---------------------------------------------------------------------------------------
@@ -95,6 +107,12 @@ public class ApiServiceImpl implements Iface {
 		return ssoService.login(ticket);
 	}
 
+	// common---------------------------------------------------------------------------------------
+	@Override
+	public SysUserVO findUserByAccount(String account) throws TException {
+		return userService.findByAccount(account);
+	}
+
 	@Autowired
 	private BlogPostService blogPostService;
 	@Autowired
@@ -103,5 +121,7 @@ public class ApiServiceImpl implements Iface {
 	private SOService soService;
 	@Autowired
 	private SSOService ssoService;
+	@Autowired
+	private SysUserService userService;
 
 }

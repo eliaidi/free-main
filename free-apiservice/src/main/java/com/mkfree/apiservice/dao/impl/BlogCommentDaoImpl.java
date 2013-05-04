@@ -31,19 +31,20 @@ public class BlogCommentDaoImpl extends MongodbDao<BlogComment> implements BlogC
 	}
 
 	@Override
-	protected Class<BlogComment> getEntityClass() {
-		return BlogComment.class;
-	}
-
-	@Override
-	public List<BlogComment> findOrderByCreateTime(int num) {
+	public List<BlogComment> findByUserIdOrderByCreateTime(String userId, int num) {
 		Query query = new Query();
+		query.addCriteria(new Criteria().and("toUserId").is(userId));
 		List<Order> orders = new ArrayList<Order>();
-		orders.add(new Order(Direction.ASC, "createTime"));
+		orders.add(new Order(Direction.DESC, "createTime"));
 		Sort sort = new Sort(orders);
 		query.with(sort);
 		query.limit(num);
 		return super.find(query);
+	}
+
+	@Override
+	protected Class<BlogComment> getEntityClass() {
+		return BlogComment.class;
 	}
 
 	@Autowired

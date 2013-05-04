@@ -42,7 +42,7 @@ public class PostsDisplayDirective implements TemplateDirectiveModel {
 
 		} else if (type == 2) {
 
-		} else if (type == 3) {
+		} else if (type == 3) {// 阅读次数高
 			posts = BlogClient.findByType(type, startIndex, number, length);
 			paramWrap.put(BLOG_POSTS, DEFAULT_WRAPPER.wrap(posts));
 		} else if (type == 4) {// 头条
