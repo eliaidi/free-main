@@ -1,0 +1,1 @@
+thrift --gen java -out D:\sofeware\git_project\free-main\fre-apiclient\src\main\java  D:\sofeware\git_projct\free-main\free-apiclient\src\main\java\com\mkfree\apiclient\thriftpool\apisevice.thrift
