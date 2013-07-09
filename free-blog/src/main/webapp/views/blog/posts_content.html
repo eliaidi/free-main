@@ -42,6 +42,8 @@ body {
 				</ul>
 			</div>
 		</div>
+		<!-- 广告位 -->
+		<#include "../include/adv1.html"/>
 		<div class="row-fluid">
 			<div class="span9">
 				<div class="hero-unit">
@@ -95,7 +97,7 @@ body {
 								style="margin-left: 20px;"><input id="inputVistorName" value="" type="text" class="span3" placeholder="留下你的网名..." /></span> </#if>
 							<textarea id="comment_content"></textarea>
 							<br>
-							<button class="btn btn-primary pull-right" onclick="saveBlogComment('${posts.id}','${posts.userId}','${commentIndex}'<#if sso_user??>,'${sso_user.id}','${sso_user.nick}'</#if>);">提 交</button>
+							<button class="btn btn-primary pull-right" onclick="saveBlogComment('${posts.id}','${posts.blogUser}','${commentIndex}'<#if sso_user??>,'${sso_user.id}','${sso_user.nick}'</#if>);">提 交</button>
 						</div>
 					</div>
 				</div>
