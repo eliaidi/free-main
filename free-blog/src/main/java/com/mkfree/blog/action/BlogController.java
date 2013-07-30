@@ -166,18 +166,16 @@ public class BlogController {
 	@RequestMapping(value = "/{account}/space/admin/post/save", method = RequestMethod.POST)
 	public String saveBlogPosts(HttpServletRequest req, HttpServletResponse res, BlogPostVO blogPostVO, @PathVariable String account) {
 		String url = "";
-		String userid = RequestUtils.getParamValue(req, "userid");
-		blogPostVO.setUserId(userid);
 		blogPostVO.setSummary(HtmlUtils.filterHtmlCode(blogPostVO.getContent(), 240));
 		String id = BlogClient.save(blogPostVO);
 		if (id != null) {
-			url = BlogConstants.MKFREE_BLOG_URL + account + "/space/admin/posts/" + id;
+			url = BlogConstants.MKFREE_BLOG_URL + account + "/space/admin/post/" + id;
 		} else {
 			url = BlogConstants.MKFREE_STATIC_URL + BlogConstants.ERROR_HTML;
 		}
 		return "redirect:" + url;
 	}
-
+	
 	/**
 	 * 我的空间博客,可以(crud)
 	 * 
