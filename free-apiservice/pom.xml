@@ -14,6 +14,32 @@
 		<cglib.version>2.2.2</cglib.version>
 	</properties>
 	<build>
+		<resources>
+			<resource>
+				<targetPath>${project.build.directory}/conf/config</targetPath>
+				<filtering>true</filtering>
+				<directory>${basedir}/src/main/resources/config</directory>
+				<includes>
+					<include>**/*</include>
+				</includes>
+			</resource>
+			<resource>
+				<targetPath>${project.build.directory}/conf/spring</targetPath>
+				<filtering>true</filtering>
+				<directory>${basedir}/src/main/resources/spring</directory>
+				<includes>
+					<include>**/*</include>
+				</includes>
+			</resource>
+			<resource>
+				<targetPath>${project.build.directory}/conf/config</targetPath>
+				<filtering>true</filtering>
+				<directory>${basedir}/src/main/resources/config.${package.environment}</directory>
+				<includes>
+					<include>**/*</include>
+				</includes>
+			</resource>
+		</resources>
 		<plugins>
 			<!-- 打包jar文件时，配置manifest文件，加入lib包的jar依赖 -->
 			<plugin>
@@ -26,8 +52,47 @@
 							<classpathPrefix>lib/</classpathPrefix>
 							<mainClass>com.mkfree.apiservice.ApiServiceServer</mainClass>
 						</manifest>
+						<manifestEntries>
+							<Class-Path>conf/</Class-Path>
+						</manifestEntries>
 					</archive>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/lib</outputDirectory>
+							<includeScope>compile</includeScope>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.2</version>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<descriptors>
+								<descriptor>${basedir}/publish.xml</descriptor>
+							</descriptors>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
@@ -37,10 +102,8 @@
 			<artifactId>free-framework</artifactId>
 			<version>${framework.version}</version>
 			<exclusions>
-				<!-- <exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-webmvc</artifactId>
-				</exclusion> -->
+				<!-- <exclusion> <groupId>org.springframework</groupId> <artifactId>spring-webmvc</artifactId> 
+					</exclusion> -->
 				<exclusion>
 					<groupId>org.freemarker</groupId>
 					<artifactId>freemarker</artifactId>
