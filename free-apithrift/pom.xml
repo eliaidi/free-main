@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.mkfree</groupId>
-		<version>0.0.2-SNAPSHOT</version>
+		<version>0.0.2</version>
 		<artifactId>free-main</artifactId>
 		<relativePath>../pom.xml</relativePath>
 	</parent>

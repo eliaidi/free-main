@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.mkfree</groupId>
 	<artifactId>free-main</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.2</version>
 	<packaging>pom</packaging>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -31,7 +31,7 @@
 		<connection>scm:git:git@github.com:oyhk/free-main.git</connection>
 		<developerConnection>scm:git:git@github.com:oyhk/free-main.git</developerConnection>
 		<url>scm:git:git@github.com:oyhk/free-main.git</url>
-	  <tag>HEAD</tag>
+	  <tag>free-main-0.0.2</tag>
   </scm>
 	<profiles>
 		<profile>
