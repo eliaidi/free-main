@@ -32,9 +32,6 @@
 		<connection>scm:git:git@github.com:oyhk/free-main.git</connection>
 		<developerConnection>scm:git:git@github.com:oyhk/free-main.git</developerConnection>
 		<url>scm:git:git@github.com:oyhk/free-main.git</url>
-		<configuration>
-	            <autoVersionSubmodules>true</autoVersionSubmodules>
-	    </configuration>
 	</scm>
 	<profiles>
 		<profile>
