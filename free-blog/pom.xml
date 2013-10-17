@@ -13,12 +13,12 @@
 		<dependency>
 			<groupId>com.mkfree</groupId>
 			<artifactId>free-framework</artifactId>
-			<version>${framework.version}</version>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.mkfree</groupId>
 			<artifactId>free-apiclient</artifactId>
-			<version>${apiclient.version}</version>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>

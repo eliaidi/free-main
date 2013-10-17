@@ -12,10 +12,6 @@
 		<!-- jdk version -->
 		<jdk.version>1.7</jdk.version>
 		<!-- jar version -->
-		<!-- free jar -->
-		<framework.version>${project.version}</framework.version>
-		<apithrift.version>${project.version}</apithrift.version>
-		<apiclient.version>${project.version}</apiclient.version>
 		<!-- 第三方 jar -->
 		<spring.version>3.1.2.RELEASE</spring.version>
 		<spring.data.redis.version>1.0.2.RELEASE</spring.data.redis.version>

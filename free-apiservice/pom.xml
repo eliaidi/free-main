@@ -100,7 +100,7 @@
 		<dependency>
 			<groupId>com.mkfree</groupId>
 			<artifactId>free-framework</artifactId>
-			<version>${framework.version}</version>
+			<version>0.0.1-SNAPSHOT</version>
 			<exclusions>
 				<!-- <exclusion> <groupId>org.springframework</groupId> <artifactId>spring-webmvc</artifactId> 
 					</exclusion> -->
@@ -117,7 +117,7 @@
 		<dependency>
 			<groupId>com.mkfree</groupId>
 			<artifactId>free-apithrift</artifactId>
-			<version>${apithrift.version}</version>
+			<version>0.0.1-SNAPSHOT</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>*</artifactId>
