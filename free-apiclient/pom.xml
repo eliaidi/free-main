@@ -4,7 +4,7 @@
 		<groupId>com.mkfree</groupId>
 		<artifactId>free-main</artifactId>
 		<relativePath>../pom.xml</relativePath>
-		<version>0.0.1</version>
+		<version>0.0.2-SNAPSHOT</version>
 	</parent>
 	<artifactId>free-apiclient</artifactId>
 	<build>
@@ -24,7 +24,7 @@
 		<dependency>
 			<groupId>com.mkfree</groupId>
 			<artifactId>free-apithrift</artifactId>
-			<version>0.0.1</version>
+			<version>0.0.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.elasticsearch</groupId>

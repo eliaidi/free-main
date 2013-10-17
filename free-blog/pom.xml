@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.mkfree</groupId>
 		<artifactId>free-main</artifactId>
-		<version>0.0.1</version>
+		<version>0.0.2-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>free-blog</artifactId>
@@ -12,12 +12,12 @@
 		<dependency>
 			<groupId>com.mkfree</groupId>
 			<artifactId>free-framework</artifactId>
-			<version>0.0.1</version>
+			<version>0.0.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.mkfree</groupId>
 			<artifactId>free-apiclient</artifactId>
-			<version>0.0.1</version>
+			<version>0.0.2-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>
