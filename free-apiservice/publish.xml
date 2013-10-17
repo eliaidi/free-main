@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assembly
+	xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0 http://maven.apache.org/xsd/assembly-1.1.0.xsd">
+	<id>run</id>
+	<formats>
+		<format>tar.gz</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<fileSets>
+		<fileSet>
+			<directory>${project.build.directory}</directory>
+			<excludes>
+			    <exclude>classes/</exclude>
+			    <exclude>archive-tmp/</exclude>
+			    <exclude>maven-archiver/</exclude>
+			    <exclude>test-classes/</exclude>
+			    <exclude>surefire-reports/</exclude>
+			    <exclude>surefire/</exclude>
+			    <exclude>apidocs/</exclude>
+			    <exclude>javadoc-bundle-options/</exclude>
+			    <exclude>generated-test-sources/</exclude>
+			    <exclude>generated-sources/</exclude>
+			    <exclude>*-sources.jar</exclude>
+			    <exclude>*-javadoc.jar</exclude>
+			</excludes>
+			<outputDirectory>/${project.version}</outputDirectory>
+		</fileSet>
+	</fileSets>
+</assembly> 
