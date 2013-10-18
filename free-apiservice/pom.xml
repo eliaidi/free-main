@@ -15,6 +15,23 @@
 	</properties>
 	<build>
 		<resources>
+			<!-- 开发环境 -->
+			<resource>
+				<filtering>true</filtering>
+				<directory>${basedir}/src/main/resources/</directory>
+				<includes>
+					<include>**/*</include>
+				</includes>
+			</resource>
+			<resource>
+				<filtering>true</filtering>
+				<targetPath>${basedir}/src/main/webapp/WEB-INF/classes/config</targetPath>
+				<directory>${basedir}/src/main/resources/config.${package.environment}</directory>
+				<includes>
+					<include>**/*</include>
+				</includes>
+			</resource>
+			<!-- 发布环境 -->
 			<resource>
 				<targetPath>${project.build.directory}/conf/config</targetPath>
 				<filtering>true</filtering>
