@@ -1,5 +1,6 @@
 package com.mkfree.apiservice;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -7,8 +8,10 @@ import org.apache.thrift.TException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mkfree.apiservice.domain.AccessAnalysis;
 import com.mkfree.apiservice.service.blog.BlogCommentService;
 import com.mkfree.apiservice.service.blog.BlogPostService;
+import com.mkfree.apiservice.service.common.AccessAnalysisService;
 import com.mkfree.apiservice.service.permission.SysUserService;
 import com.mkfree.apiservice.service.so.SOService;
 import com.mkfree.apiservice.service.sso.SSOService;
@@ -113,6 +116,30 @@ public class ApiServiceImpl implements Iface {
 		return userService.findByAccount(account);
 	}
 
+	// common accessAnalysis---------------------------------------------------------------------------------------
+
+	/**
+	 * 保存一个访问分析日志
+	 * 
+	 * @param userSession 没有关闭浏览器的会话(唯一标识)
+	 * @param userId
+	 * @param userIp
+	 * @param referer
+	 * @param uri
+	 * @param type
+	 * @return id
+	 */
+	public String saveAccessAnalysis(String userSession, String userId, String userIp, String referer, String uri, int type) {
+		AccessAnalysis entity = new AccessAnalysis();
+		entity.setUserId(userId);
+		entity.setCreateTime(new Date());
+		entity.setReferer(referer);
+		entity.setUri(uri);
+		entity.setUserIp(userIp);
+		entity.setUserSession(userSession);
+		return accessAnalysisService.save(entity);
+	}
+
 	@Autowired
 	private BlogPostService blogPostService;
 	@Autowired
@@ -123,5 +150,7 @@ public class ApiServiceImpl implements Iface {
 	private SSOService ssoService;
 	@Autowired
 	private SysUserService userService;
+	@Autowired
+	private AccessAnalysisService accessAnalysisService;
 
 }
