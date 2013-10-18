@@ -2,6 +2,7 @@ package com.mkfree.framework.sso;
 
 import java.io.IOException;
 import java.util.Random;
+import java.util.UUID;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -31,13 +32,29 @@ import com.mkfree.framework.common.web.session.SessionUtils;
  */
 public class SSOFilter implements Filter {
 
+	// 访问者唯一标识常量
+	public static String visitorArtifactId = "visitorArtifactId";
+
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) resp;
 
 		this.ssoFilterService(request, response);
+		this.addVisitorArtifactIdToSession(request, response);
 		chain.doFilter(request, response);
+	}
+
+	/**
+	 * 添加访问者唯一标识到session
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	private void addVisitorArtifactIdToSession(HttpServletRequest request, HttpServletResponse response) {
+		if (!SessionUtils.isExist(request, visitorArtifactId)) {
+			SessionUtils.addSession(request, visitorArtifactId, visitorArtifactId + ":" + UUID.randomUUID());
+		}
 	}
 
 	/**

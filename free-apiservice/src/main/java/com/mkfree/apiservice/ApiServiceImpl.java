@@ -118,6 +118,9 @@ public class ApiServiceImpl implements Iface {
 
 	// common accessAnalysis---------------------------------------------------------------------------------------
 
+	@Autowired
+	private BlogPostService blogPostService;
+
 	/**
 	 * 保存一个访问分析日志
 	 * 
@@ -129,19 +132,18 @@ public class ApiServiceImpl implements Iface {
 	 * @param type
 	 * @return id
 	 */
-	public String saveAccessAnalysis(String userSession, String userId, String userIp, String referer, String uri, int type) {
+	@Override
+	public String saveAccessAnalysis(String visitorArtifactId, String userId, String userIp, String referer, String uri, int type) throws TException {
 		AccessAnalysis entity = new AccessAnalysis();
 		entity.setUserId(userId);
 		entity.setCreateTime(new Date());
 		entity.setReferer(referer);
 		entity.setUri(uri);
 		entity.setUserIp(userIp);
-		entity.setUserSession(userSession);
+		entity.setVisitorArtifactId(visitorArtifactId);
 		return accessAnalysisService.save(entity);
 	}
 
-	@Autowired
-	private BlogPostService blogPostService;
 	@Autowired
 	private BlogCommentService blogCommentService;
 	@Autowired

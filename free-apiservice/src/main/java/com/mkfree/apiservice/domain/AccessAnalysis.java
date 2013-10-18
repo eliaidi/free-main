@@ -17,7 +17,7 @@ import com.mkfree.framework.common.utils.IDEntity;
 @Document(collection = "blogAccessAnalysis")
 public class AccessAnalysis extends IDEntity {
 
-	private String userSession;// 本次访问者唯一标识
+	private String visitorArtifactId;// 本次访问者唯一标识
 	private String userId;// 浏览用户默认-1，登录用户的用户id
 	private String userIp;// 浏览用户ip
 	private String referer;// 访问来源(uri)
@@ -25,12 +25,12 @@ public class AccessAnalysis extends IDEntity {
 	private int type;// 统计类型 1:暂时是博客 2：还不知道是什么
 	private Date createTime;// 创建时间
 
-	public String getUserSession() {
-		return userSession;
+	public String getVisitorArtifactId() {
+		return visitorArtifactId;
 	}
 
-	public void setUserSession(String userSession) {
-		this.userSession = userSession;
+	public void setVisitorArtifactId(String visitorArtifactId) {
+		this.visitorArtifactId = visitorArtifactId;
 	}
 
 	public String getUserId() {

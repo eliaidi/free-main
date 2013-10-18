@@ -2,6 +2,7 @@ package com.mkfree.apiservice.service;
 
 import java.util.Date;
 
+import org.apache.thrift.TException;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -17,7 +18,12 @@ public class AccessAnalysisServiceTest extends BaseTest {
 		String referer = "http://blog.mkfree.com/";// 访问来源(uri)
 		String uri = "http://blog.mkfree.com/posts/2";// 本次访问uri
 		int type = 1;// 统计类型 1:暂时是博客 2：还不知道是什么
-		String id = apiService.saveAccessAnalysis(userSession, userId, userIp, referer, uri, type);
+		String id = null;
+		try {
+			id = apiService.saveAccessAnalysis(userSession, userId, userIp, referer, uri, type);
+		} catch (TException e) {
+			e.printStackTrace();
+		}
 		System.out.println(id);
 	}
 

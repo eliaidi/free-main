@@ -5,12 +5,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.mkfree.apiclient.common.AccessAnalysisClient;
 import com.mkfree.framework.common.redis.RedisService;
+import com.mkfree.framework.common.web.session.SessionUtils;
+import com.mkfree.framework.sso.SSOFilter;
 
 /**
- * 暂时做sso filter 到时候一定要更改
+ * 暂时做博客访问分析
  * 
  * @author hk
  * 
@@ -20,31 +24,24 @@ public class FrontContextInterceptor extends HandlerInterceptorAdapter {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+		return true;
+	}
 
-		/*
-		 * if(CookieUtils.checkCookieValueIsNull(request,
-		 * SSOConstants.SSO_TICKET) &&
-		 * CookieUtils.checkCookieValueIsNull(request,
-		 * SSOConstants.SESSIONID)){//cookie -->> sso_ticket,sessionid不存在
-		 * request.getSession().removeAttribute(SSOConstants.SSO_USER); }else{
-		 * SysUser userSession = (SysUser) SessionUtils.getSessionValue(request,
-		 * SSOConstants.SSO_USER);//user session 存在 if(userSession != null){
-		 * }else{ if(CookieUtils.checkCookieValueIsNull(request,
-		 * SSOConstants.SESSIONID)){//user sessionid 不存在
-		 * System.out.println("user sessionid 不存在");
-		 * if(CookieUtils.checkCookieValueIsNull(request,
-		 * SSOConstants.SSO_TICKET)){ System.out.println("数据库查询验证"); }
-		 * }else{//cookie user sessionId 存在 String sessionId =
-		 * CookieUtils.getCookieValue(request,SSOConstants.SESSIONID); byte[]
-		 * objectBytes = redisService.get(sessionId.getBytes()); SysUser user =
-		 * (SysUser) SerializeUtil.unserialize(objectBytes); if(user ==
-		 * null){//redis user session 已经失效
-		 * if(CookieUtils.checkCookieValueIsNull(request,
-		 * SSOConstants.SSO_TICKET)){ System.out.println("数据库查询验证"); } }else{
-		 * request.getSession().setAttribute(SSOConstants.SSO_USER, user); }
-		 * 
-		 * } } }
-		 */return true;
+	@Override
+	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+		String visitorArtifactId = (String) SessionUtils.getSessionValue(request, SSOFilter.visitorArtifactId);
+		String userId = "-1";
+		String userIp = "127.0.0.1";
+		String referer = "http://blog.mkfree.com/";
+		String uri = "http://blog.mkfree.com/posts/32";
+		int type = 1;
+		AccessAnalysisClient.saveAccessAnalysis(visitorArtifactId, userId, userIp, referer, uri, type);
+		super.afterCompletion(request, response, handler, ex);
+	}
+
+	@Override
+	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+		super.postHandle(request, response, handler, modelAndView);
 	}
 
 	@Autowired

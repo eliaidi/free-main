@@ -162,6 +162,18 @@ public class ApiService {
      */
     public com.mkfree.apithrift.vo.SysUserVO findUserByAccount(String account) throws org.apache.thrift.TException;
 
+    /**
+     * 保存一个访问分析日志
+     * 
+     * @param userSession
+     * @param userId
+     * @param userIp
+     * @param referer
+     * @param uri
+     * @param type
+     */
+    public String saveAccessAnalysis(String userSession, String userId, String userIp, String referer, String uri, int type) throws org.apache.thrift.TException;
+
   }
 
   public interface AsyncIface extends com.mkfree.apithrift.BaseService .AsyncIface {
@@ -199,6 +211,8 @@ public class ApiService {
     public void loginByTicket(String ticketValue, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.loginByTicket_call> resultHandler) throws org.apache.thrift.TException;
 
     public void findUserByAccount(String account, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.findUserByAccount_call> resultHandler) throws org.apache.thrift.TException;
+
+    public void saveAccessAnalysis(String userSession, String userId, String userIp, String referer, String uri, int type, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.saveAccessAnalysis_call> resultHandler) throws org.apache.thrift.TException;
 
   }
 
@@ -615,6 +629,34 @@ public class ApiService {
         return result.success;
       }
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "findUserByAccount failed: unknown result");
+    }
+
+    public String saveAccessAnalysis(String userSession, String userId, String userIp, String referer, String uri, int type) throws org.apache.thrift.TException
+    {
+      send_saveAccessAnalysis(userSession, userId, userIp, referer, uri, type);
+      return recv_saveAccessAnalysis();
+    }
+
+    public void send_saveAccessAnalysis(String userSession, String userId, String userIp, String referer, String uri, int type) throws org.apache.thrift.TException
+    {
+      saveAccessAnalysis_args args = new saveAccessAnalysis_args();
+      args.setUserSession(userSession);
+      args.setUserId(userId);
+      args.setUserIp(userIp);
+      args.setReferer(referer);
+      args.setUri(uri);
+      args.setType(type);
+      sendBase("saveAccessAnalysis", args);
+    }
+
+    public String recv_saveAccessAnalysis() throws org.apache.thrift.TException
+    {
+      saveAccessAnalysis_result result = new saveAccessAnalysis_result();
+      receiveBase(result, "saveAccessAnalysis");
+      if (result.isSetSuccess()) {
+        return result.success;
+      }
+      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "saveAccessAnalysis failed: unknown result");
     }
 
   }
@@ -1209,6 +1251,53 @@ public class ApiService {
       }
     }
 
+    public void saveAccessAnalysis(String userSession, String userId, String userIp, String referer, String uri, int type, org.apache.thrift.async.AsyncMethodCallback<saveAccessAnalysis_call> resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      saveAccessAnalysis_call method_call = new saveAccessAnalysis_call(userSession, userId, userIp, referer, uri, type, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class saveAccessAnalysis_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private String userSession;
+      private String userId;
+      private String userIp;
+      private String referer;
+      private String uri;
+      private int type;
+      public saveAccessAnalysis_call(String userSession, String userId, String userIp, String referer, String uri, int type, org.apache.thrift.async.AsyncMethodCallback<saveAccessAnalysis_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.userSession = userSession;
+        this.userId = userId;
+        this.userIp = userIp;
+        this.referer = referer;
+        this.uri = uri;
+        this.type = type;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("saveAccessAnalysis", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        saveAccessAnalysis_args args = new saveAccessAnalysis_args();
+        args.setUserSession(userSession);
+        args.setUserId(userId);
+        args.setUserIp(userIp);
+        args.setReferer(referer);
+        args.setUri(uri);
+        args.setType(type);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public String getResult() throws org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return (new Client(prot)).recv_saveAccessAnalysis();
+      }
+    }
+
   }
 
   public static class Processor<I extends Iface> extends com.mkfree.apithrift.BaseService.Processor<I> implements org.apache.thrift.TProcessor {
@@ -1239,6 +1328,7 @@ public class ApiService {
       processMap.put("loginByAccountAndPassword", new loginByAccountAndPassword());
       processMap.put("loginByTicket", new loginByTicket());
       processMap.put("findUserByAccount", new findUserByAccount());
+      processMap.put("saveAccessAnalysis", new saveAccessAnalysis());
       return processMap;
     }
 
@@ -1580,6 +1670,26 @@ public class ApiService {
       public findUserByAccount_result getResult(I iface, findUserByAccount_args args) throws org.apache.thrift.TException {
         findUserByAccount_result result = new findUserByAccount_result();
         result.success = iface.findUserByAccount(args.account);
+        return result;
+      }
+    }
+
+    public static class saveAccessAnalysis<I extends Iface> extends org.apache.thrift.ProcessFunction<I, saveAccessAnalysis_args> {
+      public saveAccessAnalysis() {
+        super("saveAccessAnalysis");
+      }
+
+      public saveAccessAnalysis_args getEmptyArgsInstance() {
+        return new saveAccessAnalysis_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public saveAccessAnalysis_result getResult(I iface, saveAccessAnalysis_args args) throws org.apache.thrift.TException {
+        saveAccessAnalysis_result result = new saveAccessAnalysis_result();
+        result.success = iface.saveAccessAnalysis(args.userSession, args.userId, args.userIp, args.referer, args.uri, args.type);
         return result;
       }
     }
@@ -2703,7 +2813,7 @@ public class ApiService {
                   for (int _i1 = 0; _i1 < _map0.size; ++_i1)
                   {
                     String _key2; // required
-                    String _val3; // required
+                    String _val3; // optional
                     _key2 = iprot.readString();
                     _val3 = iprot.readString();
                     struct.params.put(_key2, _val3);
@@ -2803,7 +2913,7 @@ public class ApiService {
             for (int _i7 = 0; _i7 < _map6.size; ++_i7)
             {
               String _key8; // required
-              String _val9; // required
+              String _val9; // optional
               _key8 = iprot.readString();
               _val9 = iprot.readString();
               struct.params.put(_key8, _val9);
@@ -14738,6 +14848,1212 @@ public class ApiService {
         if (incoming.get(0)) {
           struct.success = new com.mkfree.apithrift.vo.SysUserVO();
           struct.success.read(iprot);
+          struct.setSuccessIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class saveAccessAnalysis_args implements org.apache.thrift.TBase<saveAccessAnalysis_args, saveAccessAnalysis_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("saveAccessAnalysis_args");
+
+    private static final org.apache.thrift.protocol.TField USER_SESSION_FIELD_DESC = new org.apache.thrift.protocol.TField("userSession", org.apache.thrift.protocol.TType.STRING, (short)1);
+    private static final org.apache.thrift.protocol.TField USER_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("userId", org.apache.thrift.protocol.TType.STRING, (short)2);
+    private static final org.apache.thrift.protocol.TField USER_IP_FIELD_DESC = new org.apache.thrift.protocol.TField("userIp", org.apache.thrift.protocol.TType.STRING, (short)3);
+    private static final org.apache.thrift.protocol.TField REFERER_FIELD_DESC = new org.apache.thrift.protocol.TField("referer", org.apache.thrift.protocol.TType.STRING, (short)4);
+    private static final org.apache.thrift.protocol.TField URI_FIELD_DESC = new org.apache.thrift.protocol.TField("uri", org.apache.thrift.protocol.TType.STRING, (short)5);
+    private static final org.apache.thrift.protocol.TField TYPE_FIELD_DESC = new org.apache.thrift.protocol.TField("type", org.apache.thrift.protocol.TType.I32, (short)6);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new saveAccessAnalysis_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new saveAccessAnalysis_argsTupleSchemeFactory());
+    }
+
+    public String userSession; // required
+    public String userId; // required
+    public String userIp; // required
+    public String referer; // required
+    public String uri; // required
+    public int type; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      USER_SESSION((short)1, "userSession"),
+      USER_ID((short)2, "userId"),
+      USER_IP((short)3, "userIp"),
+      REFERER((short)4, "referer"),
+      URI((short)5, "uri"),
+      TYPE((short)6, "type");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // USER_SESSION
+            return USER_SESSION;
+          case 2: // USER_ID
+            return USER_ID;
+          case 3: // USER_IP
+            return USER_IP;
+          case 4: // REFERER
+            return REFERER;
+          case 5: // URI
+            return URI;
+          case 6: // TYPE
+            return TYPE;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    private static final int __TYPE_ISSET_ID = 0;
+    private byte __isset_bitfield = 0;
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.USER_SESSION, new org.apache.thrift.meta_data.FieldMetaData("userSession", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.USER_ID, new org.apache.thrift.meta_data.FieldMetaData("userId", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.USER_IP, new org.apache.thrift.meta_data.FieldMetaData("userIp", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.REFERER, new org.apache.thrift.meta_data.FieldMetaData("referer", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.URI, new org.apache.thrift.meta_data.FieldMetaData("uri", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.TYPE, new org.apache.thrift.meta_data.FieldMetaData("type", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(saveAccessAnalysis_args.class, metaDataMap);
+    }
+
+    public saveAccessAnalysis_args() {
+    }
+
+    public saveAccessAnalysis_args(
+      String userSession,
+      String userId,
+      String userIp,
+      String referer,
+      String uri,
+      int type)
+    {
+      this();
+      this.userSession = userSession;
+      this.userId = userId;
+      this.userIp = userIp;
+      this.referer = referer;
+      this.uri = uri;
+      this.type = type;
+      setTypeIsSet(true);
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public saveAccessAnalysis_args(saveAccessAnalysis_args other) {
+      __isset_bitfield = other.__isset_bitfield;
+      if (other.isSetUserSession()) {
+        this.userSession = other.userSession;
+      }
+      if (other.isSetUserId()) {
+        this.userId = other.userId;
+      }
+      if (other.isSetUserIp()) {
+        this.userIp = other.userIp;
+      }
+      if (other.isSetReferer()) {
+        this.referer = other.referer;
+      }
+      if (other.isSetUri()) {
+        this.uri = other.uri;
+      }
+      this.type = other.type;
+    }
+
+    public saveAccessAnalysis_args deepCopy() {
+      return new saveAccessAnalysis_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.userSession = null;
+      this.userId = null;
+      this.userIp = null;
+      this.referer = null;
+      this.uri = null;
+      setTypeIsSet(false);
+      this.type = 0;
+    }
+
+    public String getUserSession() {
+      return this.userSession;
+    }
+
+    public saveAccessAnalysis_args setUserSession(String userSession) {
+      this.userSession = userSession;
+      return this;
+    }
+
+    public void unsetUserSession() {
+      this.userSession = null;
+    }
+
+    /** Returns true if field userSession is set (has been assigned a value) and false otherwise */
+    public boolean isSetUserSession() {
+      return this.userSession != null;
+    }
+
+    public void setUserSessionIsSet(boolean value) {
+      if (!value) {
+        this.userSession = null;
+      }
+    }
+
+    public String getUserId() {
+      return this.userId;
+    }
+
+    public saveAccessAnalysis_args setUserId(String userId) {
+      this.userId = userId;
+      return this;
+    }
+
+    public void unsetUserId() {
+      this.userId = null;
+    }
+
+    /** Returns true if field userId is set (has been assigned a value) and false otherwise */
+    public boolean isSetUserId() {
+      return this.userId != null;
+    }
+
+    public void setUserIdIsSet(boolean value) {
+      if (!value) {
+        this.userId = null;
+      }
+    }
+
+    public String getUserIp() {
+      return this.userIp;
+    }
+
+    public saveAccessAnalysis_args setUserIp(String userIp) {
+      this.userIp = userIp;
+      return this;
+    }
+
+    public void unsetUserIp() {
+      this.userIp = null;
+    }
+
+    /** Returns true if field userIp is set (has been assigned a value) and false otherwise */
+    public boolean isSetUserIp() {
+      return this.userIp != null;
+    }
+
+    public void setUserIpIsSet(boolean value) {
+      if (!value) {
+        this.userIp = null;
+      }
+    }
+
+    public String getReferer() {
+      return this.referer;
+    }
+
+    public saveAccessAnalysis_args setReferer(String referer) {
+      this.referer = referer;
+      return this;
+    }
+
+    public void unsetReferer() {
+      this.referer = null;
+    }
+
+    /** Returns true if field referer is set (has been assigned a value) and false otherwise */
+    public boolean isSetReferer() {
+      return this.referer != null;
+    }
+
+    public void setRefererIsSet(boolean value) {
+      if (!value) {
+        this.referer = null;
+      }
+    }
+
+    public String getUri() {
+      return this.uri;
+    }
+
+    public saveAccessAnalysis_args setUri(String uri) {
+      this.uri = uri;
+      return this;
+    }
+
+    public void unsetUri() {
+      this.uri = null;
+    }
+
+    /** Returns true if field uri is set (has been assigned a value) and false otherwise */
+    public boolean isSetUri() {
+      return this.uri != null;
+    }
+
+    public void setUriIsSet(boolean value) {
+      if (!value) {
+        this.uri = null;
+      }
+    }
+
+    public int getType() {
+      return this.type;
+    }
+
+    public saveAccessAnalysis_args setType(int type) {
+      this.type = type;
+      setTypeIsSet(true);
+      return this;
+    }
+
+    public void unsetType() {
+      __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __TYPE_ISSET_ID);
+    }
+
+    /** Returns true if field type is set (has been assigned a value) and false otherwise */
+    public boolean isSetType() {
+      return EncodingUtils.testBit(__isset_bitfield, __TYPE_ISSET_ID);
+    }
+
+    public void setTypeIsSet(boolean value) {
+      __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __TYPE_ISSET_ID, value);
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case USER_SESSION:
+        if (value == null) {
+          unsetUserSession();
+        } else {
+          setUserSession((String)value);
+        }
+        break;
+
+      case USER_ID:
+        if (value == null) {
+          unsetUserId();
+        } else {
+          setUserId((String)value);
+        }
+        break;
+
+      case USER_IP:
+        if (value == null) {
+          unsetUserIp();
+        } else {
+          setUserIp((String)value);
+        }
+        break;
+
+      case REFERER:
+        if (value == null) {
+          unsetReferer();
+        } else {
+          setReferer((String)value);
+        }
+        break;
+
+      case URI:
+        if (value == null) {
+          unsetUri();
+        } else {
+          setUri((String)value);
+        }
+        break;
+
+      case TYPE:
+        if (value == null) {
+          unsetType();
+        } else {
+          setType((Integer)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case USER_SESSION:
+        return getUserSession();
+
+      case USER_ID:
+        return getUserId();
+
+      case USER_IP:
+        return getUserIp();
+
+      case REFERER:
+        return getReferer();
+
+      case URI:
+        return getUri();
+
+      case TYPE:
+        return Integer.valueOf(getType());
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case USER_SESSION:
+        return isSetUserSession();
+      case USER_ID:
+        return isSetUserId();
+      case USER_IP:
+        return isSetUserIp();
+      case REFERER:
+        return isSetReferer();
+      case URI:
+        return isSetUri();
+      case TYPE:
+        return isSetType();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof saveAccessAnalysis_args)
+        return this.equals((saveAccessAnalysis_args)that);
+      return false;
+    }
+
+    public boolean equals(saveAccessAnalysis_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_userSession = true && this.isSetUserSession();
+      boolean that_present_userSession = true && that.isSetUserSession();
+      if (this_present_userSession || that_present_userSession) {
+        if (!(this_present_userSession && that_present_userSession))
+          return false;
+        if (!this.userSession.equals(that.userSession))
+          return false;
+      }
+
+      boolean this_present_userId = true && this.isSetUserId();
+      boolean that_present_userId = true && that.isSetUserId();
+      if (this_present_userId || that_present_userId) {
+        if (!(this_present_userId && that_present_userId))
+          return false;
+        if (!this.userId.equals(that.userId))
+          return false;
+      }
+
+      boolean this_present_userIp = true && this.isSetUserIp();
+      boolean that_present_userIp = true && that.isSetUserIp();
+      if (this_present_userIp || that_present_userIp) {
+        if (!(this_present_userIp && that_present_userIp))
+          return false;
+        if (!this.userIp.equals(that.userIp))
+          return false;
+      }
+
+      boolean this_present_referer = true && this.isSetReferer();
+      boolean that_present_referer = true && that.isSetReferer();
+      if (this_present_referer || that_present_referer) {
+        if (!(this_present_referer && that_present_referer))
+          return false;
+        if (!this.referer.equals(that.referer))
+          return false;
+      }
+
+      boolean this_present_uri = true && this.isSetUri();
+      boolean that_present_uri = true && that.isSetUri();
+      if (this_present_uri || that_present_uri) {
+        if (!(this_present_uri && that_present_uri))
+          return false;
+        if (!this.uri.equals(that.uri))
+          return false;
+      }
+
+      boolean this_present_type = true;
+      boolean that_present_type = true;
+      if (this_present_type || that_present_type) {
+        if (!(this_present_type && that_present_type))
+          return false;
+        if (this.type != that.type)
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(saveAccessAnalysis_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      saveAccessAnalysis_args typedOther = (saveAccessAnalysis_args)other;
+
+      lastComparison = Boolean.valueOf(isSetUserSession()).compareTo(typedOther.isSetUserSession());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetUserSession()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.userSession, typedOther.userSession);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetUserId()).compareTo(typedOther.isSetUserId());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetUserId()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.userId, typedOther.userId);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetUserIp()).compareTo(typedOther.isSetUserIp());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetUserIp()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.userIp, typedOther.userIp);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetReferer()).compareTo(typedOther.isSetReferer());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetReferer()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.referer, typedOther.referer);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetUri()).compareTo(typedOther.isSetUri());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetUri()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.uri, typedOther.uri);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetType()).compareTo(typedOther.isSetType());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetType()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.type, typedOther.type);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("saveAccessAnalysis_args(");
+      boolean first = true;
+
+      sb.append("userSession:");
+      if (this.userSession == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.userSession);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("userId:");
+      if (this.userId == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.userId);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("userIp:");
+      if (this.userIp == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.userIp);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("referer:");
+      if (this.referer == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.referer);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("uri:");
+      if (this.uri == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.uri);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("type:");
+      sb.append(this.type);
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        // it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
+        __isset_bitfield = 0;
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class saveAccessAnalysis_argsStandardSchemeFactory implements SchemeFactory {
+      public saveAccessAnalysis_argsStandardScheme getScheme() {
+        return new saveAccessAnalysis_argsStandardScheme();
+      }
+    }
+
+    private static class saveAccessAnalysis_argsStandardScheme extends StandardScheme<saveAccessAnalysis_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, saveAccessAnalysis_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // USER_SESSION
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.userSession = iprot.readString();
+                struct.setUserSessionIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 2: // USER_ID
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.userId = iprot.readString();
+                struct.setUserIdIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 3: // USER_IP
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.userIp = iprot.readString();
+                struct.setUserIpIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 4: // REFERER
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.referer = iprot.readString();
+                struct.setRefererIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 5: // URI
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.uri = iprot.readString();
+                struct.setUriIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 6: // TYPE
+              if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
+                struct.type = iprot.readI32();
+                struct.setTypeIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, saveAccessAnalysis_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.userSession != null) {
+          oprot.writeFieldBegin(USER_SESSION_FIELD_DESC);
+          oprot.writeString(struct.userSession);
+          oprot.writeFieldEnd();
+        }
+        if (struct.userId != null) {
+          oprot.writeFieldBegin(USER_ID_FIELD_DESC);
+          oprot.writeString(struct.userId);
+          oprot.writeFieldEnd();
+        }
+        if (struct.userIp != null) {
+          oprot.writeFieldBegin(USER_IP_FIELD_DESC);
+          oprot.writeString(struct.userIp);
+          oprot.writeFieldEnd();
+        }
+        if (struct.referer != null) {
+          oprot.writeFieldBegin(REFERER_FIELD_DESC);
+          oprot.writeString(struct.referer);
+          oprot.writeFieldEnd();
+        }
+        if (struct.uri != null) {
+          oprot.writeFieldBegin(URI_FIELD_DESC);
+          oprot.writeString(struct.uri);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldBegin(TYPE_FIELD_DESC);
+        oprot.writeI32(struct.type);
+        oprot.writeFieldEnd();
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class saveAccessAnalysis_argsTupleSchemeFactory implements SchemeFactory {
+      public saveAccessAnalysis_argsTupleScheme getScheme() {
+        return new saveAccessAnalysis_argsTupleScheme();
+      }
+    }
+
+    private static class saveAccessAnalysis_argsTupleScheme extends TupleScheme<saveAccessAnalysis_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, saveAccessAnalysis_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetUserSession()) {
+          optionals.set(0);
+        }
+        if (struct.isSetUserId()) {
+          optionals.set(1);
+        }
+        if (struct.isSetUserIp()) {
+          optionals.set(2);
+        }
+        if (struct.isSetReferer()) {
+          optionals.set(3);
+        }
+        if (struct.isSetUri()) {
+          optionals.set(4);
+        }
+        if (struct.isSetType()) {
+          optionals.set(5);
+        }
+        oprot.writeBitSet(optionals, 6);
+        if (struct.isSetUserSession()) {
+          oprot.writeString(struct.userSession);
+        }
+        if (struct.isSetUserId()) {
+          oprot.writeString(struct.userId);
+        }
+        if (struct.isSetUserIp()) {
+          oprot.writeString(struct.userIp);
+        }
+        if (struct.isSetReferer()) {
+          oprot.writeString(struct.referer);
+        }
+        if (struct.isSetUri()) {
+          oprot.writeString(struct.uri);
+        }
+        if (struct.isSetType()) {
+          oprot.writeI32(struct.type);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, saveAccessAnalysis_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(6);
+        if (incoming.get(0)) {
+          struct.userSession = iprot.readString();
+          struct.setUserSessionIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.userId = iprot.readString();
+          struct.setUserIdIsSet(true);
+        }
+        if (incoming.get(2)) {
+          struct.userIp = iprot.readString();
+          struct.setUserIpIsSet(true);
+        }
+        if (incoming.get(3)) {
+          struct.referer = iprot.readString();
+          struct.setRefererIsSet(true);
+        }
+        if (incoming.get(4)) {
+          struct.uri = iprot.readString();
+          struct.setUriIsSet(true);
+        }
+        if (incoming.get(5)) {
+          struct.type = iprot.readI32();
+          struct.setTypeIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class saveAccessAnalysis_result implements org.apache.thrift.TBase<saveAccessAnalysis_result, saveAccessAnalysis_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("saveAccessAnalysis_result");
+
+    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.STRING, (short)0);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new saveAccessAnalysis_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new saveAccessAnalysis_resultTupleSchemeFactory());
+    }
+
+    public String success; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      SUCCESS((short)0, "success");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 0: // SUCCESS
+            return SUCCESS;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(saveAccessAnalysis_result.class, metaDataMap);
+    }
+
+    public saveAccessAnalysis_result() {
+    }
+
+    public saveAccessAnalysis_result(
+      String success)
+    {
+      this();
+      this.success = success;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public saveAccessAnalysis_result(saveAccessAnalysis_result other) {
+      if (other.isSetSuccess()) {
+        this.success = other.success;
+      }
+    }
+
+    public saveAccessAnalysis_result deepCopy() {
+      return new saveAccessAnalysis_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.success = null;
+    }
+
+    public String getSuccess() {
+      return this.success;
+    }
+
+    public saveAccessAnalysis_result setSuccess(String success) {
+      this.success = success;
+      return this;
+    }
+
+    public void unsetSuccess() {
+      this.success = null;
+    }
+
+    /** Returns true if field success is set (has been assigned a value) and false otherwise */
+    public boolean isSetSuccess() {
+      return this.success != null;
+    }
+
+    public void setSuccessIsSet(boolean value) {
+      if (!value) {
+        this.success = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case SUCCESS:
+        if (value == null) {
+          unsetSuccess();
+        } else {
+          setSuccess((String)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case SUCCESS:
+        return getSuccess();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case SUCCESS:
+        return isSetSuccess();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof saveAccessAnalysis_result)
+        return this.equals((saveAccessAnalysis_result)that);
+      return false;
+    }
+
+    public boolean equals(saveAccessAnalysis_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_success = true && this.isSetSuccess();
+      boolean that_present_success = true && that.isSetSuccess();
+      if (this_present_success || that_present_success) {
+        if (!(this_present_success && that_present_success))
+          return false;
+        if (!this.success.equals(that.success))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(saveAccessAnalysis_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      saveAccessAnalysis_result typedOther = (saveAccessAnalysis_result)other;
+
+      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(typedOther.isSetSuccess());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSuccess()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, typedOther.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+      }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("saveAccessAnalysis_result(");
+      boolean first = true;
+
+      sb.append("success:");
+      if (this.success == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.success);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class saveAccessAnalysis_resultStandardSchemeFactory implements SchemeFactory {
+      public saveAccessAnalysis_resultStandardScheme getScheme() {
+        return new saveAccessAnalysis_resultStandardScheme();
+      }
+    }
+
+    private static class saveAccessAnalysis_resultStandardScheme extends StandardScheme<saveAccessAnalysis_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, saveAccessAnalysis_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 0: // SUCCESS
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.success = iprot.readString();
+                struct.setSuccessIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, saveAccessAnalysis_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.success != null) {
+          oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
+          oprot.writeString(struct.success);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class saveAccessAnalysis_resultTupleSchemeFactory implements SchemeFactory {
+      public saveAccessAnalysis_resultTupleScheme getScheme() {
+        return new saveAccessAnalysis_resultTupleScheme();
+      }
+    }
+
+    private static class saveAccessAnalysis_resultTupleScheme extends TupleScheme<saveAccessAnalysis_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, saveAccessAnalysis_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetSuccess()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetSuccess()) {
+          oprot.writeString(struct.success);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, saveAccessAnalysis_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.success = iprot.readString();
           struct.setSuccessIsSet(true);
         }
       }

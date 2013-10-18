@@ -1,6 +1,7 @@
 package com.mkfree.framework.common.web.session;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.util.Assert;
 
@@ -27,6 +28,32 @@ public class SessionUtils {
 			return value;
 		}
 		return null;
+	}
+
+	/**
+	 * 判断session 是否存在
+	 * 
+	 * @param req
+	 * @param name
+	 * @return
+	 */
+	public static boolean isExist(HttpServletRequest req, String name) {
+		Object value = req.getSession().getAttribute(name);
+		if (value == null) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * 添加一个属性值到session中
+	 * 
+	 * @param req
+	 * @param name
+	 * @param value
+	 */
+	public static void addSession(HttpServletRequest req, String name, String value) {
+		req.getSession().setAttribute(name, value);
 	}
 
 }

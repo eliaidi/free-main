@@ -76,4 +76,9 @@ service ApiService extends base.BaseService{
 	 * 通过用户帐号查询一个用户
 	 */
 	vo.SysUserVO findUserByAccount(1:string account);
+	//common AccessAnalysis--------------------------------------------------------------------------------------------------------
+	/**
+	 * 保存一个访问分析日志
+	 */
+	string saveAccessAnalysis(1:string userSession,2:string userId, 3:string userIp, 4:string referer, 5:string uri, 6:i32 type)
 }
