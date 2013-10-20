@@ -1,6 +1,5 @@
 package com.mkfree.apiservice;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -8,7 +7,6 @@ import org.apache.thrift.TException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mkfree.apiservice.domain.AccessAnalysis;
 import com.mkfree.apiservice.service.blog.BlogCommentService;
 import com.mkfree.apiservice.service.blog.BlogPostService;
 import com.mkfree.apiservice.service.common.AccessAnalysisService;
@@ -26,6 +24,19 @@ import com.mkfree.apithrift.vo.SysUserVO;
 @SuppressWarnings({ "unchecked", "rawtypes" })
 @Service(value = "apiService")
 public class ApiServiceImpl implements Iface {
+
+	@Autowired
+	private BlogCommentService blogCommentService;
+	@Autowired
+	private SOService soService;
+	@Autowired
+	private SSOService ssoService;
+	@Autowired
+	private SysUserService userService;
+	@Autowired
+	private AccessAnalysisService accessAnalysisService;
+	@Autowired
+	private BlogPostService blogPostService;
 
 	// blogPost---------------------------------------------------------------------------------------
 	@Override
@@ -116,43 +127,20 @@ public class ApiServiceImpl implements Iface {
 		return userService.findByAccount(account);
 	}
 
-	// common accessAnalysis---------------------------------------------------------------------------------------
-
-	@Autowired
-	private BlogPostService blogPostService;
-
-	/**
-	 * 保存一个访问分析日志
-	 * 
-	 * @param userSession 没有关闭浏览器的会话(唯一标识)
-	 * @param userId
-	 * @param userIp
-	 * @param referer
-	 * @param uri
-	 * @param type
-	 * @return id
-	 */
+	// common
+	// accessAnalysis---------------------------------------------------------------------------------------
 	@Override
-	public String saveAccessAnalysis(String visitorArtifactId, String userId, String userIp, String referer, String uri, int type) throws TException {
-		AccessAnalysis entity = new AccessAnalysis();
-		entity.setUserId(userId);
-		entity.setCreateTime(new Date());
-		entity.setReferer(referer);
-		entity.setUri(uri);
-		entity.setUserIp(userIp);
-		entity.setVisitorArtifactId(visitorArtifactId);
-		return accessAnalysisService.save(entity);
+	public String saveAccessAnalysis(String jsessionid, String fromUserId, String toUserId, String userIp, String referer, String uri, String browser, String os) throws TException {
+		return accessAnalysisService.save(jsessionid, fromUserId, toUserId, userIp, referer, uri, browser, os);
 	}
 
-	@Autowired
-	private BlogCommentService blogCommentService;
-	@Autowired
-	private SOService soService;
-	@Autowired
-	private SSOService ssoService;
-	@Autowired
-	private SysUserService userService;
-	@Autowired
-	private AccessAnalysisService accessAnalysisService;
-
+	/**
+	 * 通过userid查找博客用户的访问次数(日,昨日,周,月,一共)
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public Map<String, Long> findBlogAccessCount(String userId) {
+		return accessAnalysisService.findBlogAccessCount(userId);
+	}
 }

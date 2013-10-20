@@ -23,11 +23,13 @@ public class SSOConstants {
 	public final static String SSO_TICKET = "sso_ticket";
 	// 用户
 	public final static String SSO_USER = "sso_user";
-
-	public final static int SSO_USER_KEY_TIME = 30 * 60;// 默认半小时
-	// session id
+	// 默认半小时
+	public final static int SSO_USER_KEY_TIME = 30 * 60;
+	// 访问者唯一标识常量jsessionid
+	public final static String JSESSIONID="JSESSIONID";
+	// session id (登录后的sso_sessionid)
 	public final static String SSO_SESSIONID = "sso_sessionid";
-	// 登录用户cookie存活时间默认为7天
+	// 登录用户cookie存活时间默认为7天(单位是秒)
 	public final static int COOKIE_LIVE_TIME = 7 * 24 * 60 * 60;
 
 }

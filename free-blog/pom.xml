@@ -20,5 +20,21 @@
 			<artifactId>free-apiclient</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>bitwalker</groupId>
+			<artifactId>UserAgentUtils</artifactId>
+			<version>1.11</version>
+		</dependency>
 	</dependencies>
+	<repositories>
+		<repository>
+			<id>bitwalker.user-agent-utils.mvn.repo</id>
+			<url>https://raw.github.com/HaraldWalker/user-agent-utils/mvn-repo/</url>
+			<!-- use snapshot version -->
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+	</repositories>
 </project>

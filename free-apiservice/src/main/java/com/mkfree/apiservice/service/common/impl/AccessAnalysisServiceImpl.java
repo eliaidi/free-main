@@ -1,5 +1,9 @@
 package com.mkfree.apiservice.service.common.impl;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +20,48 @@ import com.mkfree.apiservice.service.common.AccessAnalysisService;
  */
 @Service("accessAnalysisService")
 public class AccessAnalysisServiceImpl implements AccessAnalysisService {
+	@Autowired
+	private AccessAnalysisDao accessAnalysisDao;
 
-	public String save(AccessAnalysis entity) {
+	/**
+	 * 保存一个访问分析日志
+	 * 
+	 * @param userSession 没有关闭浏览器的会话(唯一标识)
+	 * @param blogUserId
+	 * @param userIp
+	 * @param referer
+	 * @param uri
+	 * @param type
+	 * @return id
+	 */
+	public String save(String jsessionid, String fromUserId, String toUserId, String userIp, String referer, String uri, String browser, String os) {
+		AccessAnalysis entity = new AccessAnalysis();
+		entity.setJsessionid(jsessionid);
+		entity.setFromUserId(fromUserId);
+		entity.setToUserId(toUserId);
+		entity.setUserIp(userIp);
+		entity.setReferer(referer);
+		entity.setUri(uri);
+		entity.setBrowser(browser);
+		entity.setOs(os);
+		entity.setCreateTime(new Date());
 		return accessAnalysisDao.save(entity).getId();
 	}
 
-	@Autowired
-	private AccessAnalysisDao accessAnalysisDao;
+	@Override
+	public Map<String, Long> findBlogAccessCount(String userId) {
+		Map<String, Long> blogAccessCount = new HashMap<String, Long>();
+		long todayCount = accessAnalysisDao.findBlogTodayAcceccCountByUserId(userId);
+		long yesterdayCount = accessAnalysisDao.findBlogYesterdayAcceccCountByUserId(userId);
+		long weekCount = accessAnalysisDao.findBlogWeekAcceccCountByUserId(userId);
+		long monthCount = accessAnalysisDao.findBlogMonthAcceccCountByUserId(userId);
+		long allCount = accessAnalysisDao.findBlogAllAcceccCountByUserId(userId);
+		blogAccessCount.put("todayCount", todayCount);
+		blogAccessCount.put("yesterdayCount", yesterdayCount);
+		blogAccessCount.put("weekCount", weekCount);
+		blogAccessCount.put("monthCount", monthCount);
+		blogAccessCount.put("allCount", allCount);
+		return blogAccessCount;
+	}
+
 }

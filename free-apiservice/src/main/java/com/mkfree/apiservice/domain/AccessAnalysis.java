@@ -14,31 +14,41 @@ import com.mkfree.framework.common.utils.IDEntity;
  *         2013-10-17 下午5:52:56
  */
 @SuppressWarnings("serial")
-@Document(collection = "blogAccessAnalysis")
+@Document(collection = "accessAnalysis")
 public class AccessAnalysis extends IDEntity {
 
-	private String visitorArtifactId;// 本次访问者唯一标识
-	private String userId;// 浏览用户默认-1，登录用户的用户id
+	private String jsessionid;// 本次访问者唯一标识
+	private String fromUserId;// 浏览用户(未登录)默认-1，登录用户的用户id
+	private String toUserId;// 用于统计访问者,访问到谁的博客
 	private String userIp;// 浏览用户ip
 	private String referer;// 访问来源(uri)
 	private String uri;// 本次访问uri
-	private int type;// 统计类型 1:暂时是博客 2：还不知道是什么
+	private String browser; // 浏览器
+	private String os;// 操作系统
 	private Date createTime;// 创建时间
 
-	public String getVisitorArtifactId() {
-		return visitorArtifactId;
+	public String getJsessionid() {
+		return jsessionid;
 	}
 
-	public void setVisitorArtifactId(String visitorArtifactId) {
-		this.visitorArtifactId = visitorArtifactId;
+	public void setJsessionid(String jsessionid) {
+		this.jsessionid = jsessionid;
 	}
 
-	public String getUserId() {
-		return userId;
+	public String getBrowser() {
+		return browser;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
+
+	public String getOs() {
+		return os;
+	}
+
+	public void setOs(String os) {
+		this.os = os;
 	}
 
 	public String getReferer() {
@@ -73,12 +83,20 @@ public class AccessAnalysis extends IDEntity {
 		this.createTime = createTime;
 	}
 
-	public int getType() {
-		return type;
+	public String getFromUserId() {
+		return fromUserId;
 	}
 
-	public void setType(int type) {
-		this.type = type;
+	public void setFromUserId(String fromUserId) {
+		this.fromUserId = fromUserId;
+	}
+
+	public String getToUserId() {
+		return toUserId;
+	}
+
+	public void setToUserId(String toUserId) {
+		this.toUserId = toUserId;
 	}
 
 }

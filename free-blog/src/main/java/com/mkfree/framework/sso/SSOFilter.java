@@ -32,9 +32,6 @@ import com.mkfree.framework.common.web.session.SessionUtils;
  */
 public class SSOFilter implements Filter {
 
-	// 访问者唯一标识常量
-	public static String visitorArtifactId = "visitorArtifactId";
-
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) req;
@@ -52,8 +49,8 @@ public class SSOFilter implements Filter {
 	 * @param response
 	 */
 	private void addVisitorArtifactIdToSession(HttpServletRequest request, HttpServletResponse response) {
-		if (!SessionUtils.isExist(request, visitorArtifactId)) {
-			SessionUtils.addSession(request, visitorArtifactId, visitorArtifactId + ":" + UUID.randomUUID());
+		if (!SessionUtils.isExist(request, SSOConstants.JSESSIONID)) {
+			SessionUtils.addSession(request, SSOConstants.JSESSIONID, SSOConstants.JSESSIONID + ":" + UUID.randomUUID());
 		}
 	}
 

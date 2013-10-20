@@ -16,14 +16,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mkfree.apiclient.blog.BlogClient;
 import com.mkfree.apiclient.blog.BlogCommentClient;
+import com.mkfree.apiclient.common.AccessAnalysisClient;
 import com.mkfree.apiclient.common.SysUserClient;
 import com.mkfree.apithrift.vo.BlogCommentVO;
 import com.mkfree.apithrift.vo.BlogPostVO;
 import com.mkfree.apithrift.vo.PaginationVO;
 import com.mkfree.apithrift.vo.SysUserVO;
 import com.mkfree.framework.common.constants.BlogConstants;
+import com.mkfree.framework.common.constants.SSOConstants;
 import com.mkfree.framework.common.web.html.HtmlUtils;
 import com.mkfree.framework.common.web.request.RequestUtils;
+import com.mkfree.framework.common.web.session.SessionUtils;
+
+import eu.bitwalker.useragentutils.UserAgent;
 
 /**
  * @author hk
@@ -52,7 +57,7 @@ public class BlogController {
 	 * @return
 	 */
 	@RequestMapping(value = "/posts/{id}", method = RequestMethod.GET)
-	public String blogPostsContent(Model model, @PathVariable String id) {
+	public String blogPostsContent(HttpServletRequest request, Model model, @PathVariable String id) {
 		BlogPostVO bp = BlogClient.findById(id);
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("views", (bp.getViews() + 1) + "");
@@ -60,6 +65,21 @@ public class BlogController {
 		model.addAttribute("posts", bp);
 		List<BlogCommentVO> blogComments = BlogCommentClient.findByPostsId(bp.getId());
 		model.addAttribute("blogComments", blogComments);
+
+		String userIp = RequestUtils.getIpAddr(request);
+		if (!userIp.equals("127.0.0.1")) {
+			String jsessinid = (String) SessionUtils.getSessionValue(request, SSOConstants.JSESSIONID);
+			String fromUserId = "-1";// 由于现在没有注册用户,所有浏览用户默认都为-1
+			String toUserId = bp.getUserId();
+			String referer = RequestUtils.getReferer(request);
+			String uri = request.getRequestURL().toString();
+			String userAgent = request.getHeader("user-agent");
+			// 获取用户的代理,浏览器跟操作系统
+			UserAgent ua = UserAgent.parseUserAgentString(userAgent);
+			String os = ua.getOperatingSystem().getName();
+			String browser = ua.getBrowser().getName();
+			AccessAnalysisClient.saveAccessAnalysis(jsessinid, fromUserId, toUserId, userIp, referer, uri, browser, os);
+		}
 		return "blog/posts_content";
 	}
 

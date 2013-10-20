@@ -13,5 +13,6 @@
 	<bean id="settingUrl" class="com.mkfree.framework.common.web.directive.SettingDirective" />
 	<bean id="upNextPosts" class="com.mkfree.blog.action.directive.UpNextPostsDirective" />
 	<bean id="relatedPosts" class="com.mkfree.blog.action.directive.RelatedPostDirective" />
+	<bean id="blogAccessCount" class="com.mkfree.blog.action.directive.AccessAnalysisDirective" />
 
 </beans>

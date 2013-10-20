@@ -131,12 +131,14 @@ body {
 						<li><a href="#">哇,什么博客啊?</a></li>
 						<li><a href="#">博客代码能分享吗?</a></li>
 						<li><a href="#"></a></li>
+						<@blogAccessCount userId=posts.userId>
 						<li class="nav-header">访问统计</li>
-						<li><a href="#">今日访问:133</a></li>
-						<li><a href="#">昨日访问:15</a></li>
-						<li><a href="#">本周访问:235</a></li>
-						<li><a href="#">本月访问:1000</a></li>
-						<li><a href="#">所有访问:2330</a></li>
+						<li><a href="#">今日访问:${blogAccessCount.todayCount}</a></li>
+						<li><a href="#">昨日访问:${blogAccessCount.yesterdayCount}</a></li>
+						<li><a href="#">本周访问:${blogAccessCount.weekCount}</a></li>
+						<li><a href="#">本月访问:${blogAccessCount.monthCount}</a></li>
+						<li><a href="#">所有访问:${blogAccessCount.allCount}</a></li>
+						</@blogAccessCount>
 					</ul>
 				</div>
 				<!--/.well -->

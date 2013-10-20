@@ -44,7 +44,7 @@ public class VpsController {
 		return "vps/index";
 	}
 	/**
-	 * vps首页
+	 * vps 价格列表页
 	 * 
 	 * @param model
 	 * @return
@@ -52,6 +52,16 @@ public class VpsController {
 	@RequestMapping(value = "/vps/price-list", method = RequestMethod.GET)
 	public String priceList() {
 		return "vps/price_list";
+	}
+	/**
+	 * vps 相关资料页
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/vps/wiki", method = RequestMethod.GET)
+	public String wiki() {
+		return "vps/wiki";
 	}
 
 }

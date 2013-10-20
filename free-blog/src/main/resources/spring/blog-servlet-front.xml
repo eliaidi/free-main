@@ -48,6 +48,7 @@
 				<entry key="settingUrl" value-ref="settingUrl" />
 				<entry key="upNextPosts" value-ref="upNextPosts" />
 				<entry key="relatedPosts" value-ref="relatedPosts" />
+				<entry key="blogAccessCount" value-ref="blogAccessCount" />
 			</map>
 		</property>
 		<property name="templateLoaderPath" value="/views/" />

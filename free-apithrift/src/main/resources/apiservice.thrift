@@ -80,5 +80,13 @@ service ApiService extends base.BaseService{
 	/**
 	 * 保存一个访问分析日志
 	 */
-	string saveAccessAnalysis(1:string userSession,2:string userId, 3:string userIp, 4:string referer, 5:string uri, 6:i32 type)
+	string saveAccessAnalysis(1:string jsessionid,2:string fromUserId,3:string toUserId, 4:string userIp, 5:string referer, 6:string uri, 7:string browser,8:string os)
+	
+	/**
+	 * 通过userid查找博客用户的访问次数(日,昨日,周,月,一共)
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	map<string,i64> findBlogAccessCount(1:string userId);
 }
