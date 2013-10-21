@@ -1,6 +1,14 @@
 #!/bin/bash
 isUpdate=$1
 deploy=$2
+version=$3
+isSnapshot=$4
+
+snapshot=""
+if [ "$isSnapshot" == "y" ]
+	snapshot="-SNAPSHOT"
+fi
+echo " sh deploy y product 0.0.1 y"
 
 if [ "$deploy" != "test" ];then
    if [ "$deploy" != "product" ];then
@@ -16,16 +24,15 @@ mkfreeDir=/opt/mkfree
 cd $projectDir/free-main
 
 if [ "$isUpdate" = "y" ];then
-    git pull
+    git pull origin develop
 fi
 
 mvn -P$deploy -Dmaven.test.skip=true clean package
-rm -rf $mkfreeDir/free-blog/WEB-INF/lib/*
-unzip -o $projectDir/free-main/free-blog/target/free-blog-0.0.1-SNAPSHOT.war -d $mkfreeDir/free-blog/
+rm -rf $mkfreeDir/free-blog/WEB-INF/*
+unzip -o $projectDir/free-main/free-blog/target/free-blog-$version$snapshot.war -d $mkfreeDir/free-blog/
 
-cp free-apithrift/target/free-apithrift-0.0.1-SNAPSHOT.jar $mkfreeDir/free-apiservice/lib
-cp free-framework/target/free-framework-0.0.1-SNAPSHOT.jar $mkfreeDir/free-apiservice/lib
-cp free-apiservice/target/free-apiservice-0.0.1-SNAPSHOT.jar $mkfreeDir/free-apiservice/
+tar -zxvf /opt/project/free-main/free-apiservice/target/free-apiservice-0.0.1-SNAPSHOT-run.tar.gz -C /opt/mkfree/free-apiservice/
+ln -s /opt/mkfree/free-apiservice/0.0.1-SNAPSHOT/ current
 
 /opt/mkfree/free-apiservice/bin/apiservice restart
 /opt/module/jetty/current/bin/jetty.sh restart
