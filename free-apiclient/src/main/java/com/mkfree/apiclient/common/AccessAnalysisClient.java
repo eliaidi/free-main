@@ -24,7 +24,7 @@ public class AccessAnalysisClient {
 			ApiService.Client client = new ApiService.Client(protocol);// 创建Client
 			id = client.saveAccessAnalysis(jsessionid, fromUserId, toUserId, userIp, referer, uri, browser, os);
 			transport.close();// 关闭资源
-			System.out.println("saveAccessAnalysis 耗时：" + (System.currentTimeMillis() - start));
+			System.out.println("AccessAnalysisClient.saveAccessAnalysis 耗时：" + (System.currentTimeMillis() - start));
 		} catch (TException x) {
 			x.printStackTrace();
 		}

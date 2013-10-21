@@ -26,7 +26,7 @@ public class BlogClient {
 			ApiService.Client client = new ApiService.Client(protocol);// 创建Client
 			long start = System.currentTimeMillis();
 			results = client.findBlogPostByIds(ids);
-			System.out.println("耗时：" + (System.currentTimeMillis() - start));
+			System.out.println("BlogClient.findByIds 耗时：" + (System.currentTimeMillis() - start));
 			transport.close();// 关闭资源
 		} catch (TException e) {
 			e.printStackTrace();

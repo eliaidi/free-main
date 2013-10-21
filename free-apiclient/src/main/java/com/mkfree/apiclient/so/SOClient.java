@@ -21,7 +21,7 @@ public class SOClient {
 			ApiService.Client client = new ApiService.Client(protocol);// 创建Client
 			long start = System.currentTimeMillis();
 			client.createIndex();
-			System.out.println("耗时：" + (System.currentTimeMillis() - start));
+			System.out.println("SOClient.createIndex 耗时：" + (System.currentTimeMillis() - start));
 			transport.close();// 关闭资源
 		} catch (TException x) {
 			x.printStackTrace();

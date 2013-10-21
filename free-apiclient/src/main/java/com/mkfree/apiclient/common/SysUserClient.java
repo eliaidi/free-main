@@ -23,7 +23,7 @@ public class SysUserClient {
 			ApiService.Client client = new ApiService.Client(protocol);// 创建Client
 			sysUserVO = client.findUserByAccount(account);
 			transport.close();// 关闭资源
-			System.out.println("耗时：" + (System.currentTimeMillis() - start));
+			System.out.println("SysUserClient.findUserByAccount 耗时：" + (System.currentTimeMillis() - start));
 			return sysUserVO;
 		} catch (TException x) {
 			x.printStackTrace();

@@ -30,7 +30,7 @@ public class SSOClient {
 			ApiService.Client client = new ApiService.Client(protocol);// 创建Client
 			ssoUserVO = client.loginByAccountAndPassword(account, password);
 			transport.close();// 关闭资源
-			System.out.println("耗时：" + (System.currentTimeMillis() - start));
+			System.out.println("SSOClient.loginByAccountAndPassword 耗时：" + (System.currentTimeMillis() - start));
 			return ssoUserVO;
 		} catch (TException x) {
 			x.printStackTrace();
@@ -49,7 +49,7 @@ public class SSOClient {
 			ApiService.Client client = new ApiService.Client(protocol);// 创建Client
 			ssoUserVO = client.loginByTicket(ticketValue);
 			transport.close();// 关闭资源
-			System.out.println("耗时：" + (System.currentTimeMillis() - start));
+			System.out.println("SSOClient.loginByTicket 耗时：" + (System.currentTimeMillis() - start));
 			return ssoUserVO;
 		} catch (TException x) {
 			x.printStackTrace();
