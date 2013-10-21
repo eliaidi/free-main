@@ -50,11 +50,12 @@ public class AccessAnalysisDaoImpl extends MongodbDao<AccessAnalysis> implements
 	@Override
 	public long findBlogWeekAcceccCountByUserId(String userId) {
 		Calendar calendar = Calendar.getInstance();
-		calendar.set(Calendar.WEEK_OF_MONTH, 0);
+		calendar.set(Calendar.DAY_OF_WEEK, 0);
+		calendar.set(Calendar.HOUR, 12);
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);
 		Date endStart = calendar.getTime();
-		// calendar.add(Calendar.DATE, -7);
+		calendar.add(Calendar.DATE, -7);
 		Date todayStart = calendar.getTime();
 		System.out.println(todayStart);
 		System.out.println(endStart);
