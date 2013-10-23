@@ -18,8 +18,8 @@ public class VpsTimeUtil {
 	 */
 	public static Date getVPSTime() {
 		Calendar calendar = Calendar.getInstance();
-		calendar.add(Calendar.HOUR, 15);
-		calendar.add(Calendar.MINUTE, 12);
+		calendar.add(Calendar.HOUR, 9);
+		calendar.add(Calendar.MINUTE, 11);
 		return calendar.getTime();
 	}
 }
