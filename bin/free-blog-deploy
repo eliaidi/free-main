@@ -1,0 +1,59 @@
+#!/bin/bash
+isUpdate=$1
+deploy=$2
+version=$3
+isSnapshot=$4
+
+snapshot=""
+if [ "$isUpdate" == "" ]; then
+    echo " please input args exmpale ..."
+    echo " sh free-blog-deploy y/n test/product 0.0.1 y/n"
+    exit 1
+fi
+
+if [ "$deploy" == "" ]; then
+    echo " please input args exmpale ..."
+    echo " sh free-blog-deploy y/n test/product 0.0.1 y/n"
+    exit 1
+fi
+
+if [ "$version" == "" ]; then
+    echo " please input args exmpale ..."
+    echo " sh free-blog-deploy y/n test/product 0.0.1 y/n"
+    exit 1
+fi
+
+if [ "$isSnapshot" == "" ]; then
+    echo " please input args exmpale ..."
+    echo " sh free-blog-deploy y/n test/product 0.0.1 y/n"
+    exit 1
+fi
+
+
+if [ "$isSnapshot" == "y" ]; then
+	snapshot="-SNAPSHOT"
+fi
+
+
+if [ "$deploy" != "test" ];then
+   if [ "$deploy" != "product" ];then
+        echo "you package choose test or product..."
+        exit 1
+   fi
+fi
+
+projectDir=/opt/project
+mkfreeDir=/opt/mkfree
+
+
+cd $projectDir/free-main
+
+if [ "$isUpdate" = "y" ];then
+    git pull origin develop
+fi
+
+mvn -P$deploy -Dmaven.test.skip=true clean package
+rm -rf $mkfreeDir/free-blog/WEB-INF/*
+unzip -o $projectDir/free-main/free-blog/target/free-blog-$version$snapshot.war -d $mkfreeDir/free-blog/
+
+/opt/module/jetty/current/bin/jetty.sh restart
