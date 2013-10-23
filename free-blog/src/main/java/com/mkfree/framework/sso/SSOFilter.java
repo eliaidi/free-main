@@ -54,10 +54,6 @@ public class SSOFilter implements Filter {
 		if (!SessionUtils.isExist(request, SSOConstants.JSESSIONID)) {
 			SessionUtils.addSession(request, SSOConstants.JSESSIONID, SSOConstants.JSESSIONID + ":" + UUID.randomUUID());
 		}
-		String uri = request.getRequestURL().toString();
-		if (!SessionUtils.isExist(request, SSOFilter.JSESSIONURL + uri)) {
-			SessionUtils.addSession(request, SSOFilter.JSESSIONURL + uri, uri);
-		}
 	}
 
 	/**

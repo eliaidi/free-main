@@ -32,28 +32,29 @@ public class FrontContextInterceptor extends HandlerInterceptorAdapter {
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
 		String userIp = RequestUtils.getIpAddr(request);
 		String uri = request.getRequestURL().toString();
-		if (SessionUtils.isExist(request, SSOFilter.JSESSIONURL + uri)) {
-			return;
+		// if (!SessionUtils.isExist(request, SSOFilter.JSESSIONURL + uri)) {
+		// SessionUtils.addSession(request, SSOFilter.JSESSIONURL + uri, uri);
+		if (!userIp.equals("127.0.0.1")) {
+			if (uri.indexOf("posts") == -1) {
+				String jsessinid = (String) SessionUtils.getSessionValue(request, SSOConstants.JSESSIONID);
+				String fromUserId = "-1";// 由于现在没有注册用户,所有浏览用户默认都为-1
+				String toUserId = null;
+				String referer = RequestUtils.getReferer(request);
+				String userAgent = request.getHeader("user-agent");
+				// 获取用户的代理,浏览器跟操作系统
+				UserAgent ua = UserAgent.parseUserAgentString(userAgent);
+				String os = ua.getOperatingSystem().getName();
+				String browser = ua.getBrowser().getName();
+				AccessAnalysisClient.saveAccessAnalysis(jsessinid, fromUserId, toUserId, userIp, referer, uri, browser, os);
+			}
 		}
-		if (userIp.equals("127.0.0.1")) {
-			return;
-		}
-		if (uri.indexOf("posts") == -1) {
-			String jsessinid = (String) SessionUtils.getSessionValue(request, SSOConstants.JSESSIONID);
-			String fromUserId = "-1";// 由于现在没有注册用户,所有浏览用户默认都为-1
-			String toUserId = null;
-			String referer = RequestUtils.getReferer(request);
-			String userAgent = request.getHeader("user-agent");
-			// 获取用户的代理,浏览器跟操作系统
-			UserAgent ua = UserAgent.parseUserAgentString(userAgent);
-			String os = ua.getOperatingSystem().getName();
-			String browser = ua.getBrowser().getName();
-			AccessAnalysisClient.saveAccessAnalysis(jsessinid, fromUserId, toUserId, userIp, referer, uri, browser, os);
-		}
+		// }
+		super.afterCompletion(request, response, handler, ex);
 	}
 
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+		super.postHandle(request, response, handler, modelAndView);
 	}
 	//
 	// @Autowired
