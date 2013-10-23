@@ -27,6 +27,7 @@ import com.mkfree.framework.common.constants.SSOConstants;
 import com.mkfree.framework.common.web.html.HtmlUtils;
 import com.mkfree.framework.common.web.request.RequestUtils;
 import com.mkfree.framework.common.web.session.SessionUtils;
+import com.mkfree.framework.sso.SSOFilter;
 
 import eu.bitwalker.useragentutils.UserAgent;
 
@@ -66,20 +67,26 @@ public class BlogController {
 		List<BlogCommentVO> blogComments = BlogCommentClient.findByPostsId(bp.getId());
 		model.addAttribute("blogComments", blogComments);
 
+		// 访问统计
 		String userIp = RequestUtils.getIpAddr(request);
-		if (!userIp.equals("127.0.0.1")) {
-			String jsessinid = (String) SessionUtils.getSessionValue(request, SSOConstants.JSESSIONID);
-			String fromUserId = "-1";// 由于现在没有注册用户,所有浏览用户默认都为-1
-			String toUserId = bp.getUserId();
-			String referer = RequestUtils.getReferer(request);
-			String uri = request.getRequestURL().toString();
-			String userAgent = request.getHeader("user-agent");
-			// 获取用户的代理,浏览器跟操作系统
-			UserAgent ua = UserAgent.parseUserAgentString(userAgent);
-			String os = ua.getOperatingSystem().getName();
-			String browser = ua.getBrowser().getName();
-			AccessAnalysisClient.saveAccessAnalysis(jsessinid, fromUserId, toUserId, userIp, referer, uri, browser, os);
+		String uri = request.getRequestURL().toString();
+		if (userIp.equals("127.0.0.1")) {
+			return "blog/posts_content";
 		}
+		if (SessionUtils.isExist(request, SSOFilter.JSESSIONURL + uri)) {
+			return "blog/posts_content";
+		}
+		String jsessinid = (String) SessionUtils.getSessionValue(request, SSOConstants.JSESSIONID);
+		String fromUserId = "-1";// 由于现在没有注册用户,所有浏览用户默认都为-1
+		String toUserId = bp.getUserId();
+		String referer = RequestUtils.getReferer(request);
+
+		String userAgent = request.getHeader("user-agent");
+		// 获取用户的代理,浏览器跟操作系统
+		UserAgent ua = UserAgent.parseUserAgentString(userAgent);
+		String os = ua.getOperatingSystem().getName();
+		String browser = ua.getBrowser().getName();
+		AccessAnalysisClient.saveAccessAnalysis(jsessinid, fromUserId, toUserId, userIp, referer, uri, browser, os);
 		return "blog/posts_content";
 	}
 

@@ -32,6 +32,8 @@ import com.mkfree.framework.common.web.session.SessionUtils;
  */
 public class SSOFilter implements Filter {
 
+	public static final String JSESSIONURL = "jsessionurl:";
+
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) req;
@@ -51,6 +53,10 @@ public class SSOFilter implements Filter {
 	private void addVisitorArtifactIdToSession(HttpServletRequest request, HttpServletResponse response) {
 		if (!SessionUtils.isExist(request, SSOConstants.JSESSIONID)) {
 			SessionUtils.addSession(request, SSOConstants.JSESSIONID, SSOConstants.JSESSIONID + ":" + UUID.randomUUID());
+		}
+		String uri = request.getRequestURL().toString();
+		if (!SessionUtils.isExist(request, SSOFilter.JSESSIONURL + uri)) {
+			SessionUtils.addSession(request, SSOFilter.JSESSIONURL + uri, uri);
 		}
 	}
 
