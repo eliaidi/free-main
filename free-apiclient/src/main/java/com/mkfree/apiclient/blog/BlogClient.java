@@ -71,6 +71,21 @@ public class BlogClient {
 		return paginationVO;
 	}
 
+	public static PaginationVO findBlogPostPageByUserId(int pageNo, int pageSize, String userId) {
+		PaginationVO paginationVO = null;
+		try {
+			long start = System.currentTimeMillis();
+			TTransport transport = BaseClient.getTransport();
+			ApiService.Client client = BaseClient.getClient(transport);
+			paginationVO = client.findBlogPostPageByUserId(pageNo, pageSize, userId);
+			System.out.println("耗时：" + (System.currentTimeMillis() - start));
+			transport.close();// 关闭资源
+		} catch (TException e) {
+			e.printStackTrace();
+		}
+		return paginationVO;
+	}
+
 	public static String save(BlogPostVO blogPostVO) {
 		String result = null;
 		try {

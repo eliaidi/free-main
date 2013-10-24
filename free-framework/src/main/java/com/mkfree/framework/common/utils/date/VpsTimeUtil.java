@@ -16,11 +16,13 @@ public class VpsTimeUtil {
 	}
 
 	/**
-	 * * 获取vps时间对应中国时间,这里好傻,为了配合VPS的时间,而设计的(到时候换了服务器就要注意了) * * @return
-	 * */
+	 * 获取vps时间对应中国时间,这里好傻,为了配合VPS的时间,而设计的(到时候换了服务器就要注意了)
+	 * 
+	 * @return
+	 **/
 	public static Date getVPSTime() {
 		Calendar calendar = Calendar.getInstance();
-		calendar.add(Calendar.HOUR, 15);
+		calendar.add(Calendar.HOUR, 8);
 		calendar.add(Calendar.MINUTE, 15);
 		return calendar.getTime();
 	}

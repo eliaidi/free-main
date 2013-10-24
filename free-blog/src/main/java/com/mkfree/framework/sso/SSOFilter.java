@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.mkfree.apiclient.sso.SSOClient;
 import com.mkfree.apithrift.vo.SSOUserVO;
+import com.mkfree.framework.common.constants.BlogConstants;
 import com.mkfree.framework.common.constants.SSOConstants;
 import com.mkfree.framework.common.redis.RedisService;
 import com.mkfree.framework.common.spring.util.SpringUtil;
@@ -40,8 +41,31 @@ public class SSOFilter implements Filter {
 		HttpServletResponse response = (HttpServletResponse) resp;
 
 		this.ssoFilterService(request, response);
-		this.addVisitorArtifactIdToSession(request, response);
+		// 下面url是需要登录后才能访问
+		if (isVositorPermission(request, response)) {
+			response.sendRedirect(BlogConstants.MKFREE_BLOG_URL);
+			return;
+		}
+		this.addJsessionIdToSession(request, response);
 		chain.doFilter(request, response);
+	}
+
+	/**
+	 * 我的博客空间需要登录后才能进入，防止没有登录者恶意进入
+	 * 
+	 * @param request
+	 * @param response
+	 * @return 无权限返回true
+	 */
+	private boolean isVositorPermission(HttpServletRequest request, HttpServletResponse response) {
+		String uri = request.getRequestURL().toString();
+		// 下面url是需要登录后才能访问
+		if (uri.indexOf("space/admin") != -1) {
+			if (!SessionUtils.isExist(request, SSOConstants.SSO_USER)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -50,7 +74,7 @@ public class SSOFilter implements Filter {
 	 * @param request
 	 * @param response
 	 */
-	private void addVisitorArtifactIdToSession(HttpServletRequest request, HttpServletResponse response) {
+	private void addJsessionIdToSession(HttpServletRequest request, HttpServletResponse response) {
 		if (!SessionUtils.isExist(request, SSOConstants.JSESSIONID)) {
 			SessionUtils.addSession(request, SSOConstants.JSESSIONID, SSOConstants.JSESSIONID + ":" + UUID.randomUUID());
 		}

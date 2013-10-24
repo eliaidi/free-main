@@ -113,10 +113,10 @@ public class BlogController {
 	 */
 	@RequestMapping(value = "/{account}/space")
 	public String personalSpace(Model model, @PathVariable String account) {
-		PaginationVO pages = BlogClient.getPage(1, 15);
+		SysUserVO sysUserVO = SysUserClient.findUserByAccount(account);
+		PaginationVO pages = BlogClient.findBlogPostPageByUserId(1, 15, sysUserVO.getId());
 		pages.setPageUrl(BlogConstants.MKFREE_BLOG_URL + account + "/space");
 		model.addAttribute("pages", pages);
-		SysUserVO sysUserVO = SysUserClient.findUserByAccount(account);
 		model.addAttribute("user", sysUserVO);
 		List<BlogCommentVO> blogCommentVOs = BlogCommentClient.findByUserIdOrderByCreateTime(sysUserVO.getId(), 10);
 		model.addAttribute("blogComments", blogCommentVOs);
@@ -148,7 +148,8 @@ public class BlogController {
 	 */
 	@RequestMapping(value = "/{account}/space/admin")
 	public String myBlogSpace(Model model, @PathVariable String account) {
-		PaginationVO pages = BlogClient.getPage(1, 15);
+		SysUserVO sysUserVO = SysUserClient.findUserByAccount(account);
+		PaginationVO pages = BlogClient.findBlogPostPageByUserId(1, 15, sysUserVO.getId());
 		pages.setPageUrl(BlogConstants.MKFREE_BLOG_URL + account + "/space/admin");
 		model.addAttribute("pages", pages);
 		return "blog/myspace";
@@ -163,7 +164,8 @@ public class BlogController {
 	 */
 	@RequestMapping(value = "/{account}/space/admin/{pageNo}")
 	public String myBlogSpace(Model model, @PathVariable String account, @PathVariable int pageNo) {
-		PaginationVO pages = BlogClient.getPage(pageNo, 15);
+		SysUserVO sysUserVO = SysUserClient.findUserByAccount(account);
+		PaginationVO pages = BlogClient.findBlogPostPageByUserId(1, 15, sysUserVO.getId());
 		pages.setPageUrl(BlogConstants.MKFREE_BLOG_URL + account + "/space/admin");
 		model.addAttribute("pages", pages);
 		return "blog/myspace";

@@ -35,7 +35,7 @@ public class SessionUtils {
 	 * 
 	 * @param req
 	 * @param name
-	 * @return
+	 * @return 存在返回true 否则
 	 */
 	public static boolean isExist(HttpServletRequest req, String name) {
 		Object value = req.getSession().getAttribute(name);
