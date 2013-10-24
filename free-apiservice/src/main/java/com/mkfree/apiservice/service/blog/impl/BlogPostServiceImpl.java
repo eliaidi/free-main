@@ -21,6 +21,8 @@ import com.mkfree.framework.common.web.html.HtmlUtils;
 
 @Service("blogPostsService")
 public class BlogPostServiceImpl implements BlogPostService {
+	@Autowired
+	private BlogPostsDao blogPostsDao;
 
 	@Override
 	public BlogPostVO findById(String id) {
@@ -116,6 +118,20 @@ public class BlogPostServiceImpl implements BlogPostService {
 		return blogPostsDao.findTotalByUserId(userId);
 	}
 
-	@Autowired
-	private BlogPostsDao blogPostsDao;
+	@Override
+	public PaginationVO findBlogPostPageByUserId(int pageNo, int pageSize, String userId) {
+		PaginationVO results = new PaginationVO();
+		results.setDatas(new ArrayList<BlogPostVO>());
+		Pagination<BlogPost> pages = this.blogPostsDao.getPostPageByUserId(pageNo, pageSize, userId);
+		for (int i = 0; i < pages.getDatas().size(); i++) {
+			BlogPost blogPost = pages.getDatas().get(i);
+			String title = blogPost.getTitle();
+			blogPost.setTitle(title.length() > 50 ? title.substring(0, 50) + "..." : title);
+			BlogPostVO blogPostVO = new BlogPostVO();
+			KBeanUtils.copyProperties(blogPost, blogPostVO);
+			results.getDatas().add(blogPostVO);
+		}
+		KBeanUtils.copyProperties(pages, results, new String[] { "datas" });
+		return results;
+	}
 }

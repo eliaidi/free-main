@@ -3,8 +3,10 @@ package com.mkfree.apiservice.service.blog;
 import java.util.List;
 import java.util.Map;
 
+import com.mkfree.apiservice.domain.BlogPost;
 import com.mkfree.apithrift.vo.BlogPostVO;
 import com.mkfree.apithrift.vo.PaginationVO;
+import com.mkfree.framework.common.page.Pagination;
 
 /**
  * 博客博文服务接口
@@ -32,6 +34,16 @@ public interface BlogPostService {
 	 * @return
 	 */
 	public PaginationVO getPage(int pageNo, int pageSize);
+
+	/**
+	 * 获取用户博客数 并且分页
+	 * 
+	 * @param pageNo
+	 * @param pageSize
+	 * @param userId
+	 * @return
+	 */
+	public PaginationVO findBlogPostPageByUserId(int pageNo, int pageSize, String userId);
 
 	/**
 	 * 通过博客ＩＤ去获取上一篇下一篇文章

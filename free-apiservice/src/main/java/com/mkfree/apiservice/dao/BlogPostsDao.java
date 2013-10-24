@@ -67,6 +67,16 @@ public interface BlogPostsDao {
 	public List<BlogPost> findBytype(int type, int startIndex, int number);
 
 	/**
+	 * 获取用户博客数 并且分页
+	 * 
+	 * @param pageNo
+	 * @param pageSize
+	 * @param userId
+	 * @return
+	 */
+	public Pagination<BlogPost> getPostPageByUserId(int pageNo, int pageSize, String userId);
+
+	/**
 	 * 获取分页记录
 	 * 
 	 * @param pageNo

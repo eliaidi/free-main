@@ -38,6 +38,15 @@ service ApiService extends base.BaseService{
 	 */
 	vo.PaginationVO getBlogPostPage(1:i32 pageNo,2:i32 pageSize);
 	/**
+	 * 获取用户博客数 并且分页
+	 * 
+	 * @param pageNo
+	 * @param pageSize
+	 * @param userId
+	 * @return
+	 */
+	vo.PaginationVO findBlogPostPageByUserId(1:i32 pageNo, 2:i32 pageSize, 3:string userId);
+	/**
 	 * 通过博客id获取,所有博客回复
 	 */
 	list<vo.BlogCommentVO> findBlogCommentByPostsId(1:string postId);
@@ -89,4 +98,5 @@ service ApiService extends base.BaseService{
 	 * @return
 	 */
 	map<string,i64> findBlogAccessCount(1:string userId);
+	
 }

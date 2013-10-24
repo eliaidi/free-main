@@ -80,6 +80,11 @@ public class ApiServiceImpl implements Iface {
 	}
 
 	@Override
+	public PaginationVO findBlogPostPageByUserId(int pageNo, int pageSize, String userId) throws TException {
+		return blogPostService.findBlogPostPageByUserId(pageNo, pageSize, userId);
+	}
+
+	@Override
 	public List<BlogCommentVO> findBlogCommentByPostsId(String postId) throws TException {
 		return blogCommentService.findByPostsId(postId);
 	}
@@ -140,7 +145,9 @@ public class ApiServiceImpl implements Iface {
 	 * @param userId
 	 * @return
 	 */
-	public Map<String, Long> findBlogAccessCount(String userId) {
+	@Override
+	public Map<String, Long> findBlogAccessCount(String userId) throws TException {
 		return accessAnalysisService.findBlogAccessCount(userId);
 	}
+
 }

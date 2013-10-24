@@ -28,6 +28,15 @@ public class BlogServiceTest extends BaseTest {
 		}
 	}
 
+	@Test
+	public void findBlogPostPageByUserId() {
+		try {
+			apiService.findBlogPostPageByUserId(1, 15, "510398ed3b9034b2008836c2");
+		} catch (TException e) {
+			e.printStackTrace();
+		}
+	}
+
 	@Autowired
 	private ApiServiceImpl apiService;
 }

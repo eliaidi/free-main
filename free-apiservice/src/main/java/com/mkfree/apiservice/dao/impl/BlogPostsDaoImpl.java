@@ -22,6 +22,17 @@ import com.mkfree.framework.common.page.Pagination;
 
 @Repository("blogPostsDao")
 public class BlogPostsDaoImpl extends MongodbDao<BlogPost> implements BlogPostsDao {
+	@Override
+	protected Class<BlogPost> getEntityClass() {
+		return BlogPost.class;
+	}
+
+	@Autowired
+	@Qualifier("mongoTemplate")
+	@Override
+	protected void setMongoTemplate(MongoTemplate mongoTemplate) {
+		this.mongoTemplate = mongoTemplate;
+	}
 
 	@Override
 	public List<BlogPost> findBytype(int type, int startIndex, int number) {
@@ -58,13 +69,6 @@ public class BlogPostsDaoImpl extends MongodbDao<BlogPost> implements BlogPostsD
 	@Override
 	public long findTotalByUserId(String userId) {
 		return this.mongoTemplate.count(new Query(), this.getEntityClass());
-	}
-
-	@Override
-	public Pagination<BlogPost> getPage(int pageNo, int pageSize) {
-		Query query = new Query();
-		query.with(new Sort(Sort.Direction.DESC, "createTime"));
-		return super.getPage(pageNo, pageSize, query);
 	}
 
 	@Override
@@ -126,14 +130,16 @@ public class BlogPostsDaoImpl extends MongodbDao<BlogPost> implements BlogPostsD
 	}
 
 	@Override
-	protected Class<BlogPost> getEntityClass() {
-		return BlogPost.class;
+	public Pagination<BlogPost> getPage(int pageNo, int pageSize) {
+		Query query = new Query();
+		query.with(new Sort(Sort.Direction.DESC, "createTime"));
+		return super.getPage(pageNo, pageSize, query);
 	}
 
-	@Autowired
-	@Qualifier("mongoTemplate")
 	@Override
-	protected void setMongoTemplate(MongoTemplate mongoTemplate) {
-		this.mongoTemplate = mongoTemplate;
+	public Pagination<BlogPost> getPostPageByUserId(int pageNo, int pageSize, String userId) {
+		Query query = new Query(Criteria.where("userId").is(userId));
+		query.with(new Sort(Sort.Direction.DESC, "createTime"));
+		return super.getPage(pageNo, pageSize, query);
 	}
 }

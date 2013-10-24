@@ -3,8 +3,8 @@ win
 thrift --gen java -out D:/dev/project/git_project/free-main/free-apithrift/src/main/java D:\dev\project\git_project\free-main\free-apithrift\src\main\resources\base.thrift
 thrift --gen java -out D:/dev/project/git_project/free-main/free-apithrift/src/main/java D:\dev\project\git_project\free-main\free-apithrift\src\main\resources\vo.thrift
 thrift --gen java -out D:/dev/project/git_project/free-main/free-apithrift/src/main/java D:\dev\project\git_project\free-main\free-apithrift\src\main\resources\apiservice.thrift
-ubuntu
-thrift --gen java -out /home/oyhk/git/free-apithrift/src/main/java /home/oyhk/git/free-apithrift/src/main/resources/apiservice.thrift
-#test
 
-#product
+ubuntu (gongsi)
+thrift --gen java -out /opt/xrk/workspace/free-main/free-apithrift/src/main/java /opt/xrk/workspace/free-main/free-apithrift/src/main/resources/base.thrift
+thrift --gen java -out /opt/xrk/workspace/free-main/free-apithrift/src/main/java /opt/xrk/workspace/free-main/free-apithrift/src/main/resources/vo.thrift
+thrift --gen java -out /opt/xrk/workspace/free-main/free-apithrift/src/main/java /opt/xrk/workspace/free-main/free-apithrift/src/main/resources/apiservice.thrift
