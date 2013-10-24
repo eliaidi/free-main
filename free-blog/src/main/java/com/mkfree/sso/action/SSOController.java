@@ -31,6 +31,11 @@ import com.mkfree.framework.common.web.cookie.CookieUtils;
 @Controller
 public class SSOController {
 
+	@RequestMapping(value = "/sso/register", method = RequestMethod.POST)
+	public String register() {
+		return "sso/register";
+	}
+
 	/**
 	 * 用户登录
 	 * 
