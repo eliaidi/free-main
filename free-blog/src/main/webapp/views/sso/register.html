@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>用户注册|mkfree-博客</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="Keywords" content="休闲网站,休闲博客,java编程 ,java设计模式,java基础,编程技术,java" />
+<meta name="description" content="mkfree 休闲网站--自由-博客,发表心情,分享技术,分享图片,分享视频">
+<meta name="author" content="<@settingUrl>${mkfree_blog_url}</@settingUrl> (oyhk)">
+<link href="${mkfree_static_url}/common/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="${mkfree_static_url}/common/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+<#include "../include/logo.html"/>
+<style type="text/css">
+body {
+	padding-top: 60px;
+	padding-bottom: 40px;
+}
+.form-signin {
+  max-width: 500px;
+  padding: 19px 29px 29px;
+  margin: 0 auto 20px;
+  background-color: #fff;
+  border: 1px solid #e5e5e5;
+  -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+          border-radius: 5px;
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+     -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+          box-shadow: 0 1px 2px rgba(0,0,0,.05);
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin input[type="text"],
+.form-signin input[type="password"] {
+  font-size: 16px;
+  height: auto;
+  margin-bottom: 15px;
+  padding: 7px 9px;
+}
+</style>
+</head>
+<body>
+	<#include "../include/navigation.html"/>
+	<div class="container" style="min-height: 550px;">
+		
+		<form name="register" class="form-signin" method="post" action="http://blog.mkfree.com/sso/save">
+			<h2 class="form-signin-heading">mkfree博客用户注册</h2>
+			<input type="text" name="account" class="input-block-level" placeholder="请输入用户帐号"> 
+			<input type="password" name="password" id="password" class="input-block-level" placeholder="请输入用户密码"> 
+			<input type="password" id="password2" class="input-block-level" placeholder="确认用户密码"> 
+			<button class="btn btn-large btn-primary" type="submit">注册</button>
+		</form>
+	</div>
+	<div class="container">
+		<#include "../include/footer.html" />
+	</div>
+	<!-- /container -->
+
+	<!-- Le javascript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="${mkfree_static_url}/common/script/jquery/jquery.min.js"></script>
+	<script src="${mkfree_static_url}/common/bootstrap/script/bootstrap.min.js"></script>
+</body>
+</html>

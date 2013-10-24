@@ -26,7 +26,7 @@
 		            <li><a href="${mkfree_blog_url}vps">VPS</a></li>
 					<li><a href="#">RSS</a></li>
 				</ul>
-				<form class="navbar-search pull-left" action="${mkfree_blog_url}so/blog">
+				<form name="so" class="navbar-search pull-left" action="${mkfree_blog_url}so/blog">
 		            <input name="q" type="text" class="search-query span2" placeholder="搜索">
 		            <button type="submit" class="btn">搜索</button>
 		         </form>
@@ -37,11 +37,11 @@
 					<li><a href="${mkfree_blog_url}sso/logout">退出</a></li>
 				</ul>
 				<#else>
-				<form action="${mkfree_blog_url}sso/login" class="navbar-form pull-right" method="post">
+				<form name="login" action="${mkfree_blog_url}sso/login" class="navbar-form pull-right" method="post">
 					<input name="account" class="span1" type="text" placeholder="帐号"> 
 					<input name="password" class="span1" type="password" placeholder="密码">
 					<button type="submit" class="btn">登 录</button>
-					<a type="button" class="btn" href="http://sso.mkfree.com/register" target="_blank">注 册</a>
+					<a type="button" class="btn" href="http://blog.mkfree.com/sso/register" target="_blank">注 册</a>
 				</form>
 				</#if>
 			</div>

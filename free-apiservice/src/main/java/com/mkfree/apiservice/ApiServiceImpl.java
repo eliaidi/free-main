@@ -126,6 +126,11 @@ public class ApiServiceImpl implements Iface {
 		return ssoService.login(ticket);
 	}
 
+	@Override
+	public String saveUser(String account, String password) throws TException {
+		return ssoService.save(account, password);
+	}
+
 	// common---------------------------------------------------------------------------------------
 	@Override
 	public SysUserVO findUserByAccount(String account) throws TException {
@@ -149,5 +154,4 @@ public class ApiServiceImpl implements Iface {
 	public Map<String, Long> findBlogAccessCount(String userId) throws TException {
 		return accessAnalysisService.findBlogAccessCount(userId);
 	}
-
 }

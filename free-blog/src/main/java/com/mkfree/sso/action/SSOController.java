@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,9 +32,23 @@ import com.mkfree.framework.common.web.cookie.CookieUtils;
 @Controller
 public class SSOController {
 
-	@RequestMapping(value = "/sso/register", method = RequestMethod.POST)
+	@RequestMapping(value = "/sso/register", method = RequestMethod.GET)
 	public String register() {
 		return "sso/register";
+	}
+
+	/**
+	 * 添加用户注册
+	 * 
+	 * @param account
+	 * @param password
+	 * @return
+	 */
+	@RequestMapping(value = "/sso/save", method = RequestMethod.POST)
+	public String save(@RequestParam("account") String account, @RequestParam("password") String password, Model model) {
+		String userId = SSOClient.saveUser(account, password);
+		model.addAttribute("account", account);
+		return "sso/success";
 	}
 
 	/**

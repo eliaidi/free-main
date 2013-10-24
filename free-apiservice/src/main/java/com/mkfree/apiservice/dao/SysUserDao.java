@@ -5,6 +5,22 @@ import com.mkfree.apiservice.domain.SysUser;
 public interface SysUserDao {
 
 	/**
+	 * 判断用户是否存在
+	 * 
+	 * @param account
+	 * @return
+	 */
+	public boolean isExist(String account);
+
+	/**
+	 * 新增一个用户
+	 * 
+	 * @param entity
+	 * @return
+	 */
+	public SysUser save(SysUser entity);
+
+	/**
 	 * 通过帐号密码查找用户
 	 * 
 	 * @param account

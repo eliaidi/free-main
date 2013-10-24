@@ -5,6 +5,14 @@ import com.mkfree.apithrift.vo.SSOUserVO;
 public interface SSOService {
 
 	/**
+	 * 新增一个用户
+	 * 
+	 * @param entity
+	 * @return
+	 */
+	public String save(String account, String password);
+
+	/**
 	 * 通过帐号密码登录
 	 * 
 	 * @param account

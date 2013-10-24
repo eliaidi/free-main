@@ -32,6 +32,21 @@ public class SSOClient {
 		return ssoUserVO;
 	}
 
+	public static String saveUser(String account, String password) {
+		String userId = null;
+		try {
+			long start = System.currentTimeMillis();
+			TTransport transport = BaseClient.getTransport();
+			ApiService.Client client = BaseClient.getClient(transport);
+			userId = client.saveUser(account, password);
+			transport.close();// 关闭资源
+			System.out.println("SSOClient.loginByAccountAndPassword 耗时：" + (System.currentTimeMillis() - start));
+		} catch (TException x) {
+			x.printStackTrace();
+		}
+		return userId;
+	}
+
 	public static SSOUserVO loginByTicket(String ticketValue) {
 		SSOUserVO ssoUserVO = null;
 		try {

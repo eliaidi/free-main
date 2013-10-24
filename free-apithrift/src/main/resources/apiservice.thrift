@@ -80,6 +80,13 @@ service ApiService extends base.BaseService{
 	 * 通过ticket登录
 	 */
 	vo.SSOUserVO loginByTicket(1:string ticketValue);
+	/**
+	 * 新增一个用户
+	 * 
+	 * @param entity
+	 * @return
+	 */
+	string saveUser(1:string account, 2:string password);
 	//common--------------------------------------------------------------------------------------------------------
 	/**
 	 * 通过用户帐号查询一个用户

@@ -21,7 +21,7 @@ public class SysUser extends IDEntity implements Serializable {
 	private String email;// 博客用户邮箱
 	private int sex;// 博客用户性别(-1:未知,0:男,1女)
 	private int age;// 博客用户年龄(-1:未知)
-	private int status;// 博客用户状态 (0:禁用,1:正常, ...)
+	private int status = 1;// 博客用户状态 (0:禁用,1:正常, ...)
 	private String autograph;// 博客用户个性签名
 	private Date createTime;// 博客用户创建时间
 

@@ -13,6 +13,15 @@ import com.mkfree.framework.common.mongodb.MongodbDao;
 @Repository("sysUserDao")
 public class SysUserDaoImpl extends MongodbDao<SysUser> implements SysUserDao {
 
+	@Override
+	public boolean isExist(String account) {
+		SysUser user = this.findByAccount(account);
+		if (user != null)
+			return true;
+		return false;
+
+	}
+
 	public SysUser findByAccountAndPassword(String account, String password) {
 		Query query = new Query();
 		Criteria c = new Criteria();
