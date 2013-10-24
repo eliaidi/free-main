@@ -11,15 +11,17 @@ import java.util.Date;
  *         2013-2-2 下午5:33:48
  */
 public class VpsTimeUtil {
+	public static void main(String[] args) {
+		System.out.println(getVPSTime());
+	}
+
 	/**
-	 * 获取vps时间对应中国时间,这里好傻,为了配合VPS的时间,而设计的(到时候换了服务器就要注意了)
-	 * 
-	 * @return
-	 */
+	 * * 获取vps时间对应中国时间,这里好傻,为了配合VPS的时间,而设计的(到时候换了服务器就要注意了) * * @return
+	 * */
 	public static Date getVPSTime() {
 		Calendar calendar = Calendar.getInstance();
-		calendar.add(Calendar.HOUR, 4);
-		calendar.add(Calendar.MINUTE, 2);
+		calendar.add(Calendar.HOUR, 15);
+		calendar.add(Calendar.MINUTE, 15);
 		return calendar.getTime();
 	}
 }
