@@ -1,5 +1,7 @@
 package com.mkfree.apiservice.dao;
 
+import java.util.List;
+
 import com.mkfree.apiservice.domain.SysUser;
 
 public interface SysUserDao {
@@ -36,6 +38,13 @@ public interface SysUserDao {
 	 * @return
 	 */
 	public SysUser findById(String id);
+
+	/**
+	 * 查找所有用户
+	 * 
+	 * @return
+	 */
+	public List<SysUser> findAll();
 
 	/**
 	 * 通过用户帐号去查找用户(用户帐号是唯一的)

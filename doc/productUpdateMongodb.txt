@@ -1,5 +1,12 @@
 - 2013.05.04
+#### 改名
 db.blogPosts.update({},{$rename:{"blogUser":"userId"}},false,true);
 db.blogComments.update({},{$rename:{"userId":"fromUserId"}},false,true);
-
+#### 修改
 db.blogComments.update({},{$set:{"toUserId":"510398ed3b9034b2008836c2"}},false,true);
+
+- 2013.10.25
+#### 删除字段
+db.sysUser.update({query},{option},{multi:true});
+db.sysUser.update({_id:ObjectId("510398ed3b9034b2008836c2")},{$unset:{_class:""}},{multi:true});
+db.blogPosts.update({},{$unset:{_class:""}},{multi:true});
