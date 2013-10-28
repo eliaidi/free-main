@@ -40,6 +40,4 @@ public class SOServiceTest extends BaseTest {
 		}
 	}
 
-	@Autowired
-	private ApiServiceImpl apiService;
 }

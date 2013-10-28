@@ -20,6 +20,4 @@ public class SSOServiceTest extends BaseTest {
 		}
 	}
 
-	@Autowired
-	private ApiServiceImpl apiService;
 }

@@ -92,12 +92,23 @@ service ApiService extends base.BaseService{
 	 * 通过用户帐号查询一个用户
 	 */
 	vo.SysUserVO findUserByAccount(1:string account);
+	/**
+	 * 上传文件
+	 * 
+	 * @param fileByteBuffer 文件字节缓存
+	 * @param appName 应用名.例如：blog-post（博客文章的附件）,blog-space(我的博客的附件)
+	 * @param originName (源文件名)
+	 * @param userId 用户id
+	 * @param userIp 用户ip
+	 * @return
+	 */
+	vo.AppUploadAttachmentVO saveAppUploadAttachment(1:binary fileByteBuffer, 2:string appName, 3:string originName, 4:string userId, 5:string userIp);
+	
 	//common AccessAnalysis--------------------------------------------------------------------------------------------------------
 	/**
 	 * 保存一个访问分析日志
 	 */
-	string saveAccessAnalysis(1:string jsessionid,2:string fromUserId,3:string toUserId, 4:string userIp, 5:string referer, 6:string uri, 7:string browser,8:string os)
-	
+	string saveAccessAnalysis(1:string jsessionid,2:string fromUserId,3:string toUserId, 4:string userIp, 5:string referer, 6:string uri, 7:string browser,8:string os);	
 	/**
 	 * 通过userid查找博客用户的访问次数(日,昨日,周,月,一共)
 	 * 

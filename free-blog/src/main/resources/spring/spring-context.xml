@@ -25,6 +25,5 @@
 	<bean class="com.mkfree.framework.common.constants.AppUploadConstants" />
 	
 	<import resource="blog-context.xml" />
-	<import resource="spring-mongodb.xml" />
 	<import resource="spring-redis.xml" />
 </beans>

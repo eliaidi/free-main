@@ -41,6 +41,4 @@ public class AccessAnalysisServiceTest extends BaseTest {
 		}
 	}
 
-	@Autowired
-	private ApiServiceImpl apiService;
 }

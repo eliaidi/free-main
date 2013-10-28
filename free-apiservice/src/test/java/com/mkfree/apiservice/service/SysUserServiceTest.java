@@ -19,7 +19,4 @@ public class SysUserServiceTest extends BaseTest {
 			e.printStackTrace();
 		}
 	}
-
-	@Autowired
-	private ApiServiceImpl apiService;
 }

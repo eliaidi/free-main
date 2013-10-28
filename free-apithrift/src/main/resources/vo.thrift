@@ -22,7 +22,19 @@ struct BlogCommentVO {
 	7:string replyIp;// 回复者的IP地址
 	8:string toUserId;// 评论写博客的用户
 }
-
+/**
+ * 应用上传附件
+ */
+struct AppUploadAttachmentVO{
+	1:string id;
+	2:string url;// 文件名,包含路径,例如:/blog/posts/000/000/000/2013-12-13-23-12-12-123.jpg
+	3:string originName;// 用户上传文件时的名称
+	4:string appName;// 属于那个应用的附件:例如博客上传了附件,这个就是指博客ID,如果是相册,那么这个就是指相册ID
+	5:i64 downloadCount;// 文件的下载次数
+	6:string userId;// 谁上传的
+	7:string userIp;// 用户上传IP是
+	8:string type;// 文件类型-->> 可能有很多种,不过一个文件只是其中一种(jpg,html,avi......)
+}
 /**
  * 定义博客实体，用于接口传输
  */

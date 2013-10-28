@@ -1,5 +1,6 @@
 package com.mkfree.apiservice;
 
+import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +14,9 @@ import com.mkfree.apiservice.service.common.AccessAnalysisService;
 import com.mkfree.apiservice.service.permission.SysUserService;
 import com.mkfree.apiservice.service.so.SOService;
 import com.mkfree.apiservice.service.sso.SSOService;
+import com.mkfree.apiservice.service.upload.AppUploadAttachmentService;
 import com.mkfree.apithrift.ApiService.Iface;
+import com.mkfree.apithrift.vo.AppUploadAttachmentVO;
 import com.mkfree.apithrift.vo.BlogCommentVO;
 import com.mkfree.apithrift.vo.BlogPostVO;
 import com.mkfree.apithrift.vo.PaginationVO;
@@ -24,20 +27,6 @@ import com.mkfree.apithrift.vo.SysUserVO;
 @SuppressWarnings({ "unchecked", "rawtypes" })
 @Service(value = "apiService")
 public class ApiServiceImpl implements Iface {
-
-	@Autowired
-	private BlogCommentService blogCommentService;
-	@Autowired
-	private SOService soService;
-	@Autowired
-	private SSOService ssoService;
-	@Autowired
-	private SysUserService userService;
-	@Autowired
-	private AccessAnalysisService accessAnalysisService;
-	@Autowired
-	private BlogPostService blogPostService;
-
 	// blogPost---------------------------------------------------------------------------------------
 	@Override
 	public String saveBlogPost(BlogPostVO blogPostVO) throws TException {
@@ -137,21 +126,34 @@ public class ApiServiceImpl implements Iface {
 		return userService.findByAccount(account);
 	}
 
-	// common
-	// accessAnalysis---------------------------------------------------------------------------------------
+	@Override
+	public AppUploadAttachmentVO saveAppUploadAttachment(ByteBuffer fileByteBuffer, String appName, String originName, String userId, String userIp) throws TException {
+		return appUploadAttachmentService.save(fileByteBuffer, appName, originName, userId, userIp);
+	}
+
+	// common accessAnalysis---------------------------------------------------------------------------------------
 	@Override
 	public String saveAccessAnalysis(String jsessionid, String fromUserId, String toUserId, String userIp, String referer, String uri, String browser, String os) throws TException {
 		return accessAnalysisService.save(jsessionid, fromUserId, toUserId, userIp, referer, uri, browser, os);
 	}
 
-	/**
-	 * 通过userid查找博客用户的访问次数(日,昨日,周,月,一共)
-	 * 
-	 * @param userId
-	 * @return
-	 */
 	@Override
 	public Map<String, Long> findBlogAccessCount(String userId) throws TException {
 		return accessAnalysisService.findBlogAccessCount(userId);
 	}
+
+	@Autowired
+	private BlogCommentService blogCommentService;
+	@Autowired
+	private SOService soService;
+	@Autowired
+	private SSOService ssoService;
+	@Autowired
+	private SysUserService userService;
+	@Autowired
+	private AccessAnalysisService accessAnalysisService;
+	@Autowired
+	private BlogPostService blogPostService;
+	@Autowired
+	private AppUploadAttachmentService appUploadAttachmentService;
 }
