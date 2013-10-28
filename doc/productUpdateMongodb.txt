@@ -10,3 +10,5 @@ db.blogComments.update({},{$set:{"toUserId":"510398ed3b9034b2008836c2"}},false,t
 db.sysUser.update({query},{option},{multi:true});
 db.sysUser.update({_id:ObjectId("510398ed3b9034b2008836c2")},{$unset:{_class:""}},{multi:true});
 db.blogPosts.update({},{$unset:{_class:""}},{multi:true});
+#### 在博客文章里添加一个类型字段
+db.blogPosts.update({ },{$set:{type:0}},false,true);

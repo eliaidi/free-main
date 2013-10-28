@@ -22,10 +22,19 @@ public class BlogPost extends IDEntity {
 	private int replies;// 博客回复数
 	private String postsIp;// 博客发布,用户IP
 	private Date createTime;// 博客发布时间
-	private Date updateTime;// 博客更新时间
 	private String blogNick;// 博客发布人昵称(冗余数据)
 	private String blogCategory;// 博客所属分类
 	private String userId;// 用户发的博客
+	private int type;// 默认(无状态):0 博客类型 1.hot(热门) 2.top(置顶) 3.head(头) 4.精华 5.有再加吧
+	private Date updateTime;// 博客更新时间
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
 
 	public String getTitle() {
 		return title;
@@ -114,6 +123,5 @@ public class BlogPost extends IDEntity {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-
 
 }
