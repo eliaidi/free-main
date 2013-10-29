@@ -27,7 +27,8 @@ public class BlogPost extends IDEntity {
 	private String userId;// 用户发的博客
 	private int type;// 默认(无状态):0 博客类型 1.hot(热门) 2.top(置顶) 3.head(头) 4.精华 5.博客专题
 	private Date updateTime;// 博客更新时间
-	// 下面是专题字段
+
+	// 下面是专题字段(可有可无)
 	private String topicId;// 博客属于那个专题
 	private String parentId;// 添加了博客专题,需要有博客的父id,用于做博客的目录
 
