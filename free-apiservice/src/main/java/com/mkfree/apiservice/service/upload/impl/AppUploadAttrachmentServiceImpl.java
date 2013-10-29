@@ -40,7 +40,7 @@ public class AppUploadAttrachmentServiceImpl implements AppUploadAttachmentServi
 		File uploadFile = new File(uploadPath);
 		// 防止是windows是服务器...郁闷吧..
 		String replyFile = uploadFile.getPath().replaceAll("\\\\", "/");
-		String url = replyFile.substring(replyFile.indexOf(AppUploadConstants.BLOG_POST_ROOTPATH)) + uploadFileName;
+		String url = replyFile.substring(replyFile.indexOf(AppUploadConstants.BLOG_POST_ROOTPATH)) + "/" + uploadFileName;
 		if (!uploadFile.exists()) {
 			uploadFile.mkdirs();
 		}
