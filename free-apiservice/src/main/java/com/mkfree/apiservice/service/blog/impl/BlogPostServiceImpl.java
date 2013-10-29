@@ -16,7 +16,7 @@ import com.mkfree.apithrift.vo.BlogPostVO;
 import com.mkfree.apithrift.vo.PaginationVO;
 import com.mkfree.framework.common.page.Pagination;
 import com.mkfree.framework.common.spring.KBeanUtils;
-import com.mkfree.framework.common.utils.date.VpsTimeUtil;
+import com.mkfree.framework.common.utils.date.TimeUtils;
 import com.mkfree.framework.common.web.html.HtmlUtils;
 
 @Service("blogPostsService")
@@ -97,8 +97,8 @@ public class BlogPostServiceImpl implements BlogPostService {
 	public String save(BlogPostVO blogPostVO) {
 		BlogPost blogPost = new BlogPost();
 		KBeanUtils.copyProperties(blogPostVO, blogPost);// vo copy 到 domain
-		blogPost.setCreateTime(VpsTimeUtil.getVPSTime());
-		blogPost.setUpdateTime(VpsTimeUtil.getVPSTime());
+		blogPost.setCreateTime(TimeUtils.getVPSTime());
+		blogPost.setUpdateTime(TimeUtils.getVPSTime());
 		blogPost = blogPostsDao.save(blogPost);
 		return blogPost.getId();
 	}

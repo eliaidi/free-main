@@ -9,13 +9,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ch.qos.logback.core.util.TimeUtil;
+
 import com.mkfree.apiservice.dao.BlogCommentDao;
 import com.mkfree.apiservice.domain.BlogComment;
 import com.mkfree.apiservice.service.blog.BlogCommentService;
 import com.mkfree.apithrift.vo.BlogCommentVO;
 import com.mkfree.framework.common.constants.BlogConstants;
 import com.mkfree.framework.common.spring.KBeanUtils;
-import com.mkfree.framework.common.utils.date.VpsTimeUtil;
+import com.mkfree.framework.common.utils.date.TimeUtils;
 import com.mkfree.framework.common.web.html.HtmlUtils;
 
 @Service("blogCommentService")
@@ -55,7 +57,7 @@ public class BlogCommentServiceImpl implements BlogCommentService {
 			blogComment.setReplyIp(commentVO.getReplyIp());
 			blogComment.setToUserId(commentVO.getToUserId());
 			// 下面都是登录用户了
-			blogComment.setCreateTime(VpsTimeUtil.getVPSTime());
+			blogComment.setCreateTime(TimeUtils.getVPSTime());
 			// 防止黑客,xss攻击
 			blogComment.setContent(HtmlUtils.avoidXSS(commentVO.getContent()));
 			blogComment.setNick(HtmlUtils.avoidXSS(commentVO.getNick()));

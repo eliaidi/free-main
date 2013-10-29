@@ -1,6 +1,5 @@
 package com.mkfree.apiservice.service.common.impl;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.mkfree.apiservice.dao.AccessAnalysisDao;
 import com.mkfree.apiservice.domain.AccessAnalysis;
 import com.mkfree.apiservice.service.common.AccessAnalysisService;
-import com.mkfree.framework.common.utils.date.VpsTimeUtil;
+import com.mkfree.framework.common.utils.date.TimeUtils;
 
 /**
  * 博客访问分析 业务层
@@ -45,7 +44,7 @@ public class AccessAnalysisServiceImpl implements AccessAnalysisService {
 		entity.setUri(uri);
 		entity.setBrowser(browser);
 		entity.setOs(os);
-		entity.setCreateTime(VpsTimeUtil.getVPSTime());
+		entity.setCreateTime(TimeUtils.getVPSTime());
 		return accessAnalysisDao.save(entity).getId();
 	}
 

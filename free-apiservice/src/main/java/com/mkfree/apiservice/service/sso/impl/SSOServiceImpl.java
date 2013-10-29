@@ -16,7 +16,7 @@ import com.mkfree.apiservice.domain.SysUser;
 import com.mkfree.apiservice.service.sso.SSOService;
 import com.mkfree.apithrift.vo.SSOUserVO;
 import com.mkfree.framework.common.spring.KBeanUtils;
-import com.mkfree.framework.common.utils.date.VpsTimeUtil;
+import com.mkfree.framework.common.utils.date.TimeUtils;
 
 @Service(value = "ssoService")
 public class SSOServiceImpl implements SSOService {
@@ -29,7 +29,7 @@ public class SSOServiceImpl implements SSOService {
 		SysUser entity = new SysUser();
 		entity.setAccount(account);
 		entity.setPassword(password);
-		entity.setCreateTime(VpsTimeUtil.getVPSTime());
+		entity.setCreateTime(TimeUtils.getVPSTime());
 		entity.setAge(-1);
 		entity.setSex(-1);
 		entity.setNick(account);
