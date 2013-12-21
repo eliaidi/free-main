@@ -12,13 +12,97 @@
 <#include "../include/logo.html"/>
 <style type="text/css">
 body {
-	padding-top: 60px;
 	padding-bottom: 40px;
+}
+.search-area-wrapper {
+  background: #353b65 url("http://static.mkfree.com/common/images/index/main-bg.jpg") center top no-repeat;
+  background-size: 100%;
+  min-height: 279px;
+  height: auto !important;
+  height: 279px;
+  margin-bottom: 20px;
+}
+.search-area-wrapper .search-area {
+  padding: 50px 0;
+}
+
+h3.search-header {
+  font-family: "Open Sans", sans-serif;
+  font-weight: bold;
+  font-size: 36px;
+  color: #fff;
+  text-align: center;
+}
+
+p.search-tag-line {
+  font-family: "Droid Serif", serif;
+  font-style: italic;
+  font-size: 18px;
+  line-height: 28px;
+  color: #fff;
+  text-align: center;
+}
+
+form.search-form {
+  margin: 40px 0 0;
+  text-align: center;
+}
+form.search-form .input-common, form.search-form input.search-term, form.search-form input.search-btn {
+  font-family: "Open Sans", sans-serif;
+  box-shadow: none;
+  border-radius: 0;
+  display: inline-block;
+  border: none;
+  vertical-align: bottom;
+}
+form.search-form input.search-term {
+  font-size: 14px;
+  height: 24px;
+  line-height: 24px;
+  padding: 12px;
+  width: 72%;
+  color: #858c91;
+  margin-right: 10px;
+  margin-bottom: 0;
+}
+form.search-form input.search-term.loading {
+  background-image: url("../images/search-loader.gif");
+  background-repeat: no-repeat;
+  background-position: 98% 50%;
+}
+form.search-form input.search-btn {
+  background-color: #3f4b55;
+  font-size: 14px;
+  line-height: 19px;
+  font-weight: 600;
+  padding: 14px 30px 15px;
+  color: #fff;
+}
+form.search-form input.search-btn:hover {
+  background-color: #4b5760;
+}
+
+#search-error-container label {
+  color: #fff;
+  padding: 5px;
+  font-size: 14px;
 }
 </style>
 </head>
 <body>
 	<#include "../include/navigation.html"/>
+	<div class="search-area-wrapper">
+        <div class="search-area container">
+        	<img alt="logo" src="http://static.mkfree.com/common/images/logo/logo_96.png" style="float: left;">
+			<h3 class="search-header">全站搜索</h3>
+            <p class="search-tag-line">基于ElasticSearch搜索,博客源代码已开放,有兴趣的童鞋们一起学习下,大家都分享知识!QQ:1109349806  oyhk</p>
+            <form id="search-form" class="search-form clearfix" method="get" action="${mkfree_blog_url}so/blog" autocomplete="off" novalidate="novalidate">
+                <input class="search-term required" type="text" id="q" name="q" placeholder="搜索博文" title="* Please enter a search term!" autocomplete="off">
+                <input class="search-btn" type="submit" value="Search">
+                <div id="search-error-container"></div>
+            </form>
+        </div>
+    </div>
 	<div class="container">
 		<div class="row">
 			<div class="span8">
@@ -29,107 +113,51 @@ body {
 					</#list> </@postsDisplay>
 					<p> <a class="btn btn-primary btn-large" href="${mkfree_blog_url}list/1">更 多 &raquo;</a> </p>
 				</div>
+				<@postsDisplay type=5 count=20>
+				<#list blogPosts as posts>
+					<h3>
+						<a href="${mkfree_blog_url}posts/${posts.id}">${posts.title}</a>
+					</h3>
+					<p>${posts.summary}</p>
+					<p>
+						<a class="btn" href="${mkfree_blog_url}posts/${posts.id}">View details &raquo;</a>
+					</p>
+				</#list>
+				</@postsDisplay>
 			</div>
 			<div class="span4">
 				<ul class="nav nav-tabs">
-					<li class="active"><a href="#1" data-toggle="tab">最新博客</a></li>
+					<!-- <li class="active"><a href="#1" data-toggle="tab">最新博客</a></li> -->
 					<li><a href="#2" data-toggle="tab">最新推荐</a></li>
-					<li><a href="#3" data-toggle="tab">本周热点</a></li>
-					<li><a style="float:right;margin-left: 35px;" href="${mkfree_blog_url}list/1" >更 多...</a></li>
+					<!-- <li><a href="#3" data-toggle="tab">本周热点</a></li> -->
+					<li><a style="float:right;margin-left: 200px;" href="${mkfree_blog_url}list/1" >更 多...</a></li>
 				</ul>
 				<div class="tab-content">
-					<div class="tab-pane active" id="1">
+					<!-- <div class="tab-pane active" id="1">
 						<ul class="unstyled">
 							<@postsDisplay type=5 count=10 length=40> <#list blogPosts as posts>
 							<li style="line-height: 30px;"><a href="${mkfree_blog_url}posts/${posts.id}">${posts.title}</a></li>
 							</#list> </@postsDisplay>
 						</ul>
-					</div>
-					<div class="tab-pane" id="2">
+					</div> -->
+ 					<div class="tab-pane active" id="2">
 						<ul class="unstyled">
 							<@postsDisplay type=3 count=10 length=40> <#list blogPosts as posts>
 							<li style="line-height: 30px;"><a href="${mkfree_blog_url}posts/${posts.id}">${posts.title}</a></li>
 							</#list> </@postsDisplay>
 						</ul>
 					</div>
-					<div class="tab-pane" id="3">
+					<!--<div class="tab-pane" id="3">
 						<ul>
 							<li><a href="${mkfree_blog_url}posts/3">休闲(mkfree)博客开发文档---介绍-作者(oyhk)---第三章</a></li>
 						</ul>
-					</div>
+					</div> -->
 				</div>
+				<#include "../include/adv1.html"/>
 			</div>
 		</div>
 		<!-- 广告位 -->
-		<#include "../include/adv1.html"/>
-		<!-- Example row of columns -->
-		<@postsDisplay type=5 count=3>
-		<div class="row">
-			<#list blogPosts as posts>
-			<div class="span4">
-				<h3>
-					<a href="${mkfree_blog_url}posts/${posts.id}">${posts.title}</a>
-				</h3>
-				<p>${posts.summary}</p>
-				<p>
-					<a class="btn" href="${mkfree_blog_url}posts/${posts.id}">View details &raquo;</a>
-				</p>
-			</div>
-			</#list>
-		</div>
-		</@postsDisplay>
-		<@postsDisplay type=5 count=3 startIndex=3>
-		<div class="row">
-			<#list blogPosts as posts>
-			<div class="span4">
-				<h3>
-					<a href="${mkfree_blog_url}posts/${posts.id}">${posts.title}</a>
-				</h3>
-				<p>${posts.summary}</p>
-				<p>
-					<a class="btn" href="${mkfree_blog_url}posts/${posts.id}">View details &raquo;</a>
-				</p>
-			</div>
-			</#list>
-		</div>
-		</@postsDisplay>
-		<@postsDisplay type=5 count=3 startIndex=6>
-		<div class="row">
-			<#list blogPosts as posts>
-			<div class="span4">
-				<h3>
-					<a href="${mkfree_blog_url}posts/${posts.id}">${posts.title}</a>
-				</h3>
-				<p>${posts.summary}</p>
-				<p>
-					<a class="btn" href="${mkfree_blog_url}posts/${posts.id}">View details &raquo;</a>
-				</p>
-			</div>
-			</#list>
-		</div>
-		</@postsDisplay>
-		<@postsDisplay type=5 count=2 startIndex=9>
-		<div class="row">
-			<#list blogPosts as posts>
-			<div class="span4">
-				<h3>
-					<a href="${mkfree_blog_url}posts/${posts.id}">${posts.title}</a>
-				</h3>
-				<p>${posts.summary}</p>
-				<p>
-					<a class="btn" href="${mkfree_blog_url}posts/${posts.id}">View details &raquo;</a>
-				</p>
-			</div>
-			</#list>
-			<div class="span3">
-				<h3>文章分类</h3>
-				<p>spring</p>
-				<p>java</p>
-				<p>nginx</p>
-				<p>thrift</p>
-			</div>
-		</div>
-		</@postsDisplay>
+		
 		<hr>
 		<#include "../include/footer.html" />
 	</div>
