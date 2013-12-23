@@ -33,12 +33,11 @@ public abstract class MongodbDao<T> implements BaseDao {
 	 */
 	@Override
 	public String getAutoIncrementingId(String domain) throws MongoDBAutoIncrementingIdException {
-		Query query = new Query();
-		query.addCriteria(new Criteria().and("_id").is(domain));
-		FindAndModifyOptions options = new FindAndModifyOptions();
-		options.returnNew(true);
-		Update update = new Update();
-		update.inc("seq", 1);
+		// _id是CounterTools的字段(做为主键,相当于某个表的表明)
+		Query query = Query.query(Criteria.where("_id").is(domain));
+		FindAndModifyOptions options = FindAndModifyOptions.options().returnNew(true);
+		// seq是CounterTools的字段（做为一个表的计数器，已同步），小心使用
+		Update update = new Update().inc("seq", 1);
 		CounterTools counterTools = mongoTemplate.findAndModify(query, update, options, CounterTools.class);
 		if (counterTools == null) {
 			throw new MongoDBAutoIncrementingIdException(domain);

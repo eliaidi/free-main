@@ -12,3 +12,9 @@ db.sysUser.update({_id:ObjectId("510398ed3b9034b2008836c2")},{$unset:{_class:""}
 db.blogPosts.update({},{$unset:{_class:""}},{multi:true});
 #### 在博客文章里添加一个类型字段
 db.blogPosts.update({ },{$set:{type:0}},false,true);
+
+- 2013.12.23
+#### 添加一个自动递增数据表
+db.counterTools.insert({_id: "blogPosts",seq: 197});  #暂时只添加blogPosts,自动生成id，当前博客有196篇所以seq :197
+
+db.blogPosts.update({'_id':ObjectId("52b7f664479e5a64742ff0fe")}, {'$set':{'_id':"196"}});
