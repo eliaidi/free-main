@@ -32,6 +32,10 @@ public class BlogPost extends IDEntity {
 	private String topicId;// 博客属于那个专题
 	private String parentId;// 添加了博客专题,需要有博客的父id,用于做博客的目录
 
+	public String getTableName() {
+		return "blogPosts";
+	}
+
 	public int getType() {
 		return type;
 	}

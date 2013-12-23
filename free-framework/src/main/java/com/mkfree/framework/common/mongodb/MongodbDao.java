@@ -5,12 +5,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
 import com.mkfree.framework.common.page.Pagination;
+import com.mkfree.framework.common.security.exception.MongoDBAutoIncrementingIdException;
 import com.mongodb.WriteResult;
 
 /**
@@ -20,7 +22,29 @@ import com.mongodb.WriteResult;
  * 
  *         2013-1-22下午5:28:26
  */
-public abstract class MongodbDao<T> {
+public abstract class MongodbDao<T> implements BaseDao {
+
+	/**
+	 * 获取某个表的自动递增id
+	 * 
+	 * @param domain 代表那个实体类或者mongodb表名
+	 * @return
+	 * @throws MongoDBAutoIncrementingIdException
+	 */
+	@Override
+	public String getAutoIncrementingId(String domain) throws MongoDBAutoIncrementingIdException {
+		Query query = new Query();
+		query.addCriteria(new Criteria().and("_id").is(domain));
+		FindAndModifyOptions options = new FindAndModifyOptions();
+		options.returnNew(true);
+		Update update = new Update();
+		update.inc("seq", 1);
+		CounterTools counterTools = mongoTemplate.findAndModify(query, update, options, CounterTools.class);
+		if (counterTools == null) {
+			throw new MongoDBAutoIncrementingIdException(domain);
+		}
+		return counterTools.getSeq().toString();
+	}
 
 	/**
 	 * 通过条件查询,查询分页结果
@@ -112,8 +136,7 @@ public abstract class MongodbDao<T> {
 	 * 通过ID获取记录,并且指定了集合名(表的意思)
 	 * 
 	 * @param id
-	 * @param collectionName
-	 *            集合名
+	 * @param collectionName 集合名
 	 * @return
 	 */
 	public T findById(String id, String collectionName) {
@@ -124,8 +147,7 @@ public abstract class MongodbDao<T> {
 	 * 通过ID去更新对象
 	 * 
 	 * @param id
-	 * @param params
-	 *            需要更新的字段
+	 * @param params 需要更新的字段
 	 * @return
 	 */
 	public WriteResult updateFirst(String id, Map<String, Object> params) {
@@ -137,8 +159,7 @@ public abstract class MongodbDao<T> {
 	 * 通过条件查询更新数据
 	 * 
 	 * @param query
-	 * @param params
-	 *            准备更新的参数
+	 * @param params 准备更新的参数 ex: title 这个是标题.. params.put("title","要修改的标题");
 	 * @return
 	 */
 	public WriteResult updateFirst(Query query, Map<String, Object> params) {
@@ -150,8 +171,7 @@ public abstract class MongodbDao<T> {
 	 * 通过条件查询出多条记录(包含一条),全部修改(感觉很少用到),可以叫批量修改
 	 * 
 	 * @param query
-	 * @param params
-	 *            准备更新的参数
+	 * @param params 准备更新的参数 ex: title 这个是标题.. params.put("title","要修改的标题");
 	 */
 	public WriteResult updateMulti(Query query, Map<String, Object> params) {
 		WriteResult writeResult = this.mongoTemplate.updateMulti(query, this.getUpdate(params), this.getEntityClass());
@@ -162,8 +182,7 @@ public abstract class MongodbDao<T> {
 	 * 通过条件查询出多条记录,全部修改,并且如果存在有新数据,也会同时插入到mongodb中..(简单说:更新或插入数据)
 	 * 
 	 * @param query
-	 * @param params
-	 *            准备更新的参数
+	 * @param params 准备更新的参数 ex: title 这个是标题.. params.put("title","要修改的标题");
 	 */
 	public WriteResult upsert(Query query, Map<String, Object> params) {
 		WriteResult writeResult = this.mongoTemplate.upsert(query, this.getUpdate(params), this.getEntityClass());
@@ -224,8 +243,7 @@ public abstract class MongodbDao<T> {
 	/**
 	 * 通过更新参数,再组装成一个update
 	 * 
-	 * @param params
-	 *            ex: title 这个是标题.. params.put("title","要修改的标题");
+	 * @param params ex: title 这个是标题.. params.put("title","要修改的标题");
 	 * @return
 	 */
 	protected Update getUpdate(Map<String, Object> params) {

@@ -15,6 +15,7 @@ import com.mkfree.apiservice.service.blog.BlogPostService;
 import com.mkfree.apithrift.vo.BlogPostVO;
 import com.mkfree.apithrift.vo.PaginationVO;
 import com.mkfree.framework.common.page.Pagination;
+import com.mkfree.framework.common.security.exception.MongoDBAutoIncrementingIdException;
 import com.mkfree.framework.common.spring.KBeanUtils;
 import com.mkfree.framework.common.utils.date.TimeUtils;
 import com.mkfree.framework.common.web.html.HtmlUtils;
@@ -96,10 +97,15 @@ public class BlogPostServiceImpl implements BlogPostService {
 	@Override
 	public String save(BlogPostVO blogPostVO) {
 		BlogPost blogPost = new BlogPost();
-		KBeanUtils.copyProperties(blogPostVO, blogPost);// vo copy 到 domain
-		blogPost.setCreateTime(TimeUtils.getVPSTime());
-		blogPost.setUpdateTime(TimeUtils.getVPSTime());
-		blogPost = blogPostsDao.save(blogPost);
+		try {
+			KBeanUtils.copyProperties(blogPostVO, blogPost);// vo copy 到 domain
+			blogPost.setCreateTime(TimeUtils.getVPSTime());
+			blogPost.setUpdateTime(TimeUtils.getVPSTime());
+			blogPost.setId(blogPostsDao.getAutoIncrementingId(blogPost.getTableName()));
+			blogPost = blogPostsDao.save(blogPost);
+		} catch (MongoDBAutoIncrementingIdException e) {
+			e.printStackTrace();
+		}
 		return blogPost.getId();
 	}
 

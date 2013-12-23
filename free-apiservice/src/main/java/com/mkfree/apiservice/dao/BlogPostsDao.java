@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.mkfree.apiservice.domain.BlogPost;
+import com.mkfree.framework.common.mongodb.BaseDao;
 import com.mkfree.framework.common.page.Pagination;
 
 /**
@@ -13,7 +14,7 @@ import com.mkfree.framework.common.page.Pagination;
  * 
  *         2013-2-2 上午9:59:52
  */
-public interface BlogPostsDao {
+public interface BlogPostsDao extends BaseDao {
 
 	/**
 	 * 通过ID去获取实体
