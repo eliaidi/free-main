@@ -18,7 +18,10 @@ body {
 	margin-top: 100px;
 	/* 100px is double the height of the navbar - I made it a big larger for some more space - keep it at 50px at least if you want to use the fixed top nav */
 }
-
+.col-lg-8_5{
+	width: 71.2%;
+	margin-left: 45px;
+}
 footer {
 	margin: 50px 0;
 }
@@ -52,13 +55,34 @@ footer {
 						</ul></li>
 					<li><a href="${mkfree_blog_url}vps">VPS</a></li>
 				</ul>
+				<#if sso_user?? >
+				<ul class="nav pull-right">
+					<li><a href="#">${sso_user.nick}</a></li>
+					<li><a href="${mkfree_blog_url}${sso_user.account}/space/admin">我的博客</a></li>
+					<li><a href="${mkfree_blog_url}sso/logout">退出</a></li>
+				</ul>
+				<#else>
+				<form class="form-inline pull-right" action="${mkfree_blog_url}sso/login" role="form">
+				  <div class="form-group">
+				    <label class="sr-only" for="exampleInputEmail2">帐 号</label>
+				    <input type="email" name="account" class="form-control" id="exampleInputEmail2" placeholder="帐 号">
+				  </div>
+				  <div class="form-group">
+				    <label class="sr-only" for="exampleInputPassword2">密 码</label>
+				    <input  type="password" name="password" class="form-control" id="exampleInputPassword2" placeholder="密 码">
+				  </div>
+				  <button type="submit" class="btn btn-default">登 录</button>
+				  <a type="button" class="btn" href="http://blog.mkfree.com/sso/register" target="_blank">注 册</a>
+				</form>
+				
+				</#if>
 			</div>
 			<!-- /.navbar-collapse -->
 		</div>
 		<!-- /.container -->
 	</nav>
 	<div class="container-fluid">
-		<div class="row ">
+		<div class="row" style="margin-left: -15px;">
 			<div class="span">
 				<ul class="breadcrumb">
 					<li><a href="http://www.mkfree.com">首页</a></li>
@@ -69,8 +93,9 @@ footer {
 			</div>
 		</div>
 		<div class="row ">
-			<div class="col-lg-8 span">
-					<div class="well" id="comments">
+			<!-- 博客左側 -->
+			<div class="col-lg-8_5 span">
+					<div class="well">
 						<h1>${posts.title}</h1>
 						<hr>
 						<p>
@@ -78,8 +103,7 @@ footer {
 							评论&nbsp;&nbsp;<span class="glyphicon glyphicon-eye-open"></span>&nbsp;&nbsp;${posts.views}浏览
 						</p>
 						<hr>
-						<!-- 				<img src="http://placehold.it/100x100" class="img-responsive">
-					<hr> -->
+		 				<!-- <img src="http://placehold.it/100x100" class="img-responsive"> <hr> -->
 						<p>${posts.content}</p>
 					</div>
 					<div class="well">
@@ -89,36 +113,37 @@ footer {
 					</div>
 					<div class="well">
 						<p style="font-weight: bold;">相关博客文章</p>
-						<ul class="unstyled">
+						<ul class="list-unstyled">
 							<@relatedPosts q=posts.title> <#list relatedPosts as posts>
 							<li><a href="${mkfree_blog_url}posts/${posts.id}">${posts.title}</a></li> </#list> </@relatedPosts>
 						</ul>
 					</div>
-					<!-- the comments -->
-					<div class="well">
+					<!-- 博客评论 -->
+					<div id="comments" class="well">
 						<#assign commentIndex = 1 /> <#list blogComments as blogComment>
+						<div>
 						<h3>
-							${commentIndex}楼:<a href="#" id="ref_${commentIndex}">${blogComment.nick}</a> <small>${blogComment.createTime}</small> <a href="javascript:voie(0)" class="pull-right"
-								onclick="commentsRef('ref_${commentIndex}')">@Ta</a>
+							${commentIndex}楼:<a href="#" id="ref_${commentIndex}">${blogComment.nick}</a> <small>${blogComment.createTime}</small> <a href="javascript:voie(0)" class="pull-right"onclick="commentsRef('ref_${commentIndex}')">@Ta</a>
 						</h3>
 						<p>${blogComment.content}</p>
+						</div>
 						<#assign commentIndex = commentIndex+1 /> </#list>
 					</div>
-					<!-- the comment box -->
+					<!-- 博客评论输入框 -->
 					<div class="well">
 						<div class="alert alert-success " id="comments_success" style="text-align: center; display: none;">
 							<button type="button" class="close" data-dismiss="alert">×</button>
 							<strong>发表评论成功!</strong>
 						</div>
 						<h4>发表评论:</h4>
-						<#if sso_user??> <span class="pull-right" style="font-size: 12px;"><input id="anonymityUserId" type="checkbox" value="0">&nbsp;&nbsp;匿名用户</span> <#else> <span
-							style="margin-left: 20px;"><input id="inputVistorName" value="" type="text" class="span3" placeholder="留下你的网名..." /></span> </#if>
+						<span class="row">
+							<#if sso_user??> <input id="anonymityUserId" type="checkbox" value="0">&nbsp;&nbsp;匿名用户 <#else> <input id="inputVistorName" value="" type="text" class="span3" placeholder="留下你的网名..." /></#if>
+						</span>
 						<textarea id="comment_content" class="form-control"></textarea>
-						<button class="btn btn-primary " onclick="saveBlogComment('${posts.id}','${posts.userId}','${commentIndex}'<#if sso_user??>,'${sso_user.id}','${sso_user.nick}'</#if>);">提
-							交</button>
+						<button class="btn btn-primary " onclick="saveBlogComment('${posts.id}','${posts.userId}','${commentIndex}'<#if sso_user??>,'${sso_user.id}','${sso_user.nick}'</#if>);">提交</button>
 					</div>
 			</div>
-
+			<!-- 博客右側 -->
 			<div class="col-lg-3">
 				<div class="well">
 					<h4>博客 搜索</h4>
@@ -136,10 +161,14 @@ footer {
 					<!-- /input-group -->
 				</div>
 				<div class="well">
+					<!-- 广告位 -->
+					<a target="_blank" href="${mkfree_blog_url}vps"><span style="font-size: 30px; color: red;">vps 季付,半年付 优惠多多(新站促销),详细点击!!</span>
+				</div>
+				<div class="well">
 					<ul class="nav nav-list">
 						<li><a href="${mkfree_blog_url}nihaooywk/space" target="_blank"><img alt="博主头像" src="http://upload.mkfree.com/blog/user/000/000/001/icon/user_1.jpg">oyhk</a></li>
 						<li>喜欢一个人，是看到了他的优点；爱一个人，是包容他的缺点…喜欢是一种心情，爱是一种感情</li>
-						<li class="nav-header">博客分类</li>
+<!-- 						<li class="nav-header">博客分类</li>
 						<li><a href="#">java(10)</a></li>
 						<li><a href="#">nodejs(5)</a></li>
 						<li class="nav-header">阅读排行</li>
@@ -149,7 +178,7 @@ footer {
 						<li><a href="#"></a></li>
 						<li class="nav-header">最新评论</li>
 						<li><a href="#">哇,什么博客啊?</a></li>
-						<li><a href="#">博客代码能分享吗?</a></li>
+						<li><a href="#">博客代码能分享吗?</a></li> -->
 						<li><a href="#"></a></li> <@blogAccessCount userId=posts.userId>
 						<li class="nav-header">访问统计</li>
 						<li><a href="#">今日访问:${blogAccessCount.todayCount}</a></li>
@@ -186,10 +215,6 @@ footer {
 					<h4>Side Widget Well</h4>
 					<p>Bootstrap's default wells work great for side widgets! What is a widget anyways...?</p>
 				</div> -->
-				<div class="well">
-					<!-- 广告位 -->
-					<a target="_blank" href="${mkfree_blog_url}vps"><span style="font-size: 30px; color: red;">vps 季付,半年付 优惠多多(新站促销),详细点击!!</span>
-				</div>
 				<!-- /well -->
 			</div>
 		</div>
@@ -244,9 +269,8 @@ footer {
 					if(data.success){ //成功.
 						var obj = data.obj;
 						// 组装评论内容,异步显示..
-						var content = '<div><p style="background-color: #F2F8EF">'+commentCount+'楼:&nbsp;<a href="#" id="ref_'+commentCount+'">'+ obj.nick
-							+'</a><span style="font-size: 11px;margin-left: 15px;">'+obj.createTime
-							+'</span><a href="javascript:voie(0)" class="pull-right" onclick="commentsRef(\'ref_'+commentCount+'\')">@Ta</a> </p><p>'+obj.content+ref+'</p></div>';
+						var content = '<div><h3>'+commentCount+'楼:<a href="#" id="ref_'+commentCount+'">'+obj.nick+'</a> <small>'+obj.createTime+'</small>'+
+									  ' <a href="javascript:voie(0)" class="pull-right" onclick="commentsRef(\'ref_'+commentCount+'\')">@Ta</a> </h3> <p>'+obj.content+ref+'</p> </div>';
 						$("#comments").append(content);
 						$("#comments_success").show("slow");
 						kedit.html("");
@@ -273,7 +297,7 @@ footer {
 		var kedit;
 		KindEditor.ready(function(K) {
 			kedit = K.create('#comment_content', {
-				width : '720px',
+				width : '905px',
 				height : '300px',
 				items : [ 'source', '|', 'undo', 'redo', 'cut', 'copy', 'paste', '|', 'code', 'justifyleft', 'justifycenter', 'justifyright',
 				          'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', '|', 'formatblock', 'fontname', 'fontsize', '|', 
