@@ -1,51 +1,42 @@
-<div class="navbar navbar-inverse navbar-fixed-top">
-	<div class="navbar-inner">
-		<div class="container-fluid" style="font-size: 16px;">
-			<a class="btn btn-navbar" data-toggle="collapse"
-				data-target=".nav-collapse"> <span class="icon-bar"></span> <span
-				class="icon-bar"></span> <span class="icon-bar"></span>
-			</a> 
-			<a class="brand" href="#">free-blog</a>
-			<div class="nav-collapse collapse">
-				<ul class="nav">
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container" style="font-size: 20px;height: 70px;">
+			<div class="navbar-header" style="margin-top: 15px;">
+				<a class="navbar-brand" href="index.php">free-blog</a>
+			</div>
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse navbar-ex1-collapse" style="margin-top: 15px;">
+				<ul class="nav navbar-nav">
 					<li><a href="${mkfree_blog_url}">首 页</a></li>
 					<!-- <li class="active"><a href="${mkfree_blog_url}">博客</a></li> -->
-					<li class="dropdown">
-		              	<a href="#" class="dropdown-toggle" data-toggle="dropdown">java core 教程 <b class="caret"></b></a>
-		              	<ul class="dropdown-menu">
-		                	<li><a href="${mkfree_blog_url}posts/5112a1d7975a15ea1757d846">java i/o 教程</a></li>
-		              	</ul>
-		            </li>
-		            <li class="dropdown">
-		              	<a href="#" class="dropdown-toggle" data-toggle="dropdown">order 教程 <b class="caret"></b></a>
-		              	<ul class="dropdown-menu">
-		                	<li><a href="${mkfree_blog_url}posts/51278bba975a07b8f133bbb8">thrift 资料</a></li>
-		                	<li><a href="${mkfree_blog_url}posts/51679f71975a2683ccfee2cc">elasticsearch java api 教程</a></li>
-		              	</ul>
-		            </li>
-		            <li><a href="${mkfree_blog_url}vps">VPS</a></li>
-					<li><a href="#">RSS</a></li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">java core 教程 <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="${mkfree_blog_url}posts/5112a1d7975a15ea1757d846">java i/o 教程</a></li>
+						</ul></li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">order 教程 <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="${mkfree_blog_url}posts/51278bba975a07b8f133bbb8">thrift 资料</a></li>
+							<li><a href="${mkfree_blog_url}posts/51679f71975a2683ccfee2cc">elasticsearch java api 教程</a></li>
+						</ul></li>
+					<li><a href="${mkfree_blog_url}vps">VPS</a></li>
 				</ul>
-				<form name="so" class="navbar-search pull-left" action="${mkfree_blog_url}so/blog">
-		            <input name="q" type="text" class="search-query span2" placeholder="搜索">
-		            <button type="submit" class="btn">搜索</button>
-		         </form>
 				<#if sso_user?? >
-				<ul class="nav pull-right">
+				<ul class="nav navbar-nav pull-right">
 					<li><a href="#">${sso_user.nick}</a></li>
 					<li><a href="${mkfree_blog_url}${sso_user.account}/space/admin">我的博客</a></li>
 					<li><a href="${mkfree_blog_url}sso/logout">退出</a></li>
 				</ul>
 				<#else>
-				<form name="login" action="${mkfree_blog_url}sso/login" class="navbar-form pull-right" method="post">
-					<input name="account" class="span1" type="text" placeholder="帐号"> 
-					<input name="password" class="span1" type="password" placeholder="密码">
-					<button type="submit" class="btn">登 录</button>
-					<a type="button" class="btn" href="http://blog.mkfree.com/sso/register" target="_blank">注 册</a>
+				<form class="form-inline pull-right" action="${mkfree_blog_url}sso/login" method="post" role="form" style="margin-top: 8px;">
+					<div class="form-group">
+						<label class="sr-only" for="exampleInputEmail2">帐 号</label> <input type="text" name="account" class="form-control" id="exampleInputEmail2" placeholder="帐 号">
+					</div>
+					<div class="form-group">
+						<label class="sr-only" for="exampleInputPassword2">密 码</label> <input type="password" name="password" class="form-control" id="exampleInputPassword2" placeholder="密 码">
+					</div>
+					<button type="submit" class="btn btn-primary dropdown-toggle">登 录</button>
+					<a class="btn btn-success dropdown-toggle" href="http://blog.mkfree.com/sso/register" target="_blank">注 册</a>
 				</form>
 				</#if>
 			</div>
-			<!--/.nav-collapse -->
 		</div>
-	</div>
-</div>
+	</nav>
