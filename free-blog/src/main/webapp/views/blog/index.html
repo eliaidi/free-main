@@ -96,10 +96,11 @@ form.search-form input.search-btn:hover {
         <div class="search-area container">
         	<img alt="logo" src="http://static.mkfree.com/common/images/logo/logo_96.png" style="float: left;">
 			<h3 class="search-header">全站搜索</h3>
+            <p class="search-tag-line">博客基于bootstarp3 有可能出现浏览器不兼容问题，如果想看得比较舒服，建议用chrome浏览器。谢谢</p>
             <p class="search-tag-line">基于ElasticSearch搜索,博客源代码已开放,有兴趣的童鞋们一起学习下,大家都分享知识!QQ:1109349806  oyhk</p>
            	<form class="form-inline" method="get" action="${mkfree_blog_url}so/blog" role="form" style="margin-top: 60px;">
 			  <div class="form-group col-xs-11">
-			    <input type="text"  class="form-control" placeholder="搜 索 博 文">
+			    <input type="text" name="q" class="form-control" placeholder="搜 索 博 文">
 			  </div>
 			  <button type="submit" class="btn btn-primary">搜 索</button>
 			</form>
