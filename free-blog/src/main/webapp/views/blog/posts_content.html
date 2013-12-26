@@ -36,12 +36,12 @@ footer {
 
 <body onload="prettyPrint();">
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-		<div class="container">
-			<div class="navbar-header">
+		<div class="container" style="font-size: 20px;height: 80px;">
+			<div class="navbar-header" style="margin-top: 15px;">
 				<a class="navbar-brand" href="index.php">free-blog</a>
 			</div>
 			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div class="collapse navbar-collapse navbar-ex1-collapse">
+			<div class="collapse navbar-collapse navbar-ex1-collapse" style="margin-top: 15px;">
 				<ul class="nav navbar-nav">
 					<li><a href="${mkfree_blog_url}">首 页</a></li>
 					<!-- <li class="active"><a href="${mkfree_blog_url}">博客</a></li> -->
@@ -57,29 +57,27 @@ footer {
 					<li><a href="${mkfree_blog_url}vps">VPS</a></li>
 				</ul>
 				<#if sso_user?? >
-				<ul class="nav pull-right">
+				<ul class="nav navbar-nav pull-right">
 					<li><a href="#">${sso_user.nick}</a></li>
 					<li><a href="${mkfree_blog_url}${sso_user.account}/space/admin">我的博客</a></li>
 					<li><a href="${mkfree_blog_url}sso/logout">退出</a></li>
 				</ul>
 				<#else>
-				<form class="form-inline pull-right" action="${mkfree_blog_url}sso/login" method="post" role="form">
+				<form class="form-inline pull-right" action="${mkfree_blog_url}sso/login" method="post" role="form" style="margin-top: 8px;">
 					<div class="form-group">
 						<label class="sr-only" for="exampleInputEmail2">帐 号</label> <input type="text" name="account" class="form-control" id="exampleInputEmail2" placeholder="帐 号">
 					</div>
 					<div class="form-group">
 						<label class="sr-only" for="exampleInputPassword2">密 码</label> <input type="password" name="password" class="form-control" id="exampleInputPassword2" placeholder="密 码">
 					</div>
-					<button type="submit" class="btn btn-default">登 录</button>
-					<a type="button" class="btn" href="http://blog.mkfree.com/sso/register" target="_blank">注 册</a>
+					<button type="submit" class="btn btn-primary dropdown-toggle">登 录</button>
+					<a class="btn btn-success dropdown-toggle" href="http://blog.mkfree.com/sso/register" target="_blank">注 册</a>
 				</form>
-
 				</#if>
 			</div>
-			<!-- /.navbar-collapse -->
 		</div>
-		<!-- /.container -->
 	</nav>
+	
 	<div class="container">
 		<div class="col-lg-13">
 			<ul class="breadcrumb">
@@ -142,21 +140,14 @@ footer {
 				</div>
 			</div>
 			<!-- 博客右側 -->
-			<div class="col-md-3 ">
+			<div class="col-md-3">
 				<div class="well">
-					<h4>博客 搜索</h4>
-					<div class="input-group">
-						<input type="text" name="q" class="form-control"> <span class="input-group-btn">
-							<button class="btn btn-default" type="button">
-								<span class="glyphicon glyphicon-search"></span>
-							</button>
-						</span>
-						<!-- 	<form name="so" class="form-control" action="${mkfree_blog_url}so/blog">
-					            <input name="q" type="text" class="search-query span2" placeholder="搜索">
-					            <button type="submit" class="glyphicon glyphicon-search">搜索</button>
-					         </form> -->
-					</div>
-					<!-- /input-group -->
+					<form class="form-inline" method="get" action="${mkfree_blog_url}so/blog" role="form" style="width: 303px;margin-left: -28px;">
+					  <div class="form-group col-xs-8">
+					    <input name="q" type="text" class="form-control" placeholder="搜 索 博 文">
+					  </div>
+					  <button type="submit" class="btn btn-primary">搜 索</button>
+					</form>
 				</div>
 				<div class="well">
 					<!-- 广告位 -->

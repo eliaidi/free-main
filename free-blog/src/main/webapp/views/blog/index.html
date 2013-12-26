@@ -7,8 +7,8 @@
 <meta name="Keywords" content="休闲网站,休闲博客,java编程 ,java设计模式,java基础,编程技术,java" />
 <meta name="description" content="mkfree 休闲网站--自由-博客,发表心情,分享技术,分享图片,分享视频">
 <meta name="author" content="<@settingUrl>${mkfree_blog_url}</@settingUrl> (oyhk)">
-<link href="${mkfree_static_url}/common/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link href="${mkfree_static_url}/common/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+<link href="${mkfree_static_url}common/bootstrap3/css/bootstrap.min.css" rel="stylesheet">
+<link href="${mkfree_static_url}common/bootstrap3/css/bootstrap-theme.min.css" rel="stylesheet">
 <#include "../include/logo.html"/>
 <style type="text/css">
 body {
@@ -20,6 +20,7 @@ body {
   min-height: 279px;
   height: auto !important;
   height: 279px;
+  margin-top:50px;
   margin-bottom: 20px;
 }
 .search-area-wrapper .search-area {
@@ -90,29 +91,75 @@ form.search-form input.search-btn:hover {
 </style>
 </head>
 <body>
-	<#include "../include/navigation.html"/>
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container" style="font-size: 20px;height: 80px;">
+			<div class="navbar-header" style="margin-top: 15px;">
+				<a class="navbar-brand" href="index.php">free-blog</a>
+			</div>
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse navbar-ex1-collapse" style="margin-top: 15px;">
+				<ul class="nav navbar-nav">
+					<li><a href="${mkfree_blog_url}">首 页</a></li>
+					<!-- <li class="active"><a href="${mkfree_blog_url}">博客</a></li> -->
+					<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">java core 教程 <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="${mkfree_blog_url}posts/5112a1d7975a15ea1757d846">java i/o 教程</a></li>
+						</ul></li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">order 教程 <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="${mkfree_blog_url}posts/51278bba975a07b8f133bbb8">thrift 资料</a></li>
+							<li><a href="${mkfree_blog_url}posts/51679f71975a2683ccfee2cc">elasticsearch java api 教程</a></li>
+						</ul></li>
+					<li><a href="${mkfree_blog_url}vps">VPS</a></li>
+				</ul>
+				<#if sso_user?? >
+				<ul class="nav navbar-nav pull-right">
+					<li><a href="#">${sso_user.nick}</a></li>
+					<li><a href="${mkfree_blog_url}${sso_user.account}/space/admin">我的博客</a></li>
+					<li><a href="${mkfree_blog_url}sso/logout">退出</a></li>
+				</ul>
+				<#else>
+				<form class="form-inline pull-right" action="${mkfree_blog_url}sso/login" method="post" role="form" style="margin-top: 8px;">
+					<div class="form-group">
+						<label class="sr-only" for="exampleInputEmail2">帐 号</label> <input type="text" name="account" class="form-control" id="exampleInputEmail2" placeholder="帐 号">
+					</div>
+					<div class="form-group">
+						<label class="sr-only" for="exampleInputPassword2">密 码</label> <input type="password" name="password" class="form-control" id="exampleInputPassword2" placeholder="密 码">
+					</div>
+					<button type="submit" class="btn btn-primary dropdown-toggle">登 录</button>
+					<a class="btn btn-success dropdown-toggle" href="http://blog.mkfree.com/sso/register" target="_blank">注 册</a>
+				</form>
+
+				</#if>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container -->
+	</nav>
 	<div class="search-area-wrapper">
         <div class="search-area container">
         	<img alt="logo" src="http://static.mkfree.com/common/images/logo/logo_96.png" style="float: left;">
 			<h3 class="search-header">全站搜索</h3>
             <p class="search-tag-line">基于ElasticSearch搜索,博客源代码已开放,有兴趣的童鞋们一起学习下,大家都分享知识!QQ:1109349806  oyhk</p>
-            <form id="search-form" class="search-form clearfix" method="get" action="${mkfree_blog_url}so/blog" autocomplete="off" novalidate="novalidate">
-                <input class="search-term required" type="text" id="q" name="q" placeholder="搜索博文" title="* Please enter a search term!" autocomplete="off">
-                <input class="search-btn" type="submit" value="Search">
-                <div id="search-error-container"></div>
-            </form>
+           	<form class="form-inline" method="get" action="${mkfree_blog_url}so/blog" role="form" style="margin-top: 60px;">
+			  <div class="form-group col-xs-11">
+			    <input type="text"  class="form-control" placeholder="搜 索 博 文">
+			  </div>
+			  <button type="submit" class="btn btn-primary">搜 索</button>
+			</form>
         </div>
     </div>
 	<div class="container">
 		<div class="row">
-			<div class="span8">
-				<div class="hero-unit">
+			<div class="col-lg-8">
+				<div class="well">
 					<@postsDisplay type=4 count=1> <#list blogPosts as posts>
 					<h3><a href="${mkfree_blog_url}posts/${posts.id}">${posts.title}</a></h3>
 					<p>${posts.summary}</p>
 					</#list> </@postsDisplay>
 					<p> <a class="btn btn-primary btn-large" href="${mkfree_blog_url}list/1">更 多 &raquo;</a> </p>
 				</div>
+				<div>
 				<@postsDisplay type=5 count=20>
 				<#list blogPosts as posts>
 					<h3>
@@ -120,18 +167,21 @@ form.search-form input.search-btn:hover {
 					</h3>
 					<p>${posts.summary}</p>
 					<p>
-						<a class="btn" href="${mkfree_blog_url}posts/${posts.id}">View details &raquo;</a>
+						<a class="btn btn-primary" href="${mkfree_blog_url}posts/${posts.id}">View details &raquo;</a>
 					</p>
 				</#list>
 				</@postsDisplay>
+				</div>
 			</div>
-			<div class="span4">
+			<div class="col-lg-4">
+				<div class="well">
 				<ul class="nav nav-tabs">
 					<!-- <li class="active"><a href="#1" data-toggle="tab">最新博客</a></li> -->
 					<li><a href="#2" data-toggle="tab">最新推荐</a></li>
 					<!-- <li><a href="#3" data-toggle="tab">本周热点</a></li> -->
-					<li><a style="float:right;margin-left: 200px;" href="${mkfree_blog_url}list/1" >更 多...</a></li>
+					<li><a style="float:right;margin-left: 152px;" href="${mkfree_blog_url}list/1" >更 多...</a></li>
 				</ul>
+				
 				<div class="tab-content">
 					<!-- <div class="tab-pane active" id="1">
 						<ul class="unstyled">
@@ -141,7 +191,7 @@ form.search-form input.search-btn:hover {
 						</ul>
 					</div> -->
  					<div class="tab-pane active" id="2">
-						<ul class="unstyled">
+						<ul class="list-unstyled">
 							<@postsDisplay type=3 count=10 length=40> <#list blogPosts as posts>
 							<li style="line-height: 30px;"><a href="${mkfree_blog_url}posts/${posts.id}">${posts.title}</a></li>
 							</#list> </@postsDisplay>
@@ -152,6 +202,7 @@ form.search-form input.search-btn:hover {
 							<li><a href="${mkfree_blog_url}posts/3">休闲(mkfree)博客开发文档---介绍-作者(oyhk)---第三章</a></li>
 						</ul>
 					</div> -->
+				</div>
 				</div>
 				<#include "../include/adv1.html"/>
 			</div>
