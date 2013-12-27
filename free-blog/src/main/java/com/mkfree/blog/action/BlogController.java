@@ -165,7 +165,7 @@ public class BlogController {
 	@RequestMapping(value = "/{account}/space/admin/{pageNo}")
 	public String myBlogSpace(Model model, @PathVariable String account, @PathVariable int pageNo) {
 		SysUserVO sysUserVO = SysUserClient.findUserByAccount(account);
-		PaginationVO pages = BlogClient.findBlogPostPageByUserId(1, 15, sysUserVO.getId());
+		PaginationVO pages = BlogClient.findBlogPostPageByUserId(pageNo, 15, sysUserVO.getId());
 		pages.setPageUrl(BlogConstants.MKFREE_BLOG_URL + account + "/space/admin");
 		model.addAttribute("pages", pages);
 		return "blog/myspace";

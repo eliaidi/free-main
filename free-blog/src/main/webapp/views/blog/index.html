@@ -15,7 +15,7 @@ body {
 	padding-bottom: 40px;
 }
 .search-area-wrapper {
-  background: #353b65 url("http://static.mkfree.com/common/images/index/main-bg.jpg") center top no-repeat;
+  background: #353b65 url("${mkfree_static_url}common/images/index/main-bg.jpg") center top no-repeat;
   background-size: 100%;
   min-height: 279px;
   height: auto !important;
@@ -96,7 +96,7 @@ form.search-form input.search-btn:hover {
         <div class="search-area container">
         	<img alt="logo" src="http://static.mkfree.com/common/images/logo/logo_96.png" style="float: left;">
 			<h3 class="search-header">全站搜索</h3>
-            <p class="search-tag-line">博客基于bootstarp3 有可能出现浏览器不兼容问题，如果想看得比较舒服，建议用chrome浏览器。谢谢</p>
+            <p class="search-tag-line">博客基于bootstarp3 有可能出现浏览器不兼容问题，如果想看得比较舒服，建议用chrome,ie9,firfox浏览器。谢谢</p>
             <p class="search-tag-line">基于ElasticSearch搜索,博客源代码已开放,有兴趣的童鞋们一起学习下,大家都分享知识!QQ:1109349806  oyhk</p>
            	<form class="form-inline" method="get" action="${mkfree_blog_url}so/blog" role="form" style="margin-top: 60px;">
 			  <div class="form-group col-xs-11">
@@ -120,11 +120,11 @@ form.search-form input.search-btn:hover {
 				<@postsDisplay type=5 count=20>
 				<#list blogPosts as posts>
 					<h3>
-						<a href="${mkfree_blog_url}posts/${posts.id}">${posts.title}</a>
+						<a href="${mkfree_blog_url}posts/${posts.id}" target="_blank">${posts.title}</a>
 					</h3>
 					<p>${posts.summary}</p>
-					<p>
-						<a class="btn btn-primary" href="${mkfree_blog_url}posts/${posts.id}">View details &raquo;</a>
+					<p align="right">
+						<a class="btn btn-primary" target="_blank" href="${mkfree_blog_url}posts/${posts.id}">浏览 详细 &raquo;</a>
 					</p>
 				</#list>
 				</@postsDisplay>
@@ -162,6 +162,7 @@ form.search-form input.search-btn:hover {
 				</div>
 				</div>
 				<#include "../include/adv1.html"/>
+				<#include "../include/notice1.html"/>
 			</div>
 		</div>
 		<!-- 广告位 -->
