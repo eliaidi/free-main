@@ -4,169 +4,199 @@
 <meta charset="utf-8">
 <title>mkfree 休闲网站--博客</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="Keywords" content="休闲网站,休闲博客,java编程 ,java设计模式,java基础,编程技术,java" />
-<meta name="description" content="mkfree 休闲网站--自由-博客,发表心情,分享技术,分享图片,分享视频">
-<meta name="author" content="<@settingUrl>${mkfree_blog_url}</@settingUrl> (oyhk)">
-<link href="${mkfree_static_url}common/bootstrap3/css/bootstrap.min.css" rel="stylesheet">
-<link href="${mkfree_static_url}common/bootstrap3/css/bootstrap-theme.min.css" rel="stylesheet">
+<meta name="Keywords"
+	content="休闲网站,休闲博客,java编程 ,java设计模式,java基础,编程技术,java" />
+<meta name="description"
+	content="mkfree 休闲网站--自由-博客,发表心情,分享技术,分享图片,分享视频">
+<meta name="author"
+	content="<@settingUrl>${mkfree_blog_url}</@settingUrl> (oyhk)">
+<link href="${mkfree_static_url}common/bootstrap3/css/bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="${mkfree_static_url}common/bootstrap3/css/bootstrap-theme.min.css"
+	rel="stylesheet">
 <#include "../include/logo.html"/>
 <style type="text/css">
 body {
 	padding-bottom: 40px;
 }
+
 .search-area-wrapper {
-  background: #353b65 url("${mkfree_static_url}common/images/index/main-bg.jpg") center top no-repeat;
-  background-size: 100%;
-  min-height: 279px;
-  height: auto !important;
-  height: 279px;
-  margin-top:50px;
-  margin-bottom: 20px;
+	background: #353b65
+		url("${mkfree_static_url}common/images/index/main-bg.jpg") center top
+		no-repeat;
+	background-size: 100%;
+	min-height: 279px;
+	height: auto !important;
+	height: 279px;
+	margin-top: 50px;
+	margin-bottom: 20px;
 }
+
 .search-area-wrapper .search-area {
-  padding: 50px 0;
+	padding: 50px 0;
 }
 
 h3.search-header {
-  font-family: "Open Sans", sans-serif;
-  font-weight: bold;
-  font-size: 36px;
-  color: #fff;
-  text-align: center;
+	font-family: "Open Sans", sans-serif;
+	font-weight: bold;
+	font-size: 36px;
+	color: #fff;
+	text-align: center;
 }
 
 p.search-tag-line {
-  font-family: "Droid Serif", serif;
-  font-style: italic;
-  font-size: 18px;
-  line-height: 28px;
-  color: #fff;
-  text-align: center;
+	font-family: "Droid Serif", serif;
+	font-style: italic;
+	font-size: 18px;
+	line-height: 28px;
+	color: #fff;
+	text-align: center;
 }
 
 form.search-form {
-  margin: 40px 0 0;
-  text-align: center;
+	margin: 40px 0 0;
+	text-align: center;
 }
-form.search-form .input-common, form.search-form input.search-term, form.search-form input.search-btn {
-  font-family: "Open Sans", sans-serif;
-  box-shadow: none;
-  border-radius: 0;
-  display: inline-block;
-  border: none;
-  vertical-align: bottom;
+
+form.search-form .input-common,form.search-form input.search-term,form.search-form input.search-btn
+	{
+	font-family: "Open Sans", sans-serif;
+	box-shadow: none;
+	border-radius: 0;
+	display: inline-block;
+	border: none;
+	vertical-align: bottom;
 }
+
 form.search-form input.search-term {
-  font-size: 14px;
-  height: 24px;
-  line-height: 24px;
-  padding: 12px;
-  width: 72%;
-  color: #858c91;
-  margin-right: 10px;
-  margin-bottom: 0;
+	font-size: 14px;
+	height: 24px;
+	line-height: 24px;
+	padding: 12px;
+	width: 72%;
+	color: #858c91;
+	margin-right: 10px;
+	margin-bottom: 0;
 }
+
 form.search-form input.search-term.loading {
-  background-image: url("../images/search-loader.gif");
-  background-repeat: no-repeat;
-  background-position: 98% 50%;
+	background-image: url("../images/search-loader.gif");
+	background-repeat: no-repeat;
+	background-position: 98% 50%;
 }
+
 form.search-form input.search-btn {
-  background-color: #3f4b55;
-  font-size: 14px;
-  line-height: 19px;
-  font-weight: 600;
-  padding: 14px 30px 15px;
-  color: #fff;
+	background-color: #3f4b55;
+	font-size: 14px;
+	line-height: 19px;
+	font-weight: 600;
+	padding: 14px 30px 15px;
+	color: #fff;
 }
+
 form.search-form input.search-btn:hover {
-  background-color: #4b5760;
+	background-color: #4b5760;
 }
 
 #search-error-container label {
-  color: #fff;
-  padding: 5px;
-  font-size: 14px;
+	color: #fff;
+	padding: 5px;
+	font-size: 14px;
 }
 </style>
 </head>
 <body>
 	<#include "../include/navigation.html" />
 	<div class="search-area-wrapper">
-        <div class="search-area container">
-        	<img alt="logo" src="http://static.mkfree.com/common/images/logo/logo_96.png" style="float: left;">
+		<div class="search-area container">
+			<img alt="logo"
+				src="http://static.mkfree.com/common/images/logo/logo_96.png"
+				style="float: left;">
 			<h3 class="search-header">全站搜索</h3>
-            <p class="search-tag-line">博客基于bootstarp3 有可能出现浏览器不兼容问题，如果想看得比较舒服，建议用chrome,ie9,firfox浏览器。谢谢</p>
-            <p class="search-tag-line">基于ElasticSearch搜索,博客源代码已开放,有兴趣的童鞋们一起学习下,大家都分享知识!QQ:1109349806  oyhk</p>
-           	<form class="form-inline" method="get" action="${mkfree_blog_url}so/blog" role="form" style="margin-top: 60px;">
-			  <div class="form-group col-xs-11">
-			    <input type="text" name="q" class="form-control" placeholder="搜 索 博 文">
-			  </div>
-			  <button type="submit" class="btn btn-primary">搜 索</button>
+			<p class="search-tag-line">博客基于bootstarp3
+				有可能出现浏览器不兼容问题，如果想看得比较舒服，建议用chrome,ie9,firfox浏览器。谢谢</p>
+			<p class="search-tag-line">基于ElasticSearch搜索,博客源代码已开放,有兴趣的童鞋们一起学习下,大家都分享知识!QQ:1109349806
+				oyhk</p>
+			<form class="form-inline" method="get"
+				action="${mkfree_blog_url}so/blog" role="form"
+				style="margin-top: 60px;">
+				<div class="form-group col-xs-11">
+					<input type="text" name="q" class="form-control"
+						placeholder="搜 索 博 文">
+				</div>
+				<button type="submit" class="btn btn-primary">搜 索</button>
 			</form>
-        </div>
-    </div>
+		</div>
+	</div>
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-8">
 				<div class="well">
 					<@postsDisplay type=4 count=1> <#list blogPosts as posts>
-					<h3><a href="${mkfree_blog_url}posts/${posts.id}">${posts.title}</a></h3>
+					<h3>
+						<a href="${mkfree_blog_url}posts/${posts.id}">${posts.title}</a>
+					</h3>
 					<p>${posts.summary}</p>
 					</#list> </@postsDisplay>
-					<p> <a class="btn btn-primary btn-large" href="${mkfree_blog_url}list/1">更 多 &raquo;</a> </p>
+					<p>
+						<a class="btn btn-primary btn-large"
+							href="${mkfree_blog_url}list/1">更 多 &raquo;</a>
+					</p>
 				</div>
-				<div>
-				<@postsDisplay type=5 count=20>
-				<#list blogPosts as posts>
+				<div id="blogList">
+					<@postsDisplay type=5 count=10> <#list blogPosts as posts>
 					<h3>
 						<a href="${mkfree_blog_url}posts/${posts.id}" target="_blank">${posts.title}</a>
 					</h3>
 					<p>${posts.summary}</p>
 					<p align="right">
-						<a class="btn btn-primary" target="_blank" href="${mkfree_blog_url}posts/${posts.id}">浏览 详细 &raquo;</a>
+						<a class="btn btn-primary" target="_blank"
+							href="${mkfree_blog_url}posts/${posts.id}">浏览 详细 &raquo;</a>
 					</p>
-				</#list>
-				</@postsDisplay>
+					</#list> </@postsDisplay>
 				</div>
 			</div>
 			<div class="col-lg-4">
 				<div class="well">
-				<ul class="nav nav-tabs">
-					<!-- <li class="active"><a href="#1" data-toggle="tab">最新博客</a></li> -->
-					<li><a href="#2" data-toggle="tab">最新推荐</a></li>
-					<!-- <li><a href="#3" data-toggle="tab">本周热点</a></li> -->
-					<li><a style="float:right;margin-left: 152px;" href="${mkfree_blog_url}list/1" >更 多...</a></li>
-				</ul>
-				
-				<div class="tab-content">
-					<!-- <div class="tab-pane active" id="1">
+					<ul class="nav nav-tabs">
+						<!-- <li class="active"><a href="#1" data-toggle="tab">最新博客</a></li> -->
+						<li><a href="#2" data-toggle="tab">最新推荐</a></li>
+						<!-- <li><a href="#3" data-toggle="tab">本周热点</a></li> -->
+						<li><a style="float: right; margin-left: 152px;"
+							href="${mkfree_blog_url}list/1">更 多...</a></li>
+					</ul>
+
+					<div class="tab-content">
+						<!-- <div class="tab-pane active" id="1">
 						<ul class="unstyled">
 							<@postsDisplay type=5 count=10 length=40> <#list blogPosts as posts>
 							<li style="line-height: 30px;"><a href="${mkfree_blog_url}posts/${posts.id}">${posts.title}</a></li>
 							</#list> </@postsDisplay>
 						</ul>
 					</div> -->
- 					<div class="tab-pane active" id="2">
-						<ul class="list-unstyled">
-							<@postsDisplay type=3 count=10 length=40> <#list blogPosts as posts>
-							<li style="line-height: 30px;"><a href="${mkfree_blog_url}posts/${posts.id}">${posts.title}</a></li>
-							</#list> </@postsDisplay>
-						</ul>
-					</div>
-					<!--<div class="tab-pane" id="3">
+						<div class="tab-pane active" id="2">
+							<ul class="list-unstyled">
+								<@postsDisplay type=3 count=10 length=40> <#list blogPosts as
+								posts>
+								<li style="line-height: 30px;"><a
+									href="${mkfree_blog_url}posts/${posts.id}">${posts.title}</a></li>
+								</#list> </@postsDisplay>
+							</ul>
+						</div>
+						<!--<div class="tab-pane" id="3">
 						<ul>
 							<li><a href="${mkfree_blog_url}posts/3">休闲(mkfree)博客开发文档---介绍-作者(oyhk)---第三章</a></li>
 						</ul>
 					</div> -->
+					</div>
 				</div>
-				</div>
-				<#include "../include/adv1.html"/>
-				<#include "../include/notice1.html"/>
+				<#include "../include/adv1.html"/> <#include
+				"../include/notice1.html"/>
 			</div>
 		</div>
 		<!-- 广告位 -->
-		
+
 		<hr>
 		<#include "../include/footer.html" />
 	</div>
@@ -177,5 +207,53 @@ form.search-form input.search-btn:hover {
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script src="${mkfree_static_url}/common/script/jquery/jquery.min.js"></script>
 	<script src="${mkfree_static_url}/common/bootstrap/script/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		var pageNo = 1;
+		window.onscroll = function() {
+			if (getScrollTop() + getClientHeight() >= (getScrollHeight() - 100)) {
+				pageNo ++;
+				url = "http://blog.mkfree.com/api/blog/list/"+pageNo;
+				$.ajax({
+					url : url,
+					data : "",
+					success : function(result) {
+						var posts = result.obj;
+						for(var i = 0;i<posts.length;i++){
+							var html = "<h3><a href='http://blog.mkfree.com/posts/"+posts[i].id+"' target='_blank'>"+posts[i].title+"</a></h3>"+
+								   "<p>"+posts[i].summary+"</p> <p align='right'> <a class='btn btn-primary' target='_blank' href='http://blog.mkfree.com/posts/"+posts[i].id+"'>浏览 详细 &raquo;</a></p>";
+							$("#blogList").append(html);
+						}
+					},
+					dataType : "json"
+				});
+			}
+		}
+		//获取滚动条当前的位置
+		function getScrollTop() {
+			var scrollTop = 0;
+			if (document.documentElement && document.documentElement.scrollTop) {
+				scrollTop = document.documentElement.scrollTop;
+			} else if (document.body) {
+				scrollTop = document.body.scrollTop;
+			}
+			return scrollTop;
+		}
+
+		//获取当前可是范围的高度
+		function getClientHeight() {
+			var clientHeight = 0;
+			if (document.body.clientHeight && document.documentElement.clientHeight) {
+				clientHeight = Math.min(document.body.clientHeight, document.documentElement.clientHeight);
+			} else {
+				clientHeight = Math.max(document.body.clientHeight, document.documentElement.clientHeight);
+			}
+			return clientHeight;
+		}
+
+		//获取文档完整的高度
+		function getScrollHeight() {
+			return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+		}
+	</script>
 </body>
 </html>
