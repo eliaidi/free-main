@@ -4,17 +4,10 @@
 <meta charset="utf-8">
 <title>mkfree 休闲网站--博客</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="Keywords"
-	content="休闲网站,休闲博客,java编程 ,java设计模式,java基础,编程技术,java" />
-<meta name="description"
-	content="mkfree 休闲网站--自由-博客,发表心情,分享技术,分享图片,分享视频">
-<meta name="author"
-	content="<@settingUrl>${mkfree_blog_url}</@settingUrl> (oyhk)">
-<link href="${mkfree_static_url}common/bootstrap3/css/bootstrap.min.css"
-	rel="stylesheet">
-<link
-	href="${mkfree_static_url}common/bootstrap3/css/bootstrap-theme.min.css"
-	rel="stylesheet">
+<meta name="Keywords" content="mkfree 休闲网站--自由-博客,发表心情,分享技术,分享图片,分享视频">
+<meta name="author" content="<@settingUrl>${mkfree_blog_url}</@settingUrl> (oyhk)">
+<link href="${mkfree_static_url}common/bootstrap3/css/bootstrap.min.css" rel="stylesheet">
+<link href="${mkfree_static_url}common/bootstrap3/css/bootstrap-theme.min.css" rel="stylesheet">
 <#include "../include/logo.html"/>
 <style type="text/css">
 body {
@@ -210,7 +203,7 @@ form.search-form input.search-btn:hover {
 	<script type="text/javascript">
 		var pageNo = 1;
 		window.onscroll = function() {
-			if (getScrollTop() + getClientHeight() >= (getScrollHeight() - 100)) {
+			if (getScrollTop() + getClientHeight() == getScrollHeight() {
 				pageNo ++;
 				url = "http://blog.mkfree.com/api/blog/list/"+pageNo;
 				$.ajax({

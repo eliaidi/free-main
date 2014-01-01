@@ -52,4 +52,7 @@ public interface AccessAnalysisDao {
 	 * @return
 	 */
 	public long findBlogAllAcceccCountByUserId(String userId);
+
+	public void analysisKeyWords();
+
 }

@@ -6,9 +6,12 @@ import org.apache.thrift.TException;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.mkfree.apiservice.ApiServiceImpl;
+import com.mkfree.apiservice.dao.AccessAnalysisDao;
 
 public class AccessAnalysisServiceTest extends BaseTest {
+
+	@Autowired
+	private AccessAnalysisDao accessAnalysisDao;
 
 	@Test
 	public void save() {
@@ -39,6 +42,11 @@ public class AccessAnalysisServiceTest extends BaseTest {
 		} catch (TException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Test
+	public void analysisKeyWords() {
+		accessAnalysisDao.analysisKeyWords();
 	}
 
 }
